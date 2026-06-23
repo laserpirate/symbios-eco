@@ -241,6 +241,35 @@ input[type=range].env.hot::-webkit-slider-thumb{background:var(--coral)}
   .rail{max-height:none}
   .stage{min-height:62vh}
 }
+@media (max-width:760px){
+  /* nav: drop the tagline, let it breathe, keep brand + palette tour */
+  nav{height:auto;min-height:46px;flex-wrap:wrap;gap:.35rem;padding:.42rem .7rem;position:sticky;top:0}
+  .nav-mid{display:none}
+  .nav-r{gap:.4rem;flex-wrap:wrap;justify-content:flex-end;font-size:.42rem}
+  .tour-hero{font-size:.5rem;padding:.3rem .55rem;white-space:nowrap;line-height:1.1}
+  .tour-hero .tri{font-size:.55rem}
+  .wm{font-size:1.05rem}.sub{display:none}
+
+  /* stack: plant stage first, then the two rails */
+  main{display:flex;flex-direction:column}
+  .stage{order:-1;min-height:66vh;border-bottom:1px solid var(--bor)}
+  .stage-top{min-height:56vh}
+  .rail.left,.rail.right{border:none;border-top:1px solid var(--bor)}
+
+  /* corner readouts: smaller + chipped so they label without hiding the plant */
+  .spec-name{font-size:1.15rem}
+  .spec-latin{font-size:.5rem}.spec-site{font-size:.45rem}
+  .vp-badge{top:.45rem;left:.5rem;gap:.12rem;max-width:62%;
+    background:rgba(9,14,8,.5);padding:.2rem .4rem;border-radius:4px;backdrop-filter:blur(2px)}
+  .vp-readout{top:.45rem;right:.5rem;font-size:.46rem;line-height:1.55;
+    background:rgba(9,14,8,.5);padding:.2rem .4rem;border-radius:4px;backdrop-filter:blur(2px)}
+
+  /* adaptation flag: centered at the very bottom edge — never over the plant */
+  .adapt{left:50%;right:auto;transform:translateX(-50%);bottom:.45rem;font-size:.46rem;
+    max-width:94%;justify-content:center;text-align:center;background:rgba(9,14,8,.86)}
+
+  .transport{gap:.5rem;padding:.5rem .6rem}
+}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001s!important}
   #canopy-grp{animation:none!important}
@@ -850,7 +879,27 @@ function render(){
   flashPipeline();
   drawMTG(iter,Math.round(p.branch),health);
   updateServices(health,crownW,crownH);
+  // mobile: frame the plant (canopy + roots) so it always fills the canvas
+  _fit={stats,groundY,baseLen};
+  fitViewport();
 }
+let _fit=null;
+function fitViewport(){
+  const svg=document.getElementById('viewport');if(!svg)return;
+  if(window.innerWidth>760||!_fit){svg.setAttribute('viewBox','0 0 800 560');return;}
+  const{stats,groundY,baseLen}=_fit;
+  const top=Math.max(0,stats.top-6);
+  const plantH=Math.max(70,groundY-top);
+  const rootDepth=Math.min(plantH*0.5,120);
+  let x0=Math.min(stats.bx0,400-50),x1=Math.max(stats.bx1,400+50);
+  const padX=(x1-x0)*0.10+22,padT=plantH*0.12+24;        // extra headroom for the name chip
+  let vx=x0-padX,vw=(x1-x0)+padX*2;
+  let vy=top-padT,vh=(groundY+rootDepth)-top+padT+12;
+  const targetAR=0.6;                                     // keep a portrait-ish frame for phones
+  if(vw/vh<targetAR){const need=vh*targetAR;vx-=(need-vw)/2;vw=need;}
+  svg.setAttribute('viewBox',`${vx.toFixed(1)} ${vy.toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}`);
+}
+let _rzT;window.addEventListener('resize',()=>{clearTimeout(_rzT);_rzT=setTimeout(fitViewport,150);});
 
 /* ============================================================
    READOUTS · viewport corners, rule card, adaptation flag
