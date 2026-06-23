@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>SymbiOS™ · Inflorescence Intelligence™ — Climate Circle Companion</title>
+<meta name="description" content="Coastal resilience platform — eco-sensing mesh, MOF-integrated phytoremediation, adaptive zoning, citizen-IoT. Harvard Climate Entrepreneurs Circle 2026–27 application companion."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=JetBrains+Mono:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090e08;--sur:#0d160c;--sur2:#0f180e;--sur3:#111a10;
+  --bor:#1e2e1d;--bor2:#1a2a19;
+  --bright:#9ed855;--cream:#e8e0d0;--ivory:#c8c0b0;
+  --dim:#3a5a38;--mid:#4a6a48;--body:#6a8a68;--muted:#2a4a28;
+  --blue:#6ab4e8;--amber:#e8aa8a;--purple:#9a8ae8;--gold:#c8a96e;
+  --teal:#55c4a0;--coral:#c45a3a;--orange:#c4904a;
+  --lavender:#c4b5e0;--lavender-mid:#a89cc8;--gold-pale:#d8d4be;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;display:flex;flex-direction:column}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+::-webkit-scrollbar-track{background:transparent}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,-2px)}}
+.fu{animation:fadeUp .65s ease both}
+.d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.32s}.d4{animation-delay:.46s}.d5{animation-delay:.6s}
+
+/* NAV */
+nav{flex-shrink:0;height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.25rem;border-bottom:1px solid var(--bor);background:rgba(9,14,8,.96);
+  backdrop-filter:blur(10px);position:relative;z-index:10}
+.nb{display:flex;align-items:baseline;gap:.6rem;text-decoration:none}
+.nv{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;
+  color:var(--cream);letter-spacing:.15em;transition:text-shadow .2s}
+.brand-link:hover .nv{text-shadow:0 0 18px rgba(196,181,224,.45)}
+.ns{font-size:.46rem;color:var(--muted);letter-spacing:.1em;font-style:italic;font-family:'Cormorant Garamond',serif}
+.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.tab{background:transparent;border:1px solid transparent;border-radius:3px;
+  padding:.32rem .75rem;cursor:pointer;font-family:'DM Mono',monospace;
+  font-size:.56rem;letter-spacing:.12em;color:var(--dim);transition:all .15s}
+.tab:hover{color:var(--body)}
+.tab.on{background:#1a2e1a;color:var(--bright);border-color:var(--muted)}
+.na{font-size:.48rem;color:var(--muted);white-space:nowrap;font-family:'DM Mono',monospace}
+.na em{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.65rem;color:var(--gold-pale)}
+
+/* CONTENT */
+#content{flex:1;overflow-y:auto;overflow-x:hidden}
+.panel{display:none;padding:1.75rem 1.5rem 4rem;max-width:1040px;margin:0 auto}
+.panel.on{display:block;animation:fadeUp .5s ease both}
+
+/* HERO BLOCKS */
+.eyebrow-row{display:flex;gap:1rem;align-items:baseline;margin-bottom:1rem;flex-wrap:wrap}
+.tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.tag{font-size:.52rem;letter-spacing:.14em;padding:3px 8px;border-radius:2px;font-family:'DM Mono',monospace}
+.tag-g{background:#1a3a18;color:var(--bright);border:1px solid rgba(158,216,85,.2)}
+.tag-a{background:#2a1e0a;color:var(--gold);border:1px solid rgba(200,169,110,.2)}
+.tag-b{background:#0a1525;color:var(--blue);border:1px solid rgba(106,180,232,.2)}
+.tag-p{background:#1a1325;color:var(--purple);border:1px solid rgba(154,138,232,.2)}
+.tag-t{background:#0a201c;color:var(--teal);border:1px solid rgba(85,196,160,.2)}
+.tag-c{background:#2a1208;color:var(--coral);border:1px solid rgba(196,90,58,.2)}
+
+.eyebrow{font-size:.58rem;color:var(--dim);letter-spacing:.16em;margin-bottom:.6rem}
+.epigraph{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(.85rem,2.2vw,1.05rem);color:#8a9a82;line-height:1.85;
+  border-left:1px solid var(--muted);padding-left:.95rem;margin:.4rem 0 1.4rem;max-width:640px;
+  user-select:none}
+.epigraph-attr{display:block;font-style:normal;font-size:.55rem;color:var(--dim);
+  letter-spacing:.12em;font-family:'DM Mono',monospace;margin-top:.5rem}
+
+.masthead{font-size:clamp(1.1rem,3.6vw,1.4rem);color:var(--gold-pale);
+  letter-spacing:.08em;margin-bottom:1.3rem;line-height:1.4;font-weight:300}
+
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(3.6rem,12vw,6.5rem);color:var(--cream);line-height:.92;
+  letter-spacing:-.02em;margin-bottom:1.2rem;user-select:none}
+.tagline{font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(.95rem,2.6vw,1.2rem);color:#8a9a82;line-height:1.7;margin-bottom:1.3rem;
+  user-select:none}
+.desc{font-size:.66rem;color:var(--mid);line-height:2.05;margin-bottom:1.5rem;max-width:760px;user-select:none}
+.desc b{color:var(--ivory);font-weight:400}
+.desc em{color:var(--gold-pale);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.9rem}
+
+/* CC CALLOUT */
+.cc-callout{background:linear-gradient(135deg,rgba(196,181,224,.06),rgba(106,180,232,.04));
+  border:1px solid rgba(196,181,224,.18);border-radius:4px;padding:1rem 1.15rem;
+  margin:1.2rem 0 1.8rem;display:flex;gap:.9rem;align-items:flex-start;max-width:760px}
+.cc-mark{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.6rem;
+  color:var(--lavender);line-height:.9;flex-shrink:0;margin-top:.1rem}
+.cc-body{font-size:.62rem;color:var(--ivory);line-height:1.85}
+.cc-body b{color:var(--lavender);font-weight:400}
+.cc-body em{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.78rem;color:var(--gold-pale)}
+
+/* SECTION LABEL */
+.sl{font-size:.54rem;color:var(--dim);letter-spacing:.18em;margin:2.2rem 0 1rem;
+  display:flex;align-items:center;gap:.75rem}
+.sl::before{content:'';display:block;width:18px;height:1px;background:var(--muted)}
+.sl::after{content:'';flex:1;height:1px;background:var(--bor2)}
+.sl-n{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-pale);font-size:.78rem;
+  font-weight:300;letter-spacing:0}
+
+/* ETYMOLOGY BAR */
+.etymology{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;
+  margin-bottom:1.5rem;user-select:none}
+.ety{background:var(--sur);border:1px solid var(--bor);border-radius:3px;padding:.7rem .8rem}
+.ety-glyph{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;
+  color:var(--gold-pale);margin-bottom:.25rem}
+.ety-lang{font-size:.46rem;color:var(--dim);letter-spacing:.14em;margin-bottom:.25rem}
+.ety-meaning{font-size:.58rem;color:var(--mid);line-height:1.55}
+
+/* MODULE GRID */
+.mod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1.5rem}
+.mod-card{background:var(--sur);border:1px solid var(--bor);border-radius:4px;padding:.95rem 1.05rem;
+  border-left:3px solid;transition:background .2s}
+.mod-card:hover{background:var(--sur3)}
+.mod-card.lime{border-left-color:var(--bright)}
+.mod-card.blue{border-left-color:var(--blue)}
+.mod-card.purple{border-left-color:var(--purple)}
+.mod-card.amber{border-left-color:var(--amber)}
+.mod-card.teal{border-left-color:var(--teal)}
+.mod-card.coral{border-left-color:var(--coral)}
+.mod-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.45rem;gap:.5rem;flex-wrap:wrap}
+.mod-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;
+  letter-spacing:.04em}
+.mod-name.lime{color:var(--bright)}
+.mod-name.blue{color:var(--blue)}
+.mod-name.purple{color:var(--purple)}
+.mod-name.amber{color:var(--amber)}
+.mod-name.teal{color:var(--teal)}
+.mod-name.coral{color:var(--coral)}
+.mod-phase{font-size:.48rem;color:var(--dim);letter-spacing:.12em}
+.mod-full{font-size:.5rem;color:var(--mid);letter-spacing:.06em;margin-bottom:.55rem}
+.mod-desc-s{font-size:.6rem;color:var(--body);line-height:1.7}
+
+/* GENERIC CARD */
+.card{background:var(--sur);border:1px solid var(--bor);border-radius:4px;
+  padding:1rem 1.15rem;margin-bottom:.75rem}
+.card-l{font-size:.5rem;color:var(--dim);letter-spacing:.16em;margin-bottom:.55rem}
+.card-t{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;
+  color:var(--ivory);margin-bottom:.5rem;font-weight:400}
+.card-b{font-size:.62rem;color:var(--mid);line-height:1.95}
+.card-b b{color:var(--ivory);font-weight:400}
+.card-b em{color:var(--gold-pale);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.78rem}
+
+/* SVG VIZ FRAME */
+.viz{background:var(--sur);border:1px solid var(--bor);border-radius:4px;
+  padding:1.1rem;margin-bottom:1rem}
+.viz-l{font-size:.5rem;color:var(--dim);letter-spacing:.16em;margin-bottom:.85rem}
+.viz-cap{font-size:.55rem;color:var(--body);line-height:1.7;margin-top:.6rem;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.7rem}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin-bottom:1.3rem}
+.stat{background:var(--sur);border:1px solid var(--bor);border-radius:4px;padding:.85rem .6rem;text-align:center}
+.stat-n{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:1.85rem;line-height:1;margin-bottom:.25rem;color:var(--ivory)}
+.stat-l{font-size:.46rem;color:var(--dim);letter-spacing:.12em;line-height:1.4}
+
+/* LIST */
+.bullet-list{list-style:none;padding:0;margin:.4rem 0}
+.bullet-list li{font-size:.62rem;color:var(--mid);line-height:1.95;padding-left:1.1rem;position:relative;margin-bottom:.45rem}
+.bullet-list li::before{content:'◦';position:absolute;left:0;color:var(--dim)}
+.bullet-list li b{color:var(--ivory);font-weight:400}
+.bullet-list li em{color:var(--gold-pale);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.75rem}
+
+/* TABLE-ISH */
+.matrix{display:grid;border:1px solid var(--bor);border-radius:4px;overflow:hidden;margin-bottom:1rem;background:var(--sur)}
+.matrix.c4{grid-template-columns:1.1fr 1fr 1fr 1fr}
+.matrix.c3{grid-template-columns:1.1fr 1.5fr 1fr}
+.m-h{background:var(--sur3);padding:.55rem .8rem;font-size:.48rem;color:var(--gold-pale);letter-spacing:.14em;border-bottom:1px solid var(--bor)}
+.m-c{padding:.7rem .8rem;font-size:.58rem;color:var(--mid);line-height:1.7;border-bottom:1px solid var(--bor2);border-right:1px solid var(--bor2)}
+.m-c:last-child{border-right:none}
+.m-c.row-h{color:var(--ivory);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.78rem;background:var(--sur2)}
+.matrix > .m-c:nth-last-child(-n+4){border-bottom:none}
+
+/* PILOT CARDS */
+.pilot-card{background:var(--sur);border:1px solid var(--bor);border-radius:4px;
+  padding:1.1rem 1.2rem;margin-bottom:.75rem;border-left:3px solid}
+.pilot-card.green{border-left-color:var(--teal)}
+.pilot-card.gold{border-left-color:var(--gold)}
+.pilot-card.purple{border-left-color:var(--purple)}
+.pilot-head{display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:.5rem;gap:.6rem;flex-wrap:wrap}
+.pilot-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--ivory)}
+.pilot-loc{font-size:.5rem;color:var(--dim);letter-spacing:.14em}
+.pilot-sub{font-size:.58rem;color:var(--body);margin-bottom:.7rem;line-height:1.75}
+.pilot-body{font-size:.62rem;color:var(--mid);line-height:1.95}
+.pilot-body b{color:var(--ivory);font-weight:400}
+
+/* LINK BUTTON */
+.btn-out{display:inline-flex;align-items:center;gap:.5rem;background:var(--sur);border:1px solid var(--bor);
+  border-radius:3px;padding:.55rem .85rem;color:var(--bright);text-decoration:none;
+  font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.13em;transition:all .15s;margin-top:.5rem}
+.btn-out:hover{background:#1a2e1a;border-color:var(--muted)}
+.btn-out .arr{font-size:.7rem}
+
+/* XEN PLACEHOLDER */
+.xen-hero{padding:2rem 0;text-align:center}
+.xen-glyph{font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(5rem,15vw,9rem);color:var(--gold-pale);line-height:1;margin-bottom:1rem;letter-spacing:.05em}
+.xen-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--mid);font-size:1rem;line-height:1.7;max-width:520px;margin:0 auto 1.4rem}
+
+/* FOOTER */
+.parent-footer{margin-top:3rem;padding:1.3rem 0 .5rem;border-top:1px solid var(--bor2);
+  text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic}
+.pf-mark{color:var(--lavender);font-size:.95rem;letter-spacing:.04em;margin-bottom:.4rem}
+.pf-meta{font-family:'DM Mono',monospace;font-size:.46rem;color:var(--muted);letter-spacing:.14em;font-style:normal}
+
+/* MOBILE */
+@media (max-width: 820px){
+  .panel{padding:1.3rem 1rem 3rem}
+  .two-col,.three-col{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .etymology{grid-template-columns:repeat(2,1fr)}
+  .matrix.c4{grid-template-columns:1fr 1fr;font-size:.55rem}
+  .mod-grid{grid-template-columns:1fr}
+}
+@media (max-width: 640px){
+  html,body{overflow:auto;height:auto}
+  body{display:block}
+  nav{position:relative;flex-wrap:wrap;height:auto;padding:.6rem .9rem;gap:.5rem}
+  .tabs{order:3;width:100%;justify-content:flex-start;overflow-x:auto;padding-bottom:.2rem}
+  .tab{padding:.25rem .55rem;font-size:.5rem;white-space:nowrap}
+  .na{display:none}
+  .nb{order:1}
+  #content{overflow:visible}
+  .panel{padding:1rem .85rem 2.5rem}
+  h1{font-size:clamp(3rem,16vw,5rem)}
+  .cc-callout{flex-direction:column;gap:.5rem}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .etymology{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#concept" class="brand-link nb" onclick="show('concept',null);return false;">
+    <span class="nv">VANA</span>
+    <span class="ns">SymbiOS™ · Inflorescence Intelligence™</span>
+  </a>
+  <div class="tabs">
+    <button class="tab on" data-id="concept" onclick="show('concept',this)">CONCEPT</button>
+    <button class="tab" data-id="architecture" onclick="show('architecture',this)">ARCHITECTURE</button>
+    <button class="tab" data-id="phyto" onclick="show('phyto',this)">PHYTOREMEDIATION</button>
+    <button class="tab" data-id="auxen" onclick="show('auxen',this)">AUXEN</button>
+    <button class="tab" data-id="pilot" onclick="show('pilot',this)">PILOT</button>
+    <button class="tab" data-id="xen" onclick="show('xen',this)">XĒN</button>
+  </div>
+  <span class="na">Marko Manriquez · <em>Founder</em> · Harvard GSD MLA I</span>
+</nav>
+
+<div id="content">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     CONCEPT
+══════════════════════════════════════════════════════════════════ -->
+<div id="concept" class="panel on">
+
+  <div class="tags fu d1">
+    <span class="tag tag-g">SymbiOS™ Platform</span>
+    <span class="tag tag-a">Climate Adaptation</span>
+    <span class="tag tag-b">Coastal Resilience</span>
+    <span class="tag tag-p">Inflorescence Intelligence™</span>
+  </div>
+
+  <p class="epigraph fu d1">
+    "Light is the left hand of darkness, and darkness the right hand of light.
+    Two are one, life and death, lying together like lovers in <em>kemmer</em>,
+    like hands joined together, like the end and the way."
+    <span class="epigraph-attr">— Ursula K. Le Guin · <em>The Left Hand of Darkness</em> · 1969</span>
+  </p>
+
+  <p class="masthead fu d2">वन · วน · 森林 · <span style="color:var(--ivory);font-family:'Cormorant Garamond',serif;font-style:italic">Forest</span></p>
+
+  <h1 class="fu d2">VANA</h1>
+  <p class="tagline fu d3">"The Word for World is Forest."</p>
+
+  <p class="desc fu d3">
+    <b>SymbiOS™</b> is a coastal resilience platform — a computational design and ecological intelligence
+    system synthesizing eco-sensing mesh networks, MOF-integrated phytoremediation,
+    adaptive zoning algorithms, and an insurance overlay layer.
+    What BIM + ArcGIS would be for urban ecologists — or ArcGIS meets IoT meets predictive
+    analytics, built for <em>living systems</em>.
+    <br><br>
+    <b>VANA</b> is Module 01 — a field-deployable plant intelligence database for climate-vulnerable
+    coastal contexts. The full stack reveals itself in the tabs that follow:
+    <b>ARCHITECTURE</b> (eco-sensing mesh), <b>PHYTOREMEDIATION</b> (MOF chemistry),
+    <b>AUXEN</b> (predictive policy + insurance), and <b>PILOT</b> (field sites).
+  </p>
+
+  <div class="cc-callout fu d4">
+    <span class="cc-mark">✦</span>
+    <span class="cc-body">
+      <b>To the Climate Circle review committee:</b> This site is the technical companion to
+      our <em>2026–27 application</em>. The platform substance referenced in Q17 (problem),
+      Q18 (solution), Q22 (technical edge), and Q32 (why CC) lives in the tabs above.
+      <b>ARCHITECTURE</b> and <b>PHYTOREMEDIATION</b> show the methodology.
+      <b>AUXEN</b> shows the insurance/zoning surface. <b>PILOT</b> shows Rumney Marsh, Bangkok,
+      and the Axolotl Rhino/Grasshopper MVP.
+    </span>
+  </div>
+
+  <div class="sl"><span class="sl-n">i.</span> Etymology · A name that contains its method</div>
+  <div class="etymology fu">
+    <div class="ety">
+      <div class="ety-glyph">वन</div>
+      <div class="ety-lang">SANSKRIT · VANA</div>
+      <div class="ety-meaning">forest · grove · the wild. The root from which the project takes its name.</div>
+    </div>
+    <div class="ety">
+      <div class="ety-glyph">วน</div>
+      <div class="ety-lang">THAI · WON</div>
+      <div class="ety-meaning">to return · to circle back · cyclical. The hydrology, the season, the monsoon.</div>
+    </div>
+    <div class="ety">
+      <div class="ety-glyph">森林</div>
+      <div class="ety-lang">CHINESE / JAPANESE · SĒNLÍN / SHINRIN</div>
+      <div class="ety-meaning">forest as compound — many trees. Shared ideographs across writing systems.</div>
+    </div>
+    <div class="ety">
+      <div class="ety-glyph">Forest</div>
+      <div class="ety-lang">ENGLISH · LATIN ROOT</div>
+      <div class="ety-meaning">the outer world. From <em>foris</em> — outside. The system beyond the door.</div>
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">ii.</span> The platform · Module ecosystem</div>
+  <div class="mod-grid fu">
+
+    <div class="mod-card lime">
+      <div class="mod-head">
+        <span class="mod-name lime">VANA</span>
+        <span class="mod-phase">PHASE 1 · ACTIVE · MODULE 01</span>
+      </div>
+      <div class="mod-full">Plant Intelligence Database · Field Tool · Dashboard</div>
+      <div class="mod-desc-s">A field-deployable, climate-aware species library and analytical dashboard for landscape architects working in coastal contexts. The reference layer underneath every downstream module.</div>
+    </div>
+
+    <div class="mod-card blue">
+      <div class="mod-head">
+        <span class="mod-name blue">XĒN</span>
+        <span class="mod-phase">PHASE 1.5 · IN DEVELOPMENT</span>
+      </div>
+      <div class="mod-full">Generative Pattern Library · M/V/A-System Grammar</div>
+      <div class="mod-desc-s">A custom growth grammar — 89 botanical specimens encoded as Morphology / Venation / Architecture parameters. Generative companion to VANA's typological data.</div>
+    </div>
+
+    <div class="mod-card teal">
+      <div class="mod-head">
+        <span class="mod-name teal">AUXLOGRAM</span>
+        <span class="mod-phase">PHASE 2 · DESIGN</span>
+      </div>
+      <div class="mod-full">Eco-Sensing Mesh · Bayesian Inference Layer</div>
+      <div class="mod-desc-s">Drones + ground sensors + satellite + citizen-IoT phones, fused into a probabilistic decision network. Higher resolution than current satellite products. See <b>ARCHITECTURE</b>.</div>
+    </div>
+
+    <div class="mod-card amber">
+      <div class="mod-head">
+        <span class="mod-name amber">PHYTOFLEET</span>
+        <span class="mod-phase">PHASE 2 · DESIGN</span>
+      </div>
+      <div class="mod-full">MOF-Integrated Phytoremediation Hardware</div>
+      <div class="mod-desc-s">Metal-organic frameworks bonded into bio-substrate — phyto-filtration units, tidal blocks, micro-site stormwater berms. Sensing-and-remediation as one object. See <b>PHYTOREMEDIATION</b>.</div>
+    </div>
+
+    <div class="mod-card purple">
+      <div class="mod-head">
+        <span class="mod-name purple">AUXEN</span>
+        <span class="mod-phase">PHASE 3 · LONG-TERM MOAT</span>
+      </div>
+      <div class="mod-full">Predictive Analytics · Policy Simulation · Insurance Overlay</div>
+      <div class="mod-desc-s">DAPP decision trees, PPPP scenario engine, exceedance probability maps, RLP insurance correlation, adaptive zoning. The decision surface for insurers, planners, and property owners. See <b>AUXEN</b>.</div>
+    </div>
+
+    <div class="mod-card coral">
+      <div class="mod-head">
+        <span class="mod-name coral">AXOLOTL</span>
+        <span class="mod-phase">MVP · FAST PATH</span>
+      </div>
+      <div class="mod-full">Rhino / Grasshopper Plugin · Food4Rhino</div>
+      <div class="mod-desc-s">The thin-slice MVP — VANA + XĒN inside the working tool of landscape architects worldwide. Distribution path through GSD studios + the Food4Rhino ecosystem. See <b>PILOT</b>.</div>
+    </div>
+
+  </div>
+
+  <div class="sl"><span class="sl-n">iii.</span> The thesis · in one paragraph</div>
+  <p class="desc fu">
+    Climate adaptation runs on backward-looking instruments. FEMA flood maps model present conditions
+    and the 100-year storm — they are baked into building codes that cannot respond to a changing
+    climate. Satellite products give continental coverage at site-irrelevant resolution. Insurance
+    pricing arrives after loss, not before adaptation. <b>SymbiOS™ inverts the stack</b> —
+    ecological sensing at site resolution, fused into a probabilistic model that produces forward-looking
+    risk surfaces. Coupled to phyto-remediation hardware that is both <em>treatment</em> and
+    <em>sensor</em>. Coupled to an insurance/zoning overlay that prices adaptation, not loss.
+    The reference modules are open enough for the design profession to extend; the analytics surface
+    is proprietary enough to defend.
+  </p>
+
+  <div class="parent-footer">
+    <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
+    <div class="pf-meta">© 2026 · All rights reserved · Confidential · Companion to Harvard Climate Entrepreneurs Circle 2026–27 application</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     ARCHITECTURE
+══════════════════════════════════════════════════════════════════ -->
+<div id="architecture" class="panel">
+
+  <div class="tags">
+    <span class="tag tag-t">AUXLOGRAM · Sensing Mesh</span>
+    <span class="tag tag-g">Phase 2 · Eco-Intelligence Layer</span>
+    <span class="tag tag-b">Bayesian Inference</span>
+  </div>
+
+  <p class="eyebrow">02 · ARCHITECTURE</p>
+  <h1 style="font-size:clamp(2.2rem,7vw,3.6rem)">The Sensing Mesh.</h1>
+  <p class="tagline">"The landscape is already sensing. AUXLOGRAM makes it <em>legible</em>."</p>
+
+  <p class="desc">
+    A federated, multi-modal sensing topology. Four ingestion classes — <b>satellite, aerial drone,
+    ground sensor, citizen-IoT</b> — fused into a Bayesian decision network that infers ecological
+    state and projects risk. Hardware-light: the citizen-IoT layer reuses billions of decommissioned
+    smartphones as distributed acoustic, thermal, and barometric nodes. The result is site-resolution
+    intelligence at continental scale, calibrated against ground truth and self-updating against drift.
+  </p>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-n" style="color:var(--bright)">4×</div><div class="stat-l">SENSING MODALITIES<br>fused per node</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--blue)">~10m</div><div class="stat-l">TARGET SPATIAL<br>RESOLUTION</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--teal)">≤15min</div><div class="stat-l">TARGET TEMPORAL<br>RESOLUTION</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--purple)">$0.08</div><div class="stat-l">PER NODE / DAY<br>(citizen IoT layer)</div></div>
+  </div>
+
+  <div class="sl"><span class="sl-n">A.</span> The topology · ingestion → inference → output</div>
+  <div class="viz">
+    <div class="viz-l">FIG. A.1 — ECO-SENSING MESH TOPOLOGY</div>
+    <svg viewBox="0 0 920 380" style="width:100%;height:auto;font-family:'DM Mono',monospace">
+      <defs>
+        <linearGradient id="flow1" x1="0" x2="1">
+          <stop offset="0" stop-color="#9ed855" stop-opacity="0.05"/>
+          <stop offset="1" stop-color="#9ed855" stop-opacity="0.5"/>
+        </linearGradient>
+        <linearGradient id="flow2" x1="0" x2="1">
+          <stop offset="0" stop-color="#6ab4e8" stop-opacity="0.05"/>
+          <stop offset="1" stop-color="#6ab4e8" stop-opacity="0.5"/>
+        </linearGradient>
+        <linearGradient id="flow3" x1="0" x2="1">
+          <stop offset="0" stop-color="#55c4a0" stop-opacity="0.05"/>
+          <stop offset="1" stop-color="#55c4a0" stop-opacity="0.5"/>
+        </linearGradient>
+        <linearGradient id="flow4" x1="0" x2="1">
+          <stop offset="0" stop-color="#9a8ae8" stop-opacity="0.05"/>
+          <stop offset="1" stop-color="#9a8ae8" stop-opacity="0.5"/>
+        </linearGradient>
+      </defs>
+
+      <!-- column headers -->
+      <text x="120" y="22" text-anchor="middle" fill="#3a5a38" font-size="9" letter-spacing="2">INGESTION</text>
+      <text x="430" y="22" text-anchor="middle" fill="#3a5a38" font-size="9" letter-spacing="2">INFERENCE</text>
+      <text x="780" y="22" text-anchor="middle" fill="#3a5a38" font-size="9" letter-spacing="2">OUTPUT</text>
+      <line x1="40" y1="32" x2="200" y2="32" stroke="#1e2e1d" stroke-width="0.5"/>
+      <line x1="350" y1="32" x2="510" y2="32" stroke="#1e2e1d" stroke-width="0.5"/>
+      <line x1="700" y1="32" x2="860" y2="32" stroke="#1e2e1d" stroke-width="0.5"/>
+
+      <!-- Ingestion nodes (left column) -->
+      <g>
+        <rect x="40" y="60" width="170" height="48" rx="3" fill="#0d160c" stroke="#3a5a38" stroke-width="0.7"/>
+        <text x="50" y="80" fill="#9ed855" font-size="10.5" font-style="italic" font-family="Cormorant Garamond, serif">◉ Satellite</text>
+        <text x="50" y="96" fill="#6a8a68" font-size="8">Sentinel-2 · Landsat 9</text>
+        <text x="50" y="106" fill="#3a5a38" font-size="6.5" letter-spacing="1">10–30m · 5d revisit</text>
+      </g>
+      <g>
+        <rect x="40" y="125" width="170" height="48" rx="3" fill="#0d160c" stroke="#6ab4e8" stroke-width="0.7"/>
+        <text x="50" y="145" fill="#6ab4e8" font-size="10.5" font-style="italic" font-family="Cormorant Garamond, serif">◈ Aerial Drone</text>
+        <text x="50" y="161" fill="#6a8a68" font-size="8">LiDAR · multispectral · thermal</text>
+        <text x="50" y="171" fill="#3a5a38" font-size="6.5" letter-spacing="1">10cm · campaign-based</text>
+      </g>
+      <g>
+        <rect x="40" y="190" width="170" height="48" rx="3" fill="#0d160c" stroke="#55c4a0" stroke-width="0.7"/>
+        <text x="50" y="210" fill="#55c4a0" font-size="10.5" font-style="italic" font-family="Cormorant Garamond, serif">◇ Ground Sensors</text>
+        <text x="50" y="226" fill="#6a8a68" font-size="8">soil · salinity · piezometric</text>
+        <text x="50" y="236" fill="#3a5a38" font-size="6.5" letter-spacing="1">site-bound · 15min cadence</text>
+      </g>
+      <g>
+        <rect x="40" y="255" width="170" height="48" rx="3" fill="#0d160c" stroke="#9a8ae8" stroke-width="0.7"/>
+        <text x="50" y="275" fill="#9a8ae8" font-size="10.5" font-style="italic" font-family="Cormorant Garamond, serif">○ Citizen IoT</text>
+        <text x="50" y="291" fill="#6a8a68" font-size="8">repurposed phones — mic, cam, IMU</text>
+        <text x="50" y="301" fill="#3a5a38" font-size="6.5" letter-spacing="1">distributed · continuous</text>
+      </g>
+      <g>
+        <rect x="40" y="320" width="170" height="48" rx="3" fill="#0d160c" stroke="#c4904a" stroke-width="0.7"/>
+        <text x="50" y="340" fill="#c4904a" font-size="10.5" font-style="italic" font-family="Cormorant Garamond, serif">◐ PhytoFleet</text>
+        <text x="50" y="356" fill="#6a8a68" font-size="8">MOF saturation · contaminant flux</text>
+        <text x="50" y="366" fill="#3a5a38" font-size="6.5" letter-spacing="1">on-treatment in situ</text>
+      </g>
+
+      <!-- Inference (center) -->
+      <g>
+        <rect x="320" y="80" width="240" height="220" rx="4" fill="#0d160c" stroke="#c4b5e0" stroke-width="0.8"/>
+        <text x="440" y="100" text-anchor="middle" fill="#c4b5e0" font-size="11" font-style="italic" font-family="Cormorant Garamond, serif">Bayesian Decision Network</text>
+        <text x="440" y="114" text-anchor="middle" fill="#6a8a68" font-size="7" letter-spacing="1">probabilistic graph · 60+ variables</text>
+
+        <!-- inner Bayesian sketch -->
+        <g transform="translate(340,128)">
+          <!-- evidence nodes (top row) -->
+          <circle cx="20" cy="14" r="9" fill="#1a2a19" stroke="#9ed855" stroke-width="0.8"/>
+          <circle cx="68" cy="14" r="9" fill="#1a2a19" stroke="#6ab4e8" stroke-width="0.8"/>
+          <circle cx="116" cy="14" r="9" fill="#1a2a19" stroke="#55c4a0" stroke-width="0.8"/>
+          <circle cx="164" cy="14" r="9" fill="#1a2a19" stroke="#9a8ae8" stroke-width="0.8"/>
+          <circle cx="200" cy="14" r="9" fill="#1a2a19" stroke="#c4904a" stroke-width="0.8"/>
+
+          <!-- mid latent nodes -->
+          <circle cx="44" cy="68" r="11" fill="#1a2a19" stroke="#c8a96e" stroke-width="0.9"/>
+          <text x="44" y="71" text-anchor="middle" fill="#c8a96e" font-size="6.5" font-style="italic" font-family="Cormorant Garamond, serif">hydro</text>
+          <circle cx="100" cy="68" r="11" fill="#1a2a19" stroke="#c8a96e" stroke-width="0.9"/>
+          <text x="100" y="71" text-anchor="middle" fill="#c8a96e" font-size="6.5" font-style="italic" font-family="Cormorant Garamond, serif">soil</text>
+          <circle cx="156" cy="68" r="11" fill="#1a2a19" stroke="#c8a96e" stroke-width="0.9"/>
+          <text x="156" y="71" text-anchor="middle" fill="#c8a96e" font-size="6.5" font-style="italic" font-family="Cormorant Garamond, serif">veg</text>
+
+          <!-- output nodes -->
+          <circle cx="56" cy="130" r="13" fill="#1a1325" stroke="#c4b5e0" stroke-width="1"/>
+          <text x="56" y="133" text-anchor="middle" fill="#c4b5e0" font-size="6.5" font-style="italic" font-family="Cormorant Garamond, serif">risk</text>
+          <circle cx="144" cy="130" r="13" fill="#1a1325" stroke="#c4b5e0" stroke-width="1"/>
+          <text x="144" y="133" text-anchor="middle" fill="#c4b5e0" font-size="6.5" font-style="italic" font-family="Cormorant Garamond, serif">zone</text>
+
+          <!-- edges (selected) -->
+          <g stroke="#3a5a38" stroke-width="0.5" fill="none">
+            <path d="M20 23 L40 58"/>
+            <path d="M68 23 L48 58"/>
+            <path d="M68 23 L96 58"/>
+            <path d="M116 23 L100 58"/>
+            <path d="M116 23 L152 58"/>
+            <path d="M164 23 L156 58"/>
+            <path d="M200 23 L160 58"/>
+            <path d="M44 78 L54 118"/>
+            <path d="M100 78 L60 120"/>
+            <path d="M100 78 L140 120"/>
+            <path d="M156 78 L146 120"/>
+          </g>
+        </g>
+
+        <text x="440" y="285" text-anchor="middle" fill="#3a5a38" font-size="6.5" letter-spacing="1.5">EVIDENCE · LATENT · OUTPUT</text>
+      </g>
+
+      <!-- Output nodes (right) -->
+      <g>
+        <rect x="680" y="60" width="200" height="42" rx="3" fill="#0d160c" stroke="#c4b5e0" stroke-width="0.7"/>
+        <text x="690" y="78" fill="#c4b5e0" font-size="10" font-style="italic" font-family="Cormorant Garamond, serif">↻ Predictive Forecast</text>
+        <text x="690" y="92" fill="#6a8a68" font-size="7">flood · drought · ecosystem state</text>
+      </g>
+      <g>
+        <rect x="680" y="118" width="200" height="42" rx="3" fill="#0d160c" stroke="#c4b5e0" stroke-width="0.7"/>
+        <text x="690" y="136" fill="#c4b5e0" font-size="10" font-style="italic" font-family="Cormorant Garamond, serif">↻ DAPP / PPPP Sim</text>
+        <text x="690" y="150" fill="#6a8a68" font-size="7">scenario branching · policy triggers</text>
+      </g>
+      <g>
+        <rect x="680" y="176" width="200" height="42" rx="3" fill="#0d160c" stroke="#c4b5e0" stroke-width="0.7"/>
+        <text x="690" y="194" fill="#c4b5e0" font-size="10" font-style="italic" font-family="Cormorant Garamond, serif">↻ Adaptive Zoning</text>
+        <text x="690" y="208" fill="#6a8a68" font-size="7">parcel-resolution recommendations</text>
+      </g>
+      <g>
+        <rect x="680" y="234" width="200" height="42" rx="3" fill="#0d160c" stroke="#c4b5e0" stroke-width="0.7"/>
+        <text x="690" y="252" fill="#c4b5e0" font-size="10" font-style="italic" font-family="Cormorant Garamond, serif">↻ Insurance Pricing</text>
+        <text x="690" y="266" fill="#6a8a68" font-size="7">RLP correlation · rate buffer signal</text>
+      </g>
+      <g>
+        <rect x="680" y="292" width="200" height="42" rx="3" fill="#0d160c" stroke="#c4b5e0" stroke-width="0.7"/>
+        <text x="690" y="310" fill="#c4b5e0" font-size="10" font-style="italic" font-family="Cormorant Garamond, serif">↻ Carbon / ESG Ledger</text>
+        <text x="690" y="324" fill="#6a8a68" font-size="7">blue-carbon attribution per node</text>
+      </g>
+
+      <!-- Flow lines: ingestion → inference -->
+      <g fill="none" stroke-width="1.2">
+        <path d="M210 84 C 260 84, 270 150, 320 168" stroke="url(#flow1)"/>
+        <path d="M210 149 C 260 149, 270 170, 320 178" stroke="url(#flow2)"/>
+        <path d="M210 214 C 260 214, 270 190, 320 190" stroke="url(#flow3)"/>
+        <path d="M210 279 C 260 279, 270 210, 320 200" stroke="url(#flow4)"/>
+        <path d="M210 344 C 260 344, 270 230, 320 212" stroke="#c4904a" stroke-opacity="0.4"/>
+      </g>
+
+      <!-- Flow lines: inference → output -->
+      <g fill="none" stroke="#c4b5e0" stroke-opacity="0.35" stroke-width="1">
+        <path d="M560 168 C 620 168, 630 81, 680 81"/>
+        <path d="M560 178 C 620 178, 630 139, 680 139"/>
+        <path d="M560 190 C 620 190, 630 197, 680 197"/>
+        <path d="M560 202 C 620 202, 630 255, 680 255"/>
+        <path d="M560 215 C 620 215, 630 313, 680 313"/>
+      </g>
+    </svg>
+    <div class="viz-cap">A federated mesh: heterogeneous ingestion, probabilistic fusion, multi-surface output. Bayesian
+      structure makes the model auditable — every output is conditional on stated evidence, and uncertainty is propagated, not hidden.</div>
+  </div>
+
+  <div class="sl"><span class="sl-n">B.</span> The citizen-IoT layer · billions of phones, already manufactured</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-l">THE INSIGHT</div>
+      <div class="card-t">A decommissioned smartphone is a 6-sensor instrument.</div>
+      <div class="card-b">
+        Every retired phone carries a microphone array, a 12MP camera, an IMU (accelerometer + gyro + magnetometer),
+        a barometer, GPS, and a temperature die. Globally, <b>~5.3 billion units</b> are decommissioned per year — manufactured
+        electronics whose embodied carbon has already been paid. The citizen-IoT layer reframes these as
+        <b>distributed acoustic + visual + barometric nodes</b>, deployed in mesh density across coastal sites at marginal
+        cost-per-node approaching free.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-l">WHAT IT MEASURES</div>
+      <div class="card-t">Phenology, hydrology, acoustics, weather.</div>
+      <div class="card-b">
+        <b>Audio:</b> bird call density (biodiversity proxy), insect chorus (pollinator activity), water flow,
+        wind events.<br>
+        <b>Vision:</b> phenological state, canopy density change, water level (waterline detection).<br>
+        <b>Barometer + IMU:</b> storm-front passage, vibration from infrastructure stress, soil settlement.<br>
+        <b>GPS + ambient:</b> air temperature, humidity, position fix for mesh self-localization.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-l">DEPLOYMENT MODEL</div>
+    <div class="card-t">A citizen app, not a hardware product.</div>
+    <div class="card-b">
+      A municipal partner, NGO, or property owner sponsors a node site. Volunteers or pilot residents
+      install the SymbiOS sensor app on a retired phone, connect it to power, and place it under weatherproof
+      housing (~$8 in materials). The phone joins the mesh, contributes data, and earns the household
+      <b>carbon credits, insurance rate buffers, or property-level resilience scores</b> through the AUXEN overlay.
+      The model is structurally cheap — the hardware exists, the user base is active, and incentives align
+      across the stakeholder map.
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">C.</span> The Bayesian inference layer · why probabilistic, not deterministic</div>
+  <p class="desc">
+    A Bayesian decision network encodes the conditional dependencies between sensed evidence (the
+    ingestion layer), latent ecological variables (hydrology, soil chemistry, vegetation viability),
+    and downstream outputs (risk, zoning recommendation, insurance signal). Two properties matter for
+    coastal resilience: <b>uncertainty propagates</b> — every output carries calibrated confidence
+    bounds, so insurers and planners can price risk honestly — and <b>missing evidence degrades
+    gracefully</b> — when a sensor goes offline, the network falls back on priors rather than failing.
+    This is the inverse of black-box ML; this is auditable, scientifically defensible inference.
+  </p>
+
+  <div class="matrix c3">
+    <div class="m-h">EVIDENCE NODE</div>
+    <div class="m-h">DEPENDS ON</div>
+    <div class="m-h">INFORMS</div>
+
+    <div class="m-c row-h">Local hydrology</div>
+    <div class="m-c">satellite SAR, ground piezometric, drone DEM, climate priors</div>
+    <div class="m-c">flood risk, vegetation viability, MOF deployment density</div>
+
+    <div class="m-c row-h">Soil contamination</div>
+    <div class="m-c">historic land use, citizen-IoT vision (industrial proximity), PhytoFleet MOF saturation</div>
+    <div class="m-c">remediation priority, plant-species selection, insurance overlay</div>
+
+    <div class="m-c row-h">Vegetation viability</div>
+    <div class="m-c">satellite NDVI, drone multispectral, citizen audio (biodiversity), VANA plant database</div>
+    <div class="m-c">carbon attribution, biodiversity score, blue-carbon ESG ledger</div>
+
+    <div class="m-c row-h">Composite risk</div>
+    <div class="m-c">all of the above + DAPP triggers + scenario branches (PPPP)</div>
+    <div class="m-c">zoning recommendation, insurance rate buffer, retrofit ROI</div>
+  </div>
+
+  <div class="parent-footer">
+    <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
+    <div class="pf-meta">© 2026 · ARCHITECTURE · Eco-Sensing Mesh + Bayesian Inference Layer</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PHYTOREMEDIATION
+══════════════════════════════════════════════════════════════════ -->
+<div id="phyto" class="panel">
+
+  <div class="tags">
+    <span class="tag tag-a">PhytoFleet · Phase 2</span>
+    <span class="tag tag-g">MOF-Integrated Phytoremediation</span>
+    <span class="tag tag-t">Sensing-as-Treatment</span>
+  </div>
+
+  <p class="eyebrow">03 · PHYTOREMEDIATION</p>
+  <h1 style="font-size:clamp(2.2rem,7vw,3.6rem)">Treatment as Sensor.</h1>
+  <p class="tagline">"A barrier that <em>knows</em> what it has captured."</p>
+
+  <p class="desc">
+    Conventional phytoremediation works — slowly, opaquely, and at the mercy of which species happen
+    to be planted. <b>PhytoFleet</b> couples plant biology to <b>metal-organic frameworks (MOFs)</b> —
+    crystalline nanoporous materials with tunable affinity for specific contaminants — and bonds the composite
+    into a bio-substrate that serves three functions at once: <em>physical barrier, contaminant capture,
+    and chemical sensor</em>. Saturation state is read off the MOF, so the unit reports its own performance
+    in real time and feeds back into the AUXLOGRAM mesh.
+  </p>
+
+  <div class="sl"><span class="sl-n">A.</span> The chemistry · why MOFs change the curve</div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-l">WHAT THEY ARE</div>
+      <div class="card-t">Metal-organic frameworks.</div>
+      <div class="card-b">
+        Crystalline materials formed by metal ion clusters connected by organic linker molecules — the result
+        is a highly porous, tunable lattice with internal surface areas exceeding <b>7,000 m²/g</b>.
+        By choosing the metal cluster and the linker, the lattice can be engineered to selectively bind
+        specific molecules: PFAS, heavy metals (Cd, Pb, Hg), nitrates, hydrocarbons, even atmospheric CO₂.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-l">WHY BIO-COUPLED</div>
+      <div class="card-t">Living substrate · MOF substrate.</div>
+      <div class="card-b">
+        MOFs alone are powdery and require engineered housings. Bonded into <b>chitosan / cellulose / mycelium
+        scaffolds</b>, they become biocompatible matrices that plant roots colonize. Roots maintain
+        hydration, deliver microbial communities, and (critically) translocate captured ions into vacuoles
+        for periodic above-ground harvest. The plant becomes a <em>renewable extraction pump</em>;
+        the MOF becomes a <em>high-affinity buffer</em>.
+      </div>
+    </div>
+  </div>
+
+  <div class="viz">
+    <div class="viz-l">FIG. P.1 — MOF / PLANT / SUBSTRATE INTEGRATION (CROSS-SECTION)</div>
+    <svg viewBox="0 0 880 320" style="width:100%;height:auto;font-family:'DM Mono',monospace">
+      <!-- ground line -->
+      <line x1="20" y1="140" x2="860" y2="140" stroke="#2a4a28" stroke-width="0.8" stroke-dasharray="2 4"/>
+      <text x="30" y="135" fill="#3a5a38" font-size="8" letter-spacing="1">SURFACE</text>
+
+      <!-- plant -->
+      <g transform="translate(220,30)">
+        <!-- canopy -->
+        <ellipse cx="0" cy="40" rx="60" ry="30" fill="#1a3a18" fill-opacity="0.5" stroke="#7cb342" stroke-width="0.8"/>
+        <ellipse cx="-20" cy="55" rx="42" ry="22" fill="#1a3a18" fill-opacity="0.4" stroke="#7cb342" stroke-width="0.7"/>
+        <ellipse cx="22" cy="58" rx="38" ry="20" fill="#1a3a18" fill-opacity="0.4" stroke="#7cb342" stroke-width="0.7"/>
+        <!-- stem -->
+        <line x1="0" y1="80" x2="0" y2="110" stroke="#5a4a30" stroke-width="2.5"/>
+        <text x="78" y="48" fill="#9ed855" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">↑ harvest cycle</text>
+        <text x="78" y="60" fill="#6a8a68" font-size="6.5">translocated ions in tissue</text>
+
+        <!-- root system into MOF zone -->
+        <g stroke="#5a4a30" stroke-width="1.4" fill="none">
+          <path d="M0 110 L0 145"/>
+          <path d="M0 130 L-15 165 L-22 195"/>
+          <path d="M0 130 L18 162 L26 192"/>
+          <path d="M0 140 L-32 175 L-50 215"/>
+          <path d="M0 140 L34 180 L52 218"/>
+          <path d="M-15 165 L-30 195"/>
+          <path d="M18 162 L34 192"/>
+        </g>
+        <!-- root hairs -->
+        <g stroke="#9ed855" stroke-width="0.5" fill="none" opacity="0.7">
+          <path d="M-22 195 L-30 205"/><path d="M-22 195 L-15 208"/>
+          <path d="M26 192 L34 202"/><path d="M26 192 L18 205"/>
+          <path d="M-50 215 L-60 225"/><path d="M52 218 L60 226"/>
+        </g>
+      </g>
+
+      <!-- MOF zone -->
+      <g>
+        <rect x="60" y="145" width="780" height="125" rx="3" fill="#0a1208" stroke="#c8a96e" stroke-width="0.7"/>
+        <text x="450" y="160" text-anchor="middle" fill="#c8a96e" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">MOF-Integrated Bio-Substrate</text>
+        <text x="450" y="173" text-anchor="middle" fill="#6a8a68" font-size="7" letter-spacing="0.8">chitosan + cellulose scaffold · embedded MOF crystals · porosity ≈ 7,000 m²/g</text>
+
+        <!-- MOF lattice grid -->
+        <g stroke="#c8a96e" stroke-opacity="0.45" stroke-width="0.5" fill="none">
+          <g transform="translate(120,200)">
+            <!-- lattice unit cells -->
+            <pattern id="moflat" x="0" y="0" width="32" height="22" patternUnits="userSpaceOnUse">
+              <rect x="0" y="0" width="32" height="22" fill="none"/>
+              <circle cx="0" cy="0" r="2" fill="#c8a96e" fill-opacity="0.7"/>
+              <circle cx="16" cy="11" r="2" fill="#c8a96e" fill-opacity="0.7"/>
+              <circle cx="32" cy="0" r="2" fill="#c8a96e" fill-opacity="0.7"/>
+              <circle cx="0" cy="22" r="2" fill="#c8a96e" fill-opacity="0.7"/>
+              <circle cx="32" cy="22" r="2" fill="#c8a96e" fill-opacity="0.7"/>
+              <line x1="0" y1="0" x2="16" y2="11" stroke="#c8a96e" stroke-opacity="0.4" stroke-width="0.5"/>
+              <line x1="32" y1="0" x2="16" y2="11" stroke="#c8a96e" stroke-opacity="0.4" stroke-width="0.5"/>
+              <line x1="0" y1="22" x2="16" y2="11" stroke="#c8a96e" stroke-opacity="0.4" stroke-width="0.5"/>
+              <line x1="32" y1="22" x2="16" y2="11" stroke="#c8a96e" stroke-opacity="0.4" stroke-width="0.5"/>
+            </pattern>
+            <rect x="0" y="0" width="650" height="44" fill="url(#moflat)"/>
+          </g>
+        </g>
+
+        <!-- captured contaminant ions -->
+        <g>
+          <circle cx="180" cy="215" r="3" fill="#c45a3a"/>
+          <circle cx="250" cy="225" r="3" fill="#9a8ae8"/>
+          <circle cx="320" cy="210" r="3" fill="#c45a3a"/>
+          <circle cx="400" cy="230" r="3" fill="#6ab4e8"/>
+          <circle cx="470" cy="218" r="3" fill="#9a8ae8"/>
+          <circle cx="540" cy="225" r="3" fill="#c45a3a"/>
+          <circle cx="610" cy="215" r="3" fill="#6ab4e8"/>
+          <circle cx="680" cy="228" r="3" fill="#9a8ae8"/>
+          <circle cx="750" cy="220" r="3" fill="#c45a3a"/>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(580,250)">
+          <circle cx="0" cy="0" r="3" fill="#c45a3a"/><text x="8" y="3" fill="#c45a3a" font-size="6.5">Pb · Cd · heavy metals</text>
+          <circle cx="0" cy="12" r="3" fill="#9a8ae8"/><text x="8" y="15" fill="#9a8ae8" font-size="6.5">PFAS / nitrates</text>
+          <circle cx="0" cy="24" r="3" fill="#6ab4e8"/><text x="8" y="27" fill="#6ab4e8" font-size="6.5">hydrocarbons</text>
+        </g>
+      </g>
+
+      <!-- contaminated influent arrow -->
+      <g>
+        <text x="640" y="100" fill="#c45a3a" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">contaminated influent</text>
+        <text x="640" y="113" fill="#6a8a68" font-size="6.5">tidal flux · stormwater · groundwater</text>
+        <path d="M620 88 L580 130" stroke="#c45a3a" stroke-width="1" stroke-dasharray="2 3" fill="none" marker-end="url(#arrIn)"/>
+      </g>
+      <!-- treated effluent arrow -->
+      <g>
+        <text x="500" y="290" fill="#9ed855" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">treated effluent</text>
+        <text x="500" y="303" fill="#6a8a68" font-size="6.5">contaminant-stripped water back to flux</text>
+        <path d="M580 280 L640 250" stroke="#9ed855" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+      </g>
+
+      <!-- saturation sensor readout -->
+      <g transform="translate(60,30)">
+        <rect x="0" y="0" width="120" height="60" rx="3" fill="#0d160c" stroke="#55c4a0" stroke-width="0.7"/>
+        <text x="10" y="14" fill="#55c4a0" font-size="6.5" letter-spacing="0.6">↻ MOF SATURATION</text>
+        <text x="10" y="30" fill="#c8c0b0" font-size="8" font-style="italic" font-family="Cormorant Garamond, serif">62% · Pb-affine</text>
+        <rect x="10" y="38" width="100" height="6" rx="1" fill="#1a2a19"/>
+        <rect x="10" y="38" width="62" height="6" rx="1" fill="#55c4a0" fill-opacity="0.8"/>
+        <text x="10" y="55" fill="#3a5a38" font-size="6">replace cycle: 18d</text>
+      </g>
+
+      <defs>
+        <marker id="arrIn" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+          <path d="M0 0 L6 3 L0 6 z" fill="#c45a3a"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="viz-cap">Plant + MOF + bio-substrate as one integrated unit. The MOF lattice captures specific ion classes; plant
+      roots translocate ions for periodic harvest; saturation is read electrochemically and reported to the mesh — the unit
+      <em>knows</em> when it is full and signals its own replacement.</div>
+  </div>
+
+  <div class="sl"><span class="sl-n">B.</span> The hardware family · three deployment geometries</div>
+
+  <div class="three-col">
+    <div class="card">
+      <div class="card-l">TYPOLOGY · ONE</div>
+      <div class="card-t">Tidal blocks.</div>
+      <div class="card-b">
+        Cast-form MOF-bonded substrate blocks placed along the high-tide interface. Function as
+        <b>coastal surge barriers + contaminant capture</b>. Self-stabilizing keyed geometry, biocompatible for
+        oyster + mangrove colonization. Pilot site: Rumney Marsh, Bangkok delta.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-l">TYPOLOGY · TWO</div>
+      <div class="card-t">Phyto-cisterns.</div>
+      <div class="card-b">
+        Buried micro-site stormwater treatment vessels — modular, parcel-scale. Stormwater enters, passes through
+        a MOF + plant root mat, exits remediated. <b>Saturation monitored; replacement scheduled per AUXLOGRAM
+        readout</b>. Insurance-qualifying retrofit.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-l">TYPOLOGY · THREE</div>
+      <div class="card-t">Phyto-fleet eco-machines.</div>
+      <div class="card-b">
+        Mobile / barge-mounted MOF-plant arrays for active deployment in contamination events —
+        <b>oil spills, algal blooms, sewage discharges, agricultural runoff plumes</b>. Sensor-equipped;
+        report capture rate and remediation footprint live.
+      </div>
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">C.</span> Target contaminants · what the system removes</div>
+
+  <div class="matrix c4">
+    <div class="m-h">CONTAMINANT CLASS</div>
+    <div class="m-h">MOF FAMILY</div>
+    <div class="m-h">PLANT PARTNER (SE ASIA / NEW ENGLAND)</div>
+    <div class="m-h">SOURCE / RELEVANCE</div>
+
+    <div class="m-c row-h">Heavy metals · Pb, Cd, Hg, As</div>
+    <div class="m-c">UiO-66-NH₂ · ZIF-8 (carboxyl, amine functional)</div>
+    <div class="m-c">Vetiver · Sunflower · Spartina · Mangrove</div>
+    <div class="m-c">Industrial legacy · coastal sediment · brownfield</div>
+
+    <div class="m-c row-h">PFAS · "forever chemicals"</div>
+    <div class="m-c">MOF-808 · MIL-101(Cr) (fluorophilic pore)</div>
+    <div class="m-c">Phragmites · Typha (with rhizosphere microbes)</div>
+    <div class="m-c">Firefighting foam · landfill leachate · airport sites</div>
+
+    <div class="m-c row-h">Nitrates · phosphates · agricultural runoff</div>
+    <div class="m-c">HKUST-1 · UiO-66-SO₃H</div>
+    <div class="m-c">Cyperus papyrus · Eichhornia · Typha</div>
+    <div class="m-c">Coastal eutrophication · algal bloom precursor</div>
+
+    <div class="m-c row-h">Petroleum hydrocarbons · BTEX</div>
+    <div class="m-c">MIL-53(Al) · IRMOF-1 (hydrophobic pore)</div>
+    <div class="m-c">Casuarina · Salix · Populus</div>
+    <div class="m-c">Port-area runoff · vehicle infiltration · spill response</div>
+
+    <div class="m-c row-h">Atmospheric CO₂ · point-source</div>
+    <div class="m-c">Mg-MOF-74 · CALF-20</div>
+    <div class="m-c">Coupled to mangrove blue-carbon stock</div>
+    <div class="m-c">ESG ledger attribution · carbon credit instrument</div>
+  </div>
+
+  <p class="desc" style="font-size:.58rem;color:var(--dim);margin-top:.5rem">
+    Note: MOF selections drawn from published literature; specific compositional engineering and
+    biocomposite integration are part of the provisional patent scope.
+  </p>
+
+  <div class="parent-footer">
+    <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
+    <div class="pf-meta">© 2026 · PHYTOREMEDIATION · MOF + Plant + Bio-Substrate Integration</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     AUXEN
+══════════════════════════════════════════════════════════════════ -->
+<div id="auxen" class="panel">
+
+  <div class="tags">
+    <span class="tag tag-p">AUXEN · Phase 3</span>
+    <span class="tag tag-g">Adaptive Policy + Insurance Layer</span>
+    <span class="tag tag-b">Long-Term Moat</span>
+  </div>
+
+  <p class="eyebrow">04 · AUXEN</p>
+  <h1 style="font-size:clamp(2.2rem,7vw,3.6rem)">Pricing Adaptation.</h1>
+  <p class="tagline">"Don't design yourself <em>into a box</em>."</p>
+
+  <p class="desc">
+    AUXEN is the decision surface. It takes the sensing mesh's probabilistic forecasts and the
+    PhytoFleet deployment record and produces the three outputs that planners, insurers, and property
+    owners actually transact on: <b>scenario pathways (DAPP), futures (PPPP), and prices
+    (RLP-correlated insurance buffers + adaptive zoning recommendations)</b>. The technical
+    edge is not the data — it's the model that converts uncertain ecological signal into
+    defensible financial and regulatory instruments.
+  </p>
+
+  <div class="sl"><span class="sl-n">A.</span> DAPP · Dynamic Adaptive Policy Pathways</div>
+
+  <p class="desc">
+    Borrowed from Dutch flood-management literature (Haasnoot et al.), DAPP encodes adaptation as a
+    <b>branching decision tree triggered by threshold crossings</b> — flood elevation, repetitive-loss
+    rate, sea-level rise, vegetation collapse, MOF saturation. Each branch is a policy pathway with
+    its own cost, time-to-implement, and reversibility profile. AUXEN simulates the tree against the
+    sensing mesh's forward forecasts and surfaces which pathway you are on, which trigger is closest,
+    and what the next branch costs.
+  </p>
+
+  <div class="viz">
+    <div class="viz-l">FIG. AX.1 — DAPP DECISION TREE — RUMNEY MARSH (BOSTON) · 2025–2080</div>
+    <svg viewBox="0 0 900 320" style="width:100%;height:auto;font-family:'DM Mono',monospace">
+      <!-- timeline -->
+      <line x1="60" y1="290" x2="860" y2="290" stroke="#3a5a38" stroke-width="0.6"/>
+      <g fill="#3a5a38" font-size="7" letter-spacing="1">
+        <text x="60" y="305">2025</text>
+        <text x="220" y="305">2040</text>
+        <text x="400" y="305">2055</text>
+        <text x="580" y="305">2070</text>
+        <text x="780" y="305">2080</text>
+      </g>
+
+      <!-- Pathway A : status quo -->
+      <g>
+        <path d="M60 80 L200 80 L320 100 L460 130 L600 170 L780 220" fill="none" stroke="#c45a3a" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text x="68" y="74" fill="#c45a3a" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">Pathway A · Status Quo</text>
+        <text x="68" y="86" fill="#6a8a68" font-size="6.5">FEMA flood maps · 100-yr storm only</text>
+        <circle cx="320" cy="100" r="4" fill="#c45a3a"/>
+        <text x="328" y="98" fill="#c45a3a" font-size="6.5">trigger missed · 2045 SLR &gt; 0.4m</text>
+      </g>
+
+      <!-- Pathway B : retreat -->
+      <g>
+        <path d="M60 130 L200 130 L320 140 L460 170 L600 200" fill="none" stroke="#9a8ae8" stroke-width="1.6"/>
+        <text x="68" y="124" fill="#9a8ae8" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">Pathway B · Managed Retreat</text>
+        <text x="68" y="136" fill="#6a8a68" font-size="6.5">strategic buyout · zoning rollback</text>
+        <circle cx="460" cy="170" r="4" fill="#9a8ae8"/>
+        <text x="468" y="168" fill="#9a8ae8" font-size="6.5">trigger: insurance &gt; 4× baseline</text>
+      </g>
+
+      <!-- Pathway C : hybrid -->
+      <g>
+        <path d="M60 180 L200 180 L320 175 L460 165 L600 155 L780 150" fill="none" stroke="#55c4a0" stroke-width="1.8"/>
+        <text x="68" y="174" fill="#55c4a0" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">Pathway C · Hybrid · PhytoFleet + Soft Defense</text>
+        <text x="68" y="186" fill="#6a8a68" font-size="6.5">tidal blocks · MOF cisterns · mangrove restoration</text>
+        <circle cx="220" cy="180" r="4" fill="#55c4a0"/>
+        <text x="226" y="194" fill="#55c4a0" font-size="6.5">trigger: vegetation viability index &lt; 0.7</text>
+        <circle cx="460" cy="165" r="4" fill="#55c4a0"/>
+        <text x="466" y="159" fill="#55c4a0" font-size="6.5">trigger: MOF saturation 80%</text>
+      </g>
+
+      <!-- Pathway D : engineered -->
+      <g>
+        <path d="M60 230 L200 230 L320 235 L460 240 L600 245 L780 250" fill="none" stroke="#c8a96e" stroke-width="1.4"/>
+        <text x="68" y="224" fill="#c8a96e" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">Pathway D · Hard Engineering</text>
+        <text x="68" y="236" fill="#6a8a68" font-size="6.5">seawall · pumps · grey-grey infrastructure</text>
+        <circle cx="600" cy="245" r="4" fill="#c8a96e"/>
+        <text x="606" y="243" fill="#c8a96e" font-size="6.5">cost-prohibitive after 2060</text>
+      </g>
+
+      <!-- recommended overlay -->
+      <g>
+        <rect x="660" y="34" width="220" height="40" rx="3" fill="#0a201c" stroke="#55c4a0" stroke-width="0.8"/>
+        <text x="670" y="50" fill="#55c4a0" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">AUXEN RECOMMENDED</text>
+        <text x="670" y="64" fill="#c8c0b0" font-size="7">Pathway C · 28% cost · 71% efficacy</text>
+      </g>
+    </svg>
+    <div class="viz-cap">Four pathways under 2050–2080 sea-level-rise scenarios. AUXEN simulates each against the live mesh
+      forecast and surfaces both the current pathway and the next-trigger horizon. The hybrid (Pathway C) is recommended
+      for Rumney Marsh — same site logic transposes to Bangkok with different species and tidal regimes.</div>
+  </div>
+
+  <div class="sl"><span class="sl-n">B.</span> PPPP · Present / Probable / Plausible / Possible / Preferable</div>
+
+  <p class="desc">
+    A speculative-futures framework — originally Dunne &amp; Raby (<em>Speculative Everything</em>, 2013),
+    adapted for climate adaptation by Kira Clingen — that refuses the false certainty of a single forecast.
+    Each site is rendered under <b>five concurrent futures</b>, each design proposition serving as a foil for the others.
+    The user sees not <em>"the answer"</em> but the <em>cone of consequences</em> their site is moving through.
+  </p>
+
+  <div class="viz">
+    <div class="viz-l">FIG. AX.2 — PPPP SCENARIO CONE · BANGKOK COASTAL ZONE · 2070</div>
+    <svg viewBox="0 0 800 320" style="width:100%;height:auto;font-family:'DM Mono',monospace">
+      <!-- origin -->
+      <circle cx="80" cy="170" r="5" fill="#c8c0b0"/>
+      <text x="50" y="200" fill="#c8c0b0" font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">Present</text>
+      <text x="50" y="212" fill="#3a5a38" font-size="6.5" letter-spacing="1">2026</text>
+
+      <!-- cone slices -->
+      <path d="M80 170 L700 30 L700 60 z" fill="#c45a3a" fill-opacity="0.15" stroke="#c45a3a" stroke-width="0.6"/>
+      <path d="M80 170 L700 80 L700 120 z" fill="#c8a96e" fill-opacity="0.18" stroke="#c8a96e" stroke-width="0.6"/>
+      <path d="M80 170 L700 145 L700 195 z" fill="#9ed855" fill-opacity="0.2" stroke="#9ed855" stroke-width="0.7"/>
+      <path d="M80 170 L700 220 L700 260 z" fill="#6ab4e8" fill-opacity="0.18" stroke="#6ab4e8" stroke-width="0.6"/>
+      <path d="M80 170 L700 280 L700 310 z" fill="#9a8ae8" fill-opacity="0.15" stroke="#9a8ae8" stroke-width="0.6"/>
+
+      <!-- labels -->
+      <g font-size="9" font-style="italic" font-family="Cormorant Garamond, serif">
+        <text x="710" y="48" fill="#c45a3a">Possible · catastrophic</text>
+        <text x="710" y="102" fill="#c8a96e">Plausible · unmitigated</text>
+        <text x="710" y="174" fill="#9ed855">Probable · adapted</text>
+        <text x="710" y="244" fill="#6ab4e8">Preferable · regenerative</text>
+        <text x="710" y="298" fill="#9a8ae8">Speculative · post-coastal</text>
+      </g>
+
+      <!-- narrative annotations -->
+      <g font-size="6.5" fill="#6a8a68">
+        <text x="350" y="55">2m+ SLR · displacement</text>
+        <text x="350" y="105">1.2m SLR · partial loss</text>
+        <text x="350" y="175">0.8m SLR · phyto + retreat</text>
+        <text x="350" y="245">0.6m SLR · restored deltas</text>
+        <text x="350" y="305">post-grid floating typologies</text>
+      </g>
+
+      <!-- AUXEN recommended slice highlight -->
+      <g>
+        <text x="80" y="30" fill="#9ed855" font-size="7.5" letter-spacing="1">↓ AUXEN-RECOMMENDED CORRIDOR</text>
+        <path d="M80 170 L700 145 L700 220 z" fill="none" stroke="#9ed855" stroke-width="1.2"/>
+      </g>
+    </svg>
+    <div class="viz-cap">Five futures held in simultaneous view. AUXEN biases recommendations toward the <em>Probable–Preferable</em>
+      corridor, which is achievable with current PhytoFleet hardware, and uses the <em>Possible</em> slice as a stress-test against
+      design propositions that fail catastrophically under that branch.</div>
+  </div>
+
+  <div class="sl"><span class="sl-n">C.</span> The insurance overlay · RLP correlation as primary signal</div>
+
+  <p class="desc">
+    Insurers price coastal risk on backward-looking <b>Repetitive Loss Property (RLP)</b> data —
+    properties that have filed multiple flood claims. The signal arrives late and is geographically coarse.
+    AUXEN correlates the <em>forward</em> Bayesian risk surface with current and projected RLP densities
+    parcel-by-parcel, generating a forward-looking actuarial layer that insurers can underwrite against.
+    The same layer feeds a <b>rate-buffer mechanism</b> — property owners who deploy PhytoFleet hardware
+    or sponsor citizen-IoT nodes earn measurable premium reductions, indexed to verified site improvement.
+  </p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-l">INSURER VALUE</div>
+      <div class="card-t">Price coastal risk like credit risk.</div>
+      <div class="card-b">
+        Forward-looking loss curves, parcel resolution, conditional confidence bounds, auditable evidence trail
+        per node. The carrier underwrites adaptation, not loss. <b>Same instrument logic that
+        transformed credit pricing in the 1990s — applied to climate.</b>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-l">PROPERTY OWNER VALUE</div>
+      <div class="card-t">Adaptation as a financial instrument.</div>
+      <div class="card-b">
+        Install PhytoFleet → measurable improvement on the verified risk surface → indexed premium reduction.
+        Sponsor a citizen-IoT node → carbon credit + insurance buffer + neighborhood-level resilience score.
+        <b>Hardware investment recovers through pricing, not aesthetics.</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">D.</span> Adaptive zoning · the regulatory output</div>
+
+  <p class="desc">
+    Zoning codes today are static documents written against historical hazard maps. AUXEN's <b>adaptive
+    zoning algorithm</b> produces parcel-resolution recommendations under each PPPP scenario, with
+    DAPP triggers that schedule when zoning should automatically tighten or relax. Output formats target
+    the actual instruments planners use: <b>FEMA Letter of Map Revision (LOMR), municipal overlay districts,
+    transfer-of-development-rights schedules, and buyout-eligibility maps</b>. The model does not replace
+    the planner — it gives them a model-defensible baseline to negotiate from.
+  </p>
+
+  <div class="parent-footer">
+    <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
+    <div class="pf-meta">© 2026 · AUXEN · Adaptive Policy + Insurance + Zoning Overlay</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     PILOT
+══════════════════════════════════════════════════════════════════ -->
+<div id="pilot" class="panel">
+
+  <div class="tags">
+    <span class="tag tag-t">Field Sites · MVP Path</span>
+    <span class="tag tag-a">Rumney Marsh · Bangkok · Axolotl</span>
+    <span class="tag tag-g">Phase 1 → Phase 2</span>
+  </div>
+
+  <p class="eyebrow">05 · PILOT</p>
+  <h1 style="font-size:clamp(2.2rem,7vw,3.6rem)">Three Tracks · One Year.</h1>
+  <p class="tagline">"<em>Strategically</em> coupled to where landscape architects already work."</p>
+
+  <p class="desc">
+    Three pilots, parallel-tracked. Two field sites at opposite ends of the climate-vulnerability spectrum —
+    a <b>New England salt marsh</b> facing repetitive-loss insurance collapse, and a <b>Bangkok coastal
+    development</b> facing subsidence + storm-surge. Plus a <b>distribution channel pilot</b>: the
+    Axolotl plugin, which embeds VANA + XĒN inside Rhino/Grasshopper — the tool every landscape architect
+    already opens at 9am.
+  </p>
+
+  <div class="sl"><span class="sl-n">i.</span> Field Site 01 · Rumney Marsh, Boston</div>
+  <div class="pilot-card green">
+    <div class="pilot-head">
+      <span class="pilot-name">Rumney Marsh</span>
+      <span class="pilot-loc">REVERE / SAUGUS · MASSACHUSETTS · USA</span>
+    </div>
+    <div class="pilot-sub">650-acre Area of Critical Environmental Concern. Adjacent to dense residential parcels in FEMA AE flood zone. Repetitive-loss claims accelerating. <em>The test case for AUXEN's North American insurance overlay.</em></div>
+    <div class="pilot-body">
+      <b>Why here:</b> the marsh is one of two largest salt marshes north of Long Island, sits in a major
+      flyway, and is bordered by neighborhoods with rising NFIP premium pressure. It is the right
+      complexity-to-access ratio for a Phase-1 pilot.
+      <br><br>
+      <b>What gets deployed:</b> (1) ground-sensor array along the marsh-upland transition; (2) citizen-IoT
+      app pilot with a target neighborhood (likely Revere); (3) a 12-month DAPP scenario simulation against
+      Boston Climate Ready inundation projections; (4) a single PhytoFleet phyto-cistern installation
+      at one cooperating property as proof-of-concept.
+      <br><br>
+      <b>Partnerships:</b> Lori Collins (Harvard Resilience Track lead) is the right early channel.
+      Mass DEP, Boston Climate Ready Office, and the Saugus / Revere planning departments are the public-sector targets.
+      MAPC for regional zoning. NFIP / FEMA Region I for the insurance overlay test.
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">ii.</span> Field Site 02 · Bangkok / P Landscape</div>
+  <div class="pilot-card gold">
+    <div class="pilot-head">
+      <span class="pilot-name">Bangkok Coastal Zone</span>
+      <span class="pilot-loc">SAMUT PRAKAN / BANG KHUN THIAN · THAILAND</span>
+    </div>
+    <div class="pilot-sub">2.5cm/year subsidence. Sea-level rise compounding. Monsoon-storm-surge interaction. <em>The test case for tropical PhytoFleet typologies and the SE Asia coastal market.</em></div>
+    <div class="pilot-body">
+      <b>Why here:</b> Bangkok is the most-cited near-term canonical case for coastal urban climate
+      collapse. The vulnerability is severe, the political will is real, and the design-and-construction
+      ecosystem is sophisticated. The luxury-resort layer in particular operates at a price-per-square-meter
+      where adaptation hardware is financially trivial relative to project budgets.
+      <br><br>
+      <b>What gets deployed:</b> tropical species library expansion within VANA (mangrove, nipa palm,
+      casuarina, sea hibiscus, coastal fig); MOF-bonded tidal-block prototype against monsoon
+      surge; PPPP scenario set for 2050 / 2070 SLR under three subsidence trajectories.
+      <br><br>
+      <b>Anchor partner:</b> <b>P Landscape (PLA)</b> — Bangkok-based luxury-resort landscape architecture firm.
+      Founded by <em>Wannaporn "Pui" Phornprapha</em>, Harvard GSD MLA alumna. PLA has had an open
+      <b>Digital Solution Specialist</b> role since late 2025; the VANA module set is effectively a portfolio for it.
+      Engagement model: written agreement for a pilot site partnership, regardless of formal employment outcome.
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">iii.</span> Distribution Pilot · Axolotl plugin</div>
+  <div class="pilot-card purple">
+    <div class="pilot-head">
+      <span class="pilot-name">Axolotl</span>
+      <span class="pilot-loc">RHINOCEROS / GRASSHOPPER · FOOD4RHINO ECOSYSTEM</span>
+    </div>
+    <div class="pilot-sub">VANA's plant intelligence layer + XĒN's generative grammar — inside the tool 80% of landscape architects already use daily. <em>The fast-path MVP for distribution + traction.</em></div>
+    <div class="pilot-body">
+      <b>Why this matters:</b> the field doesn't need another platform to learn. It needs <em>its existing
+      toolchain</em> to become climate-literate. Axolotl ships VANA's plant database as queryable
+      Grasshopper components (filter by salt tolerance, climate zone, ecosystem service), XĒN's grammar
+      as procedural growth nodes, and AUXEN's risk surface as a context-overlay layer for site model imports.
+      <br><br>
+      <b>Why "Axolotl":</b> regenerative species; the GSD's mascot of resilience; reads cleanly in the Rhino plugin
+      taxonomy alongside other animal-named tools (Lunchbox, Anemone, Pufferfish, Kangaroo).
+      <em>USPTO TESS clearance pending — fallback names ready if not available.</em>
+      <br><br>
+      <b>Distribution:</b> Food4Rhino (free tier, ~250K user base); GSD studio integration (direct channel);
+      McNeel community channels (Discourse, Discord). A working v0.1 with five exemplary components is the
+      Phase-1 ship target.
+    </div>
+  </div>
+
+  <div class="sl"><span class="sl-n">iv.</span> 18-month milestone view</div>
+
+  <div class="matrix c4">
+    <div class="m-h">QUARTER</div>
+    <div class="m-h">RUMNEY MARSH</div>
+    <div class="m-h">BANGKOK / PLA</div>
+    <div class="m-h">AXOLOTL</div>
+
+    <div class="m-c row-h">Q3 2026</div>
+    <div class="m-c">Site MOU · sensor array spec</div>
+    <div class="m-c">PLA written agreement · species library expansion</div>
+    <div class="m-c">v0.1 ship · 5 GH components · Food4Rhino listing</div>
+
+    <div class="m-c row-h">Q4 2026</div>
+    <div class="m-c">Sensor install · citizen-IoT app beta · 1 PhytoFleet unit</div>
+    <div class="m-c">Tidal block prototype · monsoon-season data</div>
+    <div class="m-c">v0.2 · AUXEN context overlay · 200+ installs target</div>
+
+    <div class="m-c row-h">Q1 2027</div>
+    <div class="m-c">DAPP scenario report v1 · insurance overlay test</div>
+    <div class="m-c">PPPP scenario set · resort pilot design integration</div>
+    <div class="m-c">v0.3 · paid tier · pro features</div>
+
+    <div class="m-c row-h">Q2 2027</div>
+    <div class="m-c">RLP rate-buffer pilot with NFIP · publication</div>
+    <div class="m-c">PhytoFleet field performance data · ESG ledger</div>
+    <div class="m-c">v1.0 · documented API · 1K+ installs</div>
+  </div>
+
+  <div class="parent-footer">
+    <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
+    <div class="pf-meta">© 2026 · PILOT · Rumney Marsh · Bangkok · Axolotl</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     XĒN
+══════════════════════════════════════════════════════════════════ -->
+<div id="xen" class="panel">
+
+  <div class="tags">
+    <span class="tag tag-b">XĒN · Generative Grammar</span>
+    <span class="tag tag-a">M/V/A-System · 89 specimens</span>
+    <span class="tag tag-g">Companion Module</span>
+  </div>
+
+  <p class="eyebrow">06 · XĒN</p>
+
+  <div class="xen-hero">
+    <div class="xen-glyph">XĒN</div>
+    <p class="xen-sub">A generative pattern library — 89 botanical specimens encoded as Morphology / Venation / Architecture
+      parameters. Companion to VANA's typological data; substrate for generative computational design.</p>
+    <a class="btn-out" href="demo-plandscape/xen.html" target="_blank" rel="noopener">
+      OPEN XĒN COMPENDIUM <span class="arr">→</span>
+    </a>
+    <div style="font-size:.55rem;color:var(--muted);margin-top:.9rem;letter-spacing:.12em">
+      89 SPECIMENS · MORPHOLOGY · VENATION · HALLÉ–OLDEMAN ARCHITECTURE
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem">
+    <div class="card-l">WHY XĒN</div>
+    <div class="card-t">The grammar underneath every site decision.</div>
+    <div class="card-b">
+      VANA tells you <em>which plant</em>. XĒN tells you <em>how it grows</em> — the morphological grammar
+      that generative design tools (Rhino, Grasshopper, Houdini) need to render plants as parametric objects,
+      not as static reference images. Every specimen encodes leaf morphology, venation topology
+      (after Hallé), and architectural model (after the Hallé–Oldeman tropical-tree typology). The compendium
+      is the substrate the Axolotl plugin draws from.
+    </div>
+  </div>
+
+  <div class="parent-footer">
+    <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
+    <div class="pf-meta">© 2026 · XĒN · Generative Pattern Library</div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  const panel = document.getElementById(id);
+  if (panel) panel.classList.add('on');
+  if (btn) {
+    btn.classList.add('on');
+  } else {
+    // sync tab state from hash
+    const t = document.querySelector('.tab[data-id="' + id + '"]');
+    if (t) t.classList.add('on');
+  }
+  const c = document.getElementById('content');
+  if (c) c.scrollTop = 0;
+  if (history.replaceState) history.replaceState(null, '', '#' + id);
+}
+
+function readHash() {
+  const h = (location.hash || '#concept').replace('#', '');
+  if (document.getElementById(h)) {
+    show(h, null);
+  }
+}
+
+window.addEventListener('hashchange', readHash);
+window.addEventListener('DOMContentLoaded', readHash);
+</script>
+
+</body>
+</html>

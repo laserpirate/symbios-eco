@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  VA·NA · SymbiOS™ · Module 02 · LIVING COASTAL ATLAS
+  ============================================================
+  P1-A generative canvas — the BROAD build.
+  Every specimen on this page is grown, not drawn: one parametric
+  kernel, twenty-six coastal species, sorted by the work they do
+  on a changing shoreline. Turn the season and the whole atlas
+  turns with it.
+
+  New York Harbor palette · salt marsh → dune → maritime forest →
+  freshwater wetland → pioneer. One global graph (MTG/VVIM) under
+  each card; ecosystem services modeled from the generated geometry.
+
+  Demo artifact · modeled values illustrative · schema real.
+  ------------------------------------------------------------
+  ARTIFACT ID   : P1-B.02   (P1-B = VANA Living Coastal Atlas)
+  BUILD         : 2026/22/06/1850   (year/day/month/time-military)
+  © 2026 Marko Manriquez · SymbiOS™ | Inflorescence Intelligence™
+  All Rights Reserved · screen-record ready
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VANA · Living Coastal Atlas · SymbiOS™</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090e08;--sur:#0d160c;--sur2:#0f180e;--sur3:#0a1209;--bor:#1e2e1d;--bor2:#1a2a19;
+  --cream:#e8e0d0;--ivory:#c8c0b0;--gold-pale:#d8d4be;--gold:#c8a96e;
+  --teal:#55c4a0;--bright:#9ed855;--purple:#9a8ae8;--blue:#6ab4e8;--coral:#c45a3a;--amber:#c4904a;
+  --dim:#3a5a38;--mid:#4a6a48;--body:#6a8a68;--muted:#2a4a28;--faint:#8a9a82;
+  --mono:'DM Mono',monospace;--serif:'Cormorant Garamond',serif;
+  /* zone accents */
+  --z-marsh:#6ab4e8;--z-dune:#c8a96e;--z-forest:#9ed855;--z-wetland:#55c4a0;--z-pioneer:#9a8ae8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--mono);min-height:100vh;
+  background-image:radial-gradient(130% 70% at 50% -5%,#0d1a0c 0%,#090e08 50%)}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--muted);border-radius:3px}
+::-webkit-scrollbar-track{background:transparent}
+button{font-family:var(--mono);cursor:pointer;color:inherit;background:none;border:none}
+.italic{font-family:var(--serif);font-style:italic}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:40;height:48px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.1rem;border-bottom:1px solid var(--bor);background:rgba(9,14,8,.93);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:baseline;gap:.5rem}
+.wm{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--cream);letter-spacing:.14em}
+.wm b{color:var(--teal);font-weight:400}
+.sub{font-size:.46rem;color:var(--muted);letter-spacing:.13em}
+.nav-mid{font-family:var(--serif);font-style:italic;color:var(--faint);font-size:.95rem}
+.nav-r{display:flex;align-items:center;gap:.7rem}
+.season-toggle{display:flex;gap:2px;border:1px solid var(--bor);border-radius:4px;padding:2px;background:var(--sur2)}
+.season-toggle button{font-size:.5rem;letter-spacing:.08em;color:var(--dim);padding:.25rem .5rem;border-radius:3px;transition:all .15s}
+.season-toggle button.on{color:var(--bg);font-weight:500}
+.count{font-size:.5rem;color:var(--mid);letter-spacing:.08em}
+
+/* ---------- HERO STRIP ---------- */
+.hero{padding:1.4rem 1.1rem 1rem;max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+.hero h1{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.9rem,4.2vw,2.9rem);
+  color:var(--cream);line-height:1.0;letter-spacing:-.01em;max-width:9em}
+.hero-sub{font-family:var(--serif);font-style:italic;color:var(--teal);font-size:1.05rem;margin-top:.25rem;letter-spacing:.01em}
+.hero p{font-size:.62rem;color:var(--body);line-height:1.9;max-width:440px;margin-top:.5rem}
+.hero p b{color:var(--ivory);font-weight:400}
+.hero-stat{display:flex;gap:1.6rem;flex-shrink:0}
+.hs{text-align:right}
+.hs .n{font-family:var(--serif);font-style:italic;font-size:1.9rem;color:var(--teal);line-height:1}
+.hs .l{font-size:.46rem;color:var(--mid);letter-spacing:.1em;margin-top:.2rem}
+
+/* ---------- FILTER BAR ---------- */
+.filters{position:sticky;top:48px;z-index:30;background:rgba(9,14,8,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--bor2);padding:.7rem 1.1rem}
+.filters-in{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.fgroup{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.flabel{font-size:.46rem;color:var(--dim);letter-spacing:.13em;margin-right:.1rem}
+.chip{border:1px solid var(--bor);border-radius:3px;padding:.26rem .6rem;font-size:.52rem;color:var(--body);
+  letter-spacing:.04em;transition:all .14s;white-space:nowrap}
+.chip:hover{border-color:var(--mid);color:var(--ivory)}
+.chip.on{background:#13251f;color:var(--teal);border-color:var(--muted)}
+.chip .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.3rem;vertical-align:middle}
+.search{margin-left:auto;position:relative}
+.search input{width:200px;padding:.35rem .6rem .35rem 1.6rem;background:var(--sur2);border:1px solid var(--bor);
+  border-radius:3px;color:var(--cream);font-family:var(--mono);font-size:.56rem;outline:none;transition:all .15s}
+.search input:focus{border-color:var(--mid);width:230px}
+.search .ic{position:absolute;left:.5rem;top:50%;transform:translateY(-50%);color:var(--mid);font-size:.7rem}
+
+/* ---------- ATLAS GRID ---------- */
+.atlas{max-width:1400px;margin:0 auto;padding:1.1rem;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:.7rem}
+.card{background:var(--sur);border:1px solid var(--bor);border-radius:5px;overflow:hidden;cursor:pointer;
+  transition:transform .16s,border-color .16s,box-shadow .16s;animation:fadeUp .5s both;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);border-color:var(--mid);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.card-canvas{position:relative;aspect-ratio:1/1.04;background:
+  radial-gradient(120% 80% at 50% 15%,#0c160b 0%,#080d07 75%);border-bottom:1px solid var(--bor2)}
+.card-canvas svg{position:absolute;inset:0;width:100%;height:100%}
+.card-zone{position:absolute;top:.4rem;left:.45rem;font-size:.42rem;letter-spacing:.1em;
+  padding:1px 5px;border-radius:2px;background:rgba(9,14,8,.7);border:1px solid var(--bor)}
+.card-fn{position:absolute;top:.4rem;right:.45rem;display:flex;gap:3px}
+.card-fn i{width:6px;height:6px;border-radius:50%}
+.card-body{padding:.5rem .6rem .6rem}
+.card-name{font-family:var(--serif);font-style:italic;font-size:.96rem;color:var(--cream);line-height:1.05}
+.card-latin{font-size:.5rem;color:var(--body);margin-top:1px;letter-spacing:.02em}
+.card-meta{font-size:.46rem;color:var(--mid);margin-top:.35rem;letter-spacing:.03em}
+.card-add{position:absolute;bottom:.45rem;right:.45rem;width:19px;height:19px;border-radius:50%;
+  border:1px solid var(--bor);background:rgba(9,14,8,.75);color:var(--body);font-size:.75rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:all .15s;z-index:3}
+.card-canvas:hover .card-add{opacity:1}
+.card-add:hover{border-color:var(--teal);color:var(--teal)}
+.card-add.added{opacity:1;border-color:var(--teal);color:var(--teal);background:#13251f}
+
+/* ---------- DETAIL DRAWER ---------- */
+.scrim{position:fixed;inset:0;background:rgba(5,8,5,.6);backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,94vw);background:var(--sur);
+  border-left:1px solid var(--bor);z-index:51;transform:translateX(100%);transition:transform .26s cubic-bezier(.3,.7,.3,1);
+  overflow-y:auto;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.dr-head{position:relative;padding:1rem 1.1rem .8rem;border-bottom:1px solid var(--bor2)}
+.dr-close{position:absolute;top:.8rem;right:.9rem;font-size:1rem;color:var(--mid);width:26px;height:26px;border-radius:3px}
+.dr-close:hover{color:var(--cream);background:var(--sur2)}
+.dr-zone{font-size:.46rem;letter-spacing:.12em;padding:1px 6px;border-radius:2px;border:1px solid var(--bor);display:inline-block;margin-bottom:.5rem}
+.dr-name{font-family:var(--serif);font-style:italic;font-size:1.9rem;color:var(--cream);line-height:1}
+.dr-latin{font-size:.6rem;color:var(--body);margin-top:.15rem;letter-spacing:.03em}
+.dr-note{font-size:.56rem;color:var(--faint);line-height:1.75;margin-top:.55rem;font-family:var(--serif);font-style:italic}
+.dr-canvas{position:relative;height:280px;background:radial-gradient(120% 80% at 50% 12%,#0c160b,#080d07);border-bottom:1px solid var(--bor2)}
+.dr-canvas svg{position:absolute;inset:0;width:100%;height:100%}
+.dr-readout{position:absolute;top:.6rem;right:.7rem;text-align:right;font-size:.46rem;color:var(--mid);line-height:1.7}
+.dr-readout b{color:var(--teal);font-weight:400}
+.dr-sec{padding:.85rem 1.1rem;border-bottom:1px solid var(--bor2)}
+.dr-sec-h{font-size:.5rem;color:var(--dim);letter-spacing:.16em;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem}
+.dr-sec-h::after{content:'';flex:1;height:1px;background:var(--bor2)}
+.dr-sec-h .bn{color:var(--mid)}
+/* sliders */
+.dial{margin-bottom:.65rem}
+.dial-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.25rem}
+.dial-h .dn{font-size:.54rem;color:var(--ivory)}
+.dial-h .dn em{font-family:var(--serif);font-style:italic;color:var(--teal);margin-right:.3rem;font-size:.74rem}
+.dial-h .dv{font-size:.5rem;color:var(--body)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--bor);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--teal);border:2px solid var(--bg);box-shadow:0 0 0 1px var(--muted)}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--teal);border:2px solid var(--bg)}
+/* VVIM band rows */
+.band{margin-bottom:.7rem}
+.band-l{font-size:.48rem;letter-spacing:.1em;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.band-l i{width:7px;height:7px;border-radius:1px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;font-size:.52rem}
+.kv .k{color:var(--mid)}.kv .v{color:var(--ivory);text-align:right}
+.kv .v em{font-family:var(--serif);font-style:italic;color:var(--teal);font-style:italic}
+/* tolerance meters */
+.tol{display:flex;gap:.6rem;margin-top:.2rem}
+.tol .t{flex:1}
+.tol .tn{font-size:.44rem;color:var(--mid);letter-spacing:.06em;margin-bottom:.2rem}
+.tol .tbar{height:4px;border-radius:2px;background:var(--bor2);overflow:hidden}
+.tol .tbar i{display:block;height:100%;border-radius:2px}
+/* function tags */
+.tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.2rem}
+.tag{font-size:.46rem;letter-spacing:.06em;padding:2px 7px;border-radius:2px;border:1px solid var(--bor)}
+.rule-box{background:var(--sur3);border:1px solid var(--bor2);border-radius:4px;padding:.5rem .6rem;font-size:.6rem;color:var(--ivory);letter-spacing:.02em}
+.rule-box em{color:var(--bright);font-style:normal}
+.rule-box .rl{font-size:.46rem;color:var(--mid);margin-top:.35rem;letter-spacing:.05em}
+.fn-note{margin-bottom:.5rem;padding:.5rem .55rem;border-radius:4px;background:var(--sur3);border:1px solid var(--bor2);border-left:2px solid var(--purple)}
+.fn-note.poll{border-left-color:var(--gold)}.fn-note.rootn{border-left-color:var(--teal)}
+.fn-note .fh{font-size:.46rem;letter-spacing:.1em;color:var(--mid);margin-bottom:.25rem}
+.fn-note .fb{font-size:.54rem;color:var(--faint);line-height:1.6;font-family:var(--serif);font-style:italic}
+.dr-toggle{font-size:.48rem;letter-spacing:.06em;color:var(--teal);border:1px solid var(--muted);border-radius:3px;padding:.3rem .55rem;margin-top:.2rem;background:#0f1c1633}
+.dr-toggle.off{color:var(--mid);border-color:var(--bor2);background:transparent}
+.idx-lbl{font-size:.5rem;color:var(--cream);font-weight:500;letter-spacing:.08em;margin-bottom:.4rem}
+
+/* ---------- COMPOSE TRAY ---------- */
+.tray{position:fixed;bottom:0;left:0;right:0;z-index:45;background:rgba(10,16,9,.96);backdrop-filter:blur(12px);
+  border-top:1px solid var(--bor);transform:translateY(calc(100% - 34px));transition:transform .26s cubic-bezier(.3,.7,.3,1)}
+.tray.open{transform:translateY(0)}
+.tray-tab{height:34px;display:flex;align-items:center;justify-content:center;gap:.6rem;cursor:pointer;font-size:.54rem;letter-spacing:.1em;color:var(--teal)}
+.tray-tab .ar{transition:transform .2s}.tray.open .tray-tab .ar{transform:rotate(180deg)}
+.tray-body{padding:0 1.1rem 1rem;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:1.2rem}
+.shoreline{position:relative;height:170px;border:1px solid var(--bor2);border-radius:5px;overflow:hidden;
+  background:linear-gradient(180deg,#0b150a 0%,#0a1209 60%,#0a1015 60%,#091016 100%)}
+.shoreline svg{position:absolute;inset:0;width:100%;height:100%}
+.shoreline .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-style:italic;color:var(--mid);font-size:.85rem;text-align:center;padding:1rem}
+.tray-stats{display:flex;flex-direction:column;gap:.5rem;padding-top:.3rem}
+.tray-stats .th{font-size:.5rem;color:var(--dim);letter-spacing:.13em;margin-bottom:.2rem}
+.tstat{margin-bottom:.1rem}
+.tstat-h{display:flex;justify-content:space-between;font-size:.52rem;margin-bottom:.2rem}
+.tstat-h .n{color:var(--body)}.tstat-h .v{color:var(--cream)}
+.tstat .bar{height:4px;border-radius:2px;background:var(--bor2);overflow:hidden}
+.tstat .bar i{display:block;height:100%;border-radius:2px;transition:width .5s}
+.tray-clear{font-size:.5rem;color:var(--mid);border:1px solid var(--bor2);border-radius:3px;padding:.3rem .6rem;margin-top:.3rem;align-self:flex-start}
+.tray-clear:hover{color:var(--coral);border-color:rgba(196,90,58,.4)}
+.tray-count{font-size:.46rem;color:var(--mid);letter-spacing:.08em}
+
+/* ---------- TOAST + FOOT ---------- */
+#toast{position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:60;background:var(--sur);
+  border:1px solid var(--bor);border-radius:4px;padding:.5rem .85rem;font-size:.55rem;color:var(--ivory);
+  letter-spacing:.04em;display:none;animation:toastin .25s ease;max-width:80vw;text-align:center}
+#toast b{color:var(--teal);font-weight:400}
+.foot{max-width:1400px;margin:0 auto;padding:1.5rem 1.1rem 4rem;border-top:1px solid var(--bor2);margin-top:1rem;
+  font-size:.5rem;color:var(--mid);line-height:1.9;letter-spacing:.03em}
+.foot b{color:var(--body);font-weight:400}
+.no-results{grid-column:1/-1;text-align:center;padding:3rem;font-family:var(--serif);font-style:italic;color:var(--mid);font-size:1rem}
+
+/* tour-hero button */
+.tour-hero{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--teal);border-radius:4px;
+  padding:.3rem .65rem;font-size:.52rem;letter-spacing:.06em;color:var(--teal);background:#0f1c1633;transition:all .15s}
+.tour-hero:hover{background:#13251f;box-shadow:0 0 14px rgba(85,196,160,.25)}
+.tour-hero.on{background:var(--teal);color:#08120c;font-weight:500}
+.tour-hero .tri{font-size:.58rem}
+
+/* glossary tooltip */
+.gl{border-bottom:1px dotted var(--mid);cursor:help}
+.gl:hover{border-bottom-color:var(--teal);color:var(--teal)}
+#gtip{position:fixed;z-index:200;max-width:240px;background:var(--sur);border:1px solid var(--bor);
+  border-left:2px solid var(--teal);border-radius:4px;padding:.5rem .6rem;font-size:.52rem;line-height:1.6;
+  color:var(--ivory);letter-spacing:.02em;pointer-events:none;opacity:0;transform:translateY(4px);
+  transition:opacity .12s,transform .12s;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+#gtip.on{opacity:1;transform:translateY(0)}
+#gtip b{color:var(--teal);font-weight:500;display:block;margin-bottom:.2rem;font-size:.55rem}
+
+/* invasive treatment — red palette + warning mark */
+.card.invasive{border-color:#5a2620}
+.card.invasive:hover{border-color:#a04030;box-shadow:0 8px 24px rgba(140,40,30,.3)}
+.card.invasive .card-canvas{background:radial-gradient(120% 80% at 50% 15%,#1a0d0a 0%,#0d0706 75%)}
+.card-zone.inv{color:#e07a5a;border-color:#a0403055;background:rgba(40,12,8,.7)}
+.dr-zone.inv{color:#e07a5a;border-color:#a0403077}
+
+@media print{body{background:#fff}}
+@media (max-width:720px){.tray-body{grid-template-columns:1fr}.hero-stat{display:none}.search input{width:130px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><span class="wm">VA<b>·</b>NA</span><span class="sub">SYMBIOS™ · MODULE 02 · XĒN</span></div>
+  <div class="nav-mid">the living coastal atlas</div>
+  <div class="nav-r">
+    <button class="tour-hero" id="btnTour"><span class="tri">▶</span>tour the seasons</button>
+    <div class="season-toggle" id="seasonToggle">
+      <button data-s="0">spring</button><button data-s="1" class="on">summer</button>
+      <button data-s="2">autumn</button><button data-s="3">winter</button>
+    </div>
+    <span class="count" id="navCount">30 specimens</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div>
+    <h1>Botanical Systems as Design Source Code</h1>
+    <div class="hero-sub italic">Grown, not drawn.</div>
+    <p>Thirty species of the New York shoreline, each one procedurally generated from a handful of rules — then sorted by the <b>work it does</b> on a coast that won't sit still. Filter by where it lives or what it holds. Turn the season; the whole atlas turns.</p>
+  </div>
+  <div class="hero-stat">
+    <div class="hs"><div class="n">30</div><div class="l">SPECIES</div></div>
+    <div class="hs"><div class="n">5</div><div class="l">SHORELINE ZONES</div></div>
+    <div class="hs"><div class="n">1</div><div class="l">PARAMETRIC KERNEL</div></div>
+  </div>
+</div>
+
+<div class="filters">
+  <div class="filters-in">
+    <div class="fgroup" id="zoneChips">
+      <span class="flabel">ZONE</span>
+      <button class="chip on" data-zone="all">all</button>
+      <button class="chip" data-zone="marsh"><i class="dot" style="background:var(--z-marsh)"></i>salt marsh</button>
+      <button class="chip" data-zone="dune"><i class="dot" style="background:var(--z-dune)"></i>dune</button>
+      <button class="chip" data-zone="forest"><i class="dot" style="background:var(--z-forest)"></i>maritime forest</button>
+      <button class="chip" data-zone="wetland"><i class="dot" style="background:var(--z-wetland)"></i>freshwater</button>
+      <button class="chip" data-zone="pioneer"><i class="dot" style="background:var(--z-pioneer)"></i>pioneer</button>
+      <button class="chip" data-zone="invasive"><i class="dot" style="background:#e07a5a"></i>⚠ invasive</button>
+    </div>
+    <div class="fgroup" id="fnChips">
+      <span class="flabel">FUNCTION</span>
+      <button class="chip" data-fn="salt">salt-tolerant</button>
+      <button class="chip" data-fn="flood">flood-tolerant</button>
+      <button class="chip" data-fn="carbon">high-carbon</button>
+      <button class="chip" data-fn="phyto">phytoremediator</button>
+      <button class="chip" data-fn="erosion">erosion-control</button>
+      <button class="chip" data-fn="pollinator">pollinator</button>
+    </div>
+    <div class="search"><span class="ic">⌕</span><input id="searchInput" placeholder="search species…"/></div>
+  </div>
+</div>
+
+<div class="atlas" id="atlas"></div>
+
+<div class="foot">
+  <b>How to read this atlas.</b> Every silhouette is a live L-system — the same kernel that grows a 6-foot cordgrass grows a 70-foot oak, differing only in its parameters. Each card carries a VVIM record beneath it: three data bands (representation · biological · systems) bound to one multiscale graph. Tolerances, carbon, and habitat values are modeled for demonstration; the schema is production. Click any specimen to open its manifold, or add species to the shoreline tray to compose a living edge and watch its services accrue.<br><br>
+  SymbiOS™ | Inflorescence Intelligence™ · VANA Module 02 · XĒN compendium<br>
+  <b>VANA · P1-B · Living Coastal Atlas</b> &nbsp;|&nbsp; <span style="color:var(--teal);letter-spacing:.12em">P1-B.02</span> · build 2026/22/06/1850 &nbsp;|&nbsp; © 2026 Marko Manriquez · SymbiOS™ | Inflorescence Intelligence™ · All Rights Reserved
+</div>
+
+<!-- DETAIL DRAWER -->
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer"></div>
+
+<!-- COMPOSE TRAY -->
+<div class="tray" id="tray">
+  <div class="tray-tab" id="trayTab"><span>COMPOSE A LIVING SHORELINE</span><span class="tray-count" id="trayCount">· empty</span><span class="ar">▲</span></div>
+  <div class="tray-body">
+    <div class="shoreline" id="shoreline"><div class="empty" id="shoreEmpty">Add species from the atlas (＋) to assemble a shoreline section — marsh to upland — and model its combined defense.</div></div>
+    <div class="tray-stats">
+      <div class="th">COMBINED ECOSYSTEM SERVICES</div>
+      <div class="tstat"><div class="tstat-h"><span class="n">carbon stock</span><span class="v" id="ts-carbon">0</span></div><div class="bar"><i id="tb-carbon" style="background:var(--bright);width:0"></i></div></div>
+      <div class="tstat"><div class="tstat-h"><span class="n">surge attenuation</span><span class="v" id="ts-surge">0</span></div><div class="bar"><i id="tb-surge" style="background:var(--blue);width:0"></i></div></div>
+      <div class="tstat"><div class="tstat-h"><span class="n">stormwater capture</span><span class="v" id="ts-storm">0</span></div><div class="bar"><i id="tb-storm" style="background:var(--teal);width:0"></i></div></div>
+      <div class="tstat"><div class="tstat-h"><span class="n">habitat / biodiversity</span><span class="v" id="ts-habitat">0</span></div><div class="bar"><i id="tb-habitat" style="background:var(--gold);width:0"></i></div></div>
+      <div class="tstat"><div class="tstat-h"><span class="n">zones covered</span><span class="v" id="ts-zones">0 / 5</span></div><div class="bar"><i id="tb-zones" style="background:var(--purple);width:0"></i></div></div>
+      <button class="tray-clear" id="trayClear">clear shoreline</button>
+    </div>
+  </div>
+</div>
+
+<div id="gtip"></div>
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   ENGINE · ported from VANA / XĒN compendium
+   ============================================================ */
+const NS='http://www.w3.org/2000/svg';
+function seedRandom(seed){let s=seed>>>0;return function(){s=(s+0x6D2B79F5)|0;let t=Math.imul(s^s>>>15,1|s);t=(t+Math.imul(t^t>>>7,61|t))^t;return((t^t>>>14)>>>0)/4294967296;};}
+function svgEl(w,h){const e=document.createElementNS(NS,'svg');e.setAttribute('viewBox',`0 0 ${w} ${h}`);e.setAttribute('preserveAspectRatio','xMidYMid meet');return e;}
+function el(p,t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;}
+function L(s,x1,y1,x2,y2,c,w,o){const e=document.createElementNS(NS,'line');e.setAttribute('x1',x1.toFixed(2));e.setAttribute('y1',y1.toFixed(2));e.setAttribute('x2',x2.toFixed(2));e.setAttribute('y2',y2.toFixed(2));e.setAttribute('stroke',c);e.setAttribute('stroke-width',w);e.setAttribute('stroke-linecap','round');if(o!==undefined)e.setAttribute('opacity',o);s.appendChild(e);return e;}
+function C(s,cx,cy,r,f,o){const e=document.createElementNS(NS,'circle');e.setAttribute('cx',cx.toFixed(2));e.setAttribute('cy',cy.toFixed(2));e.setAttribute('r',r.toFixed(2));e.setAttribute('fill',f);if(o!==undefined)e.setAttribute('opacity',o);s.appendChild(e);return e;}
+function PA(s,d,c,w,o,fill){const e=document.createElementNS(NS,'path');e.setAttribute('d',d);e.setAttribute('fill',fill||'none');if(c)e.setAttribute('stroke',c);if(w)e.setAttribute('stroke-width',w);e.setAttribute('stroke-linecap','round');e.setAttribute('stroke-linejoin','round');if(o!==undefined)e.setAttribute('opacity',o);s.appendChild(e);return e;}
+function DL(s,x1,y1,x2,y2,c,w,o,dash){const e=document.createElementNS(NS,'line');e.setAttribute('x1',x1.toFixed(2));e.setAttribute('y1',y1.toFixed(2));e.setAttribute('x2',x2.toFixed(2));e.setAttribute('y2',y2.toFixed(2));e.setAttribute('stroke',c);e.setAttribute('stroke-width',w);e.setAttribute('stroke-dasharray',dash||'2 3');e.setAttribute('stroke-linecap','round');if(o!==undefined)e.setAttribute('opacity',o);s.appendChild(e);return e;}
+function EL(s,cx,cy,rx,ry,rot,f,o){const e=document.createElementNS(NS,'ellipse');e.setAttribute('cx',cx);e.setAttribute('cy',cy);e.setAttribute('rx',rx);e.setAttribute('ry',ry);if(rot)e.setAttribute('transform',`rotate(${rot} ${cx} ${cy})`);e.setAttribute('fill',f||'none');if(o!==undefined)e.setAttribute('opacity',o);s.appendChild(e);return e;}
+/* colour ramp */
+function h2r(h){h=h.replace('#','');return[parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)];}
+function r2h(r){return'#'+r.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');}
+function mix(a,b,t){const A=h2r(a),B=h2r(b);return r2h([A[0]+(B[0]-A[0])*t,A[1]+(B[1]-A[1])*t,A[2]+(B[2]-A[2])*t]);}
+
+/* season → leaf palette (master control for whole atlas) */
+const SEASONS=[
+  {n:'spring',leaf:'#a8cf6e',accent:'#d8d4be',leafy:true,dens:.78,branch:'#5a4a30'},
+  {n:'summer',leaf:'#4f7d33',accent:null,leafy:true,dens:1.0,branch:'#5a4a30'},
+  {n:'autumn',leaf:'#c4904a',accent:'#c8a96e',leafy:true,dens:.92,branch:'#5a4a30'},
+  {n:'winter',leaf:'#3a4a34',accent:null,leafy:false,dens:.05,branch:'#54472e'},
+];
+let SEASON=1;
+function leafColorFor(sp){
+  const s=SEASONS[SEASON];
+  // evergreen species keep needles through winter
+  if(!s.leafy && sp.fn.includes('evergreen')) return '#3f6a3e';
+  return mix(s.leaf, sp.leafTint||s.leaf, 0.35);
+}
+
+/* ============================================================
+   KERNEL · recursive branch (full-canopy leaves at terminals)
+   ============================================================ */
+function grow(svg,o,st){
+  function leafAt(x,y,sz,op){st.tips++;if(o.leafColor&&o.rng()>o.skip){C(svg,x,y,Math.max(0.5,sz*(0.55+o.rng()*0.7)),o.leafColor,op);st.leaves++;}}
+  function step(x,y,theta,len,depth,w){
+    if(len<o.minLen){leafAt(x,y,o.leafSize,o.leafOpacity);return;}
+    const j=(o.rng()-0.5)*2*o.jitter;
+    const nx=x+Math.cos((theta+j)*Math.PI/180)*len, ny=y+Math.sin((theta+j)*Math.PI/180)*len;
+    L(svg,x,y,nx,ny,o.color,Math.max(w,o.minWidth).toFixed(2));
+    st.seg++;st.len+=len;st.top=Math.min(st.top,ny);if(nx<st.bx0)st.bx0=nx;if(nx>st.bx1)st.bx1=nx;
+    if(depth<=1){leafAt(nx,ny,o.leafSize,o.leafOpacity);return;}
+    const bc=o.branchCount;
+    for(let i=0;i<bc;i++){
+      const ba=bc===1?0:(i-(bc-1)/2)*o.angle;
+      const asym=o.asym*o.angle*(o.rng()-0.5);
+      step(nx,ny,(theta+j)+ba+asym+o.gravity,len*(o.decay+(o.rng()-0.5)*0.05),depth-1,w*o.widthDecay);
+    }
+  }
+  st.bx0=o.cx;st.bx1=o.cx;step(o.cx,o.cy,o.dir,o.length,o.iter,o.width);
+}
+/* grass clump */
+function growGrass(svg,o,st){
+  const n=Math.round(o.blades||(10+o.iter*7));
+  for(let i=0;i<n;i++){
+    const off=(o.rng()-0.5)*o.length*0.5,bx=o.cx+off,h=o.length*(0.55+o.rng()*0.6);
+    const lean=(o.rng()-0.5)*o.angle*2+(off>0?o.gravity:-o.gravity);
+    const tx=bx+Math.sin(lean*Math.PI/180)*h*0.5,ty=o.cy-h;
+    const mx=bx+Math.sin(lean*Math.PI/180)*h*0.25,my=o.cy-h*0.55;
+    PA(svg,`M${bx.toFixed(1)} ${o.cy} Q${mx.toFixed(1)} ${my.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)}`,o.leafColor||o.color,(1+o.rng()*0.6).toFixed(2),(o.leafOpacity*(0.7+o.rng()*0.3)).toFixed(2));
+    st.seg++;st.len+=h;st.top=Math.min(st.top,ty);st.tips++;
+    if(SEASON===2&&o.rng()<0.25)C(svg,tx,ty,1.5,o.leafColor,0.8);
+  }
+  st.leaves=st.tips;
+}
+/* reed (phragmites) — tall canes + feathery plume */
+function growReed(svg,o,st){
+  const n=Math.round(8+o.iter*4);
+  for(let i=0;i<n;i++){
+    const off=(o.rng()-0.5)*o.length*0.55,bx=o.cx+off,h=o.length*(0.8+o.rng()*0.5);
+    const lean=(o.rng()-0.5)*o.angle+(off>0?o.gravity:-o.gravity);
+    const tx=bx+Math.sin(lean*Math.PI/180)*h*0.35,ty=o.cy-h;
+    L(svg,bx,o.cy,tx,ty,o.color,1.3,0.85);st.seg++;st.len+=h;st.top=Math.min(st.top,ty);
+    // plume
+    const pc=SEASON===0?'#b9a98a':SEASON===3?'#8a7a64':'#caa86a';
+    for(let k=0;k<7;k++){const a=-90+(o.rng()-0.5)*60;const pl=4+o.rng()*7;L(svg,tx,ty,tx+Math.cos(a*Math.PI/180)*pl,ty+Math.sin(a*Math.PI/180)*pl-3,pc,0.7,0.8);}
+    st.tips++;
+  }
+  st.leaves=n*4;
+}
+/* shrub — low, dense, multi-stem */
+function growShrub(svg,o,st){
+  const stems=3+Math.round(o.rng()*2);st.bx0=o.cx;st.bx1=o.cx;
+  for(let s=0;s<stems;s++){
+    const sx=o.cx+(s-(stems-1)/2)*(o.length*0.5/stems);
+    grow(svg,{...o,cx:sx,cy:o.cy,length:o.length*(0.5+o.rng()*0.3),iter:Math.max(3,o.iter-1),
+      branchCount:Math.max(3,o.branchCount),gravity:o.gravity*0.5+ (o.rng()-0.5)*4},st);
+  }
+}
+/* monopodial whorl (conifer); narrow=true → columnar cedar */
+function growWhorl(svg,o,st){
+  const tiers=Math.max(2,Math.round(o.iter*1.4)),seg=o.length*0.4;let x=o.cx,y=o.cy,w=o.width;
+  const needleCol=(!SEASONS[SEASON].leafy)?'#3f6a3e':o.leafColor;
+  for(let t=0;t<tiers;t++){
+    const ny=y-seg*(1-t*0.02);L(svg,x,ny+seg,x,ny,o.color,Math.max(w,o.minWidth));st.seg++;st.len+=seg;st.top=Math.min(st.top,ny);
+    const k=Math.max(4,Math.round(o.branchCount+2)),spread=(o.narrow?0.28:0.52)*(1-t/(tiers+1));
+    for(let b=0;b<k;b++){
+      const side=(b/k)*2-1, bx=x+side*o.length*spread, by=ny+o.length*spread*0.4+ (o.narrow?seg*0.2:seg*0.1);
+      L(svg,x,ny,bx,by,o.color,Math.max(w*0.55,o.minWidth));st.seg++;st.len+=o.length*spread;
+      if(needleCol){const nN=Math.round((o.narrow?5:4)*(o.dens||1));for(let i2=0;i2<nN;i2++){const f=i2/Math.max(nN,1);C(svg,x+(bx-x)*f,ny+(by-ny)*f,o.leafSize*(0.7+o.rng()*0.4),needleCol,o.leafOpacity);st.leaves++;st.tips++;}}
+      if(bx<st.bx0)st.bx0=bx;if(bx>st.bx1)st.bx1=bx;
+    }
+    y=ny;w*=0.9;
+  }
+}
+/* succulent pads (prickly pear) — phyllotaxis areoles */
+function growSucc(svg,o,st){
+  const pads=4+Math.round(o.rng()*2);let px=o.cx,py=o.cy-12;
+  st.bx0=o.cx-20;st.bx1=o.cx+20;
+  const padCol=(!SEASONS[SEASON].leafy)?'#3f5a3a':'#4f7d3a';
+  for(let p=0;p<pads;p++){
+    const ang=(p===0?-90:(-90+(p%2?1:-1)*(30+o.rng()*25)))*Math.PI/180;
+    const dist=14+o.rng()*6,nx=px+Math.cos(ang)*dist,ny=py+Math.sin(ang)*dist;
+    EL(svg,nx,ny,9+o.rng()*3,13+o.rng()*3,(o.rng()-0.5)*30,padCol,0.96);
+    for(let a=0;a<12;a++){const aa=a*137.508*Math.PI/180,rr=Math.sqrt(a)*2.0;const ex=nx+Math.cos(aa)*rr,ey=ny+Math.sin(aa)*rr*1.2;if(Math.abs(ex-nx)<8&&Math.abs(ey-ny)<12)C(svg,ex,ey,0.7,'#2c4226',0.8);}
+    if(SEASON===0&&p>1&&o.rng()<0.5)C(svg,nx,ny-12,2.2,'#d8c24a',0.9); // spring bloom
+    st.top=Math.min(st.top,ny-12);px=nx;py=ny;st.tips++;
+  }
+  st.leaves=pads*3;st.seg+=pads;
+}
+/* herb — stem + opposite leaves + inflorescence */
+function growHerb(svg,o,st){
+  const h=o.length*1.1,steps=7+Math.round(o.iter);
+  let y=o.cy;st.bx0=o.cx-o.length*0.4;st.bx1=o.cx+o.length*0.4;
+  const stemCol=mix(o.color,'#6f8d3e',0.5);
+  const sway=(o.rng()-0.5)*o.angle;
+  const tx=o.cx+Math.sin(sway*Math.PI/180)*h*0.3, ty=o.cy-h;
+  PA(svg,`M${o.cx} ${o.cy} Q${o.cx+ (tx-o.cx)*0.5} ${o.cy-h*0.5} ${tx} ${ty}`,stemCol,1.4,0.9);
+  for(let i=1;i<steps;i++){
+    const f=i/steps,ly=o.cy-h*f,lx=o.cx+(tx-o.cx)*f;const ls=o.leafSize*2*(1-f*0.5);
+    EL(svg,lx-ls,ly,ls,ls*0.4,-25,o.leafColor,0.9);EL(svg,lx+ls,ly,ls,ls*0.4,25,o.leafColor,0.9);st.leaves+=2;
+  }
+  // inflorescence
+  const fc=o.flower||'#c89ad8';
+  for(let k=0;k<14;k++){const a=k*137.508*Math.PI/180,rr=Math.sqrt(k)*1.6;C(svg,tx+Math.cos(a)*rr,ty+Math.sin(a)*rr*0.8,1.5,fc,0.92);}
+  st.top=ty;st.tips+=steps;st.seg+=steps;
+}
+/* clonal umbrella (sumac/aspen) */
+function growClonal(svg,o,st){
+  const stems=Math.max(2,Math.round(2+o.iter*0.3));st.bx0=o.cx;st.bx1=o.cx;
+  L(svg,o.cx-o.length*0.45,o.cy,o.cx+o.length*0.45,o.cy,o.branchColor||o.color,1.1,0.5);
+  for(let s=0;s<stems;s++){
+    const sx=o.cx+(s-(stems-1)/2)*(o.length*0.8/stems),sc=0.6+o.rng()*0.6;
+    grow(svg,{...o,cx:sx,cy:o.cy,length:o.length*0.66*sc,iter:Math.max(3,o.iter-1)},st);
+    if(o.fruit&&SEASON>=1){C(svg,sx+(o.rng()-0.5)*8,o.cy-o.length*0.66*sc-2,2.4,o.fruit,0.85);}
+  }
+}
+/* mangrove — prop roots + crown (Bangkok cross-reference) */
+function growMangrove(svg,o,st){
+  const raise=o.length*0.28,hub={x:o.cx,y:o.cy-raise},nR=5;st.bx0=o.cx;st.bx1=o.cx;
+  for(let i=0;i<nR;i++){const side=(i-(nR-1)/2),footX=o.cx+side*o.length*0.16,cpx=(hub.x+footX)/2+side*4,cpy=hub.y+raise*0.55;
+    PA(svg,`M${hub.x} ${hub.y.toFixed(1)} Q${cpx.toFixed(1)} ${cpy.toFixed(1)} ${footX.toFixed(1)} ${o.cy}`,o.color,(2.2-Math.abs(side)*0.3).toFixed(2));st.seg++;st.len+=raise;if(footX<st.bx0)st.bx0=footX;if(footX>st.bx1)st.bx1=footX;}
+  grow(svg,{...o,cx:hub.x,cy:hub.y,dir:-90,length:o.length*0.6},st);
+}
+
+/* dispatch */
+/* roots — archetype-shaped mirror of the canopy (drawer detail only) */
+function drawRootsA(svg,sp,cx,groundY,baseLen,scale,rootAmt,seed){
+  if(sp.form==='mangrove')return;
+  const rng=seedRandom((seed||0x9a)+11);
+  const depth=baseLen*(0.30+rootAmt*0.85);
+  const col=`rgba(122,112,80,${(0.30+rootAmt*0.28).toFixed(2)})`;
+  const type=sp.rootType||'fibrous';
+  const blank={bx0:cx,bx1:cx,top:groundY,seg:0,len:0,tips:0,leaves:0};
+  const base=k=>({cx,cy:groundY,decay:0.78,angle:16,jitter:6,branchCount:2,asym:0.3,gravity:0,
+    width:Math.max(1.2,3*scale*k),widthDecay:0.62,minWidth:0.3,minLen:1.4,
+    color:col,leafColor:null,leafSize:0,leafOpacity:0,skip:1,rng});
+  if(type==='taproot'){
+    grow(svg,{...base(1),dir:90,length:depth*0.9,iter:Math.min(4.5,2+rootAmt*3)},blank);
+  } else if(type==='rhizomatous'){
+    const halfW=baseLen*(0.45+rootAmt*0.6);
+    L(svg,cx-halfW,groundY+3,cx+halfW,groundY+3,col,Math.max(1.2,2.2*scale),0.7);
+    const tufts=Math.round(4+rootAmt*5);
+    for(let i=0;i<tufts;i++){const tx=cx-halfW+(i/Math.max(tufts-1,1))*halfW*2;
+      for(let k=0;k<3;k++){const a=90+(k-1)*22+(rng()-0.5)*14,dl=depth*(0.35+rng()*0.4);
+        L(svg,tx,groundY+3,tx+Math.cos(a*Math.PI/180)*dl,groundY+3+Math.sin(a*Math.PI/180)*dl,col,Math.max(0.9,1.4*scale),0.6);}}
+  } else {
+    const n=Math.round(5+rootAmt*7);
+    for(let i=0;i<n;i++){const a=90+(i-(n-1)/2)*(16+rootAmt*9)+(rng()-0.5)*10;
+      grow(svg,{...base(0.7),dir:a,length:depth*(0.42+rng()*0.4),iter:Math.min(3.5,2+rootAmt*2),gravity:6},blank);}
+  }
+}
+/* signals — airborne VOC + mycorrhizal web (drawer detail only) */
+function drawSignalsA(svg,cx,groundY,crownTop,crownW,seed){
+  const rng=seedRandom((seed||0x51)+5),cw=Math.max(50,crownW);
+  for(let i=0;i<8;i++){const bx=cx+(rng()-0.5)*cw*0.85,by=crownTop+8+rng()*32;
+    for(let k=0;k<4;k++)C(svg,bx+Math.sin((k+i)*0.9)*3,by-k*8-rng()*3,Math.max(0.3,0.9-k*0.14),'#7fe0c0',(0.5-k*0.09));}
+  for(let i=0;i<3;i++){const x1=cx+(rng()-0.5)*cw*0.5,x2=cx+(rng()-0.5)*cw*0.5,y=crownTop-4-rng()*14;
+    PA(svg,`M${x1.toFixed(1)} ${(y+6).toFixed(1)} Q${((x1+x2)/2).toFixed(1)} ${(y-8).toFixed(1)} ${x2.toFixed(1)} ${(y+6).toFixed(1)}`,'#7fe0c0',0.7,0.32);}
+  const baseY=groundY+8,nodes=[];
+  for(let i=0;i<5;i++){const nx=cx+(i-2)*cw*0.26+(rng()-0.5)*10,ny=baseY+10+rng()*22;nodes.push([nx,ny]);
+    DL(svg,cx,baseY,nx,ny,'#9a8ae8',0.8,0.42,'1.5 3');C(svg,nx,ny,1.3,'#9a8ae8',0.5);}
+  for(let i=0;i<nodes.length-1;i++)DL(svg,nodes[i][0],nodes[i][1],nodes[i+1][0],nodes[i+1][1],'#55c4a0',0.6,0.26,'1 3');
+}
+
+function renderSpecimen(svg,sp,W,H,opts){
+  opts=opts||{};
+  const groundY=H-(opts.ground||14);
+  if(opts.showGround){L(svg,0,groundY,W,groundY,'#243a20',1);const rng=seedRandom(7);for(let i=0;i<30;i++)C(svg,rng()*W,groundY+rng()*(H-groundY),0.5,'#1c2c18',0.6);}
+  const s=SEASONS[SEASON];
+  const age=opts.age!==undefined?opts.age:sp.p.age;
+  const dens=opts.density!==undefined?opts.density:sp.p.density;
+  const angle=opts.angle!==undefined?opts.angle:sp.p.angle;
+  const hueShift=opts.hue;
+  let leafCol=leafColorFor(sp);
+  if(hueShift!==undefined)leafCol=LEAFRAMP(hueShift);
+  const leafy=(s.leafy||sp.fn.includes('evergreen'))&&dens>0.02;
+  const baseLen=(sp.baseLen||34)*(0.45+age*0.62)*(opts.scale||1)*(VSCALE[sp.form]||1);
+  const iter=(sp.minIter||3)+age*((sp.maxIter||7)-(sp.minIter||3));
+  const skip=Math.min(0.92,(1-dens*s.dens));
+  const common={cx:W/2,cy:groundY,dir:-90,length:baseLen,decay:sp.p.decay||0.74,
+    angle:angle,jitter:sp.p.jitter||8,branchCount:Math.round(sp.p.branch||2),asym:sp.p.asym||0.3,
+    gravity:sp.p.gravity||0,iter:iter,width:Math.max(1.6,(sp.baseW||3.6)*(opts.scale||1)*(0.5+age*0.5)),
+    widthDecay:0.66,minWidth:0.5,minLen:1.0,color:mix(sp.branchCol||s.branch,'#6a6a5a',0),
+    branchColor:sp.branchCol||s.branch,leafColor:leafy?leafCol:null,leafSize:(sp.p.leafSize||3)*(opts.scale||1),
+    leafOpacity:0.92,skip:skip,dens:dens,rng:seedRandom((sp.seed||0x55)+ (opts.seedShift||0)),
+    blades:sp.blades,narrow:sp.narrow,fruit:sp.fruit,flower:sp.flower};
+  const st={seg:0,len:0,tips:0,leaves:0,top:H,bx0:W/2,bx1:W/2};
+  // detail mode (drawer): archetype roots behind the plant
+  if(opts.detail){const rootAmt=opts.root!==undefined?opts.root:0.6;drawRootsA(svg,sp,W/2,groundY,baseLen,opts.scale||1,rootAmt,sp.seed);}
+  switch(sp.form){
+    case'grass':growGrass(svg,common,st);break;
+    case'reed':growReed(svg,common,st);break;
+    case'shrub':growShrub(svg,common,st);break;
+    case'conifer':growWhorl(svg,common,st);break;
+    case'succulent':growSucc(svg,common,st);break;
+    case'herb':growHerb(svg,common,st);break;
+    case'clonal':growClonal(svg,common,st);break;
+    case'mangrove':growMangrove(svg,common,st);break;
+    default:grow(svg,common,st);
+  }
+  // detail mode: VOC + mycorrhizal signalling on top
+  if(opts.detail&&opts.signals!==false){const cw=Math.max(40,st.bx1-st.bx0);drawSignalsA(svg,W/2,groundY,st.top,cw,sp.seed);}
+  return st;
+}
+/* leaf ramp for the drawer hue slider */
+const LR=[[0,'#c6e27e'],[.3,'#7cb342'],[.5,'#4f7d33'],[.68,'#c9a961'],[.84,'#c4904a'],[1,'#c45a3a']];
+function LEAFRAMP(t){t=Math.max(0,Math.min(1,t));for(let i=0;i<LR.length-1;i++){const[a,ca]=LR[i],[b,cb]=LR[i+1];if(t<=b)return mix(ca,cb,(t-a)/(b-a));}return LR[LR.length-1][1];}
+
+/* form-level visual scale so short species read in a card */
+const VSCALE={tree:1.0,conifer:1.05,grass:1.15,reed:1.1,shrub:0.92,succulent:0.8,herb:0.95,clonal:1.0,mangrove:1.05};
+
+/* ============================================================
+   SPECIES DATA · 26 NY-region coastal species
+   fn tags: salt flood carbon phyto erosion pollinator nitrogen evergreen
+   tol {s,f,d} 0..1 · carbon/phyto 0..1
+   ============================================================ */
+const SPECIES=[
+  // ---- SALT MARSH ----
+  {id:'spartina-alt',name:'Smooth Cordgrass',latin:'Spartina alterniflora',family:'Poaceae',zone:'marsh',form:'grass',
+   habit:'rhizomatous grass',pheno:'warm-season',rootM:0.6,maxH:2.4,model:'linear · monocot blade',rule:'B → B (no branch · clonal tillers)',
+   fn:['salt','flood','erosion'],tol:{s:.96,f:.98,d:.30},carbon:.4,phyto:.7,seed:0x11,baseLen:58,blades:26,
+   note:'The marsh-builder. Traps sediment between its stems until the marsh itself rises to meet the tide.',
+   p:{age:.8,angle:7,gravity:1,decay:.94,branch:1,asym:.1,jitter:5,density:.55,leafSize:2}},
+  {id:'spartina-pat',name:'Saltmeadow Hay',latin:'Spartina patens',family:'Poaceae',zone:'marsh',form:'grass',
+   habit:'fine rhizomatous grass',pheno:'warm-season',rootM:0.5,maxH:1.2,model:'linear · cowlicked sward',rule:'B → B · lodging θ',
+   fn:['salt','flood','erosion'],tol:{s:.9,f:.85,d:.4},carbon:.35,phyto:.55,seed:0x12,baseLen:40,blades:34,
+   note:'The high-marsh felt — lies in swirled cowlicks above the daily tide line.',
+   p:{age:.78,angle:14,gravity:9,decay:.93,branch:1,asym:.2,jitter:8,density:.6,leafSize:1.6}},
+  {id:'phragmites',name:'Common Reed',latin:'Phragmites australis',family:'Poaceae',zone:'marsh',form:'reed',
+   habit:'tall invasive cane',pheno:'warm-season',rootM:1.0,maxH:4.5,model:'cane + plume',rule:'B → B·plume',
+   fn:['flood'],tol:{s:.7,f:.9,d:.45},carbon:.5,phyto:.6,seed:0x13,baseLen:62,
+   note:'Existing condition, not a recommendation — the aggressive non-native that crowds the disturbed edge. Mapped so it can be managed.',
+   p:{age:.85,angle:9,gravity:2,decay:.9,branch:1,asym:.15,jitter:5,density:.5,leafSize:2},flag:'invasive'},
+  {id:'bolboschoenus',name:'Saltmarsh Bulrush',latin:'Bolboschoenus robustus',family:'Cyperaceae',zone:'marsh',form:'grass',
+   habit:'triangular sedge',pheno:'warm-season',rootM:0.5,maxH:1.5,model:'linear · 3-ranked',rule:'B → B · sedge',
+   fn:['salt','flood','pollinator'],tol:{s:.8,f:.9,d:.3},carbon:.3,phyto:.5,seed:0x14,baseLen:44,blades:18,
+   note:'Seedheads feed migrating waterfowl; roots bind the brackish ditch.',
+   p:{age:.8,angle:8,gravity:3,decay:.92,branch:1,asym:.12,jitter:6,density:.5,leafSize:1.8}},
+  {id:'limonium',name:'Sea Lavender',latin:'Limonium carolinianum',family:'Plumbaginaceae',zone:'marsh',form:'herb',
+   habit:'basal rosette + airy panicle',pheno:'summer bloom',rootM:0.3,maxH:0.6,model:'rosette + branched cyme',rule:'F → F[+F][−F] · panicle',
+   fn:['salt','pollinator'],tol:{s:.9,f:.6,d:.5},carbon:.15,phyto:.35,seed:0x15,baseLen:20,flower:'#9a8ae8',leafTint:'#6f8d4e',
+   note:'A haze of tiny lavender flowers over the high marsh — pollinator fuel where little else blooms.',
+   p:{age:.7,angle:26,gravity:0,decay:.8,branch:3,asym:.4,jitter:10,density:.6,leafSize:1.6}},
+
+  // ---- DUNE ----
+  {id:'ammophila',name:'American Beachgrass',latin:'Ammophila breviligulata',family:'Poaceae',zone:'dune',form:'grass',
+   habit:'dune-building grass',pheno:'cool-season',rootM:1.2,maxH:1.0,model:'linear · sand-catch',rule:'B → B · rhizome leap',
+   fn:['erosion','salt','phyto'],tol:{s:.85,f:.3,d:.85},carbon:.3,phyto:.4,seed:0x21,baseLen:42,blades:22,leafTint:'#8aa15a',
+   note:'Buries itself to grow. Every blade catches blown sand — the reason the foredune exists at all.',
+   p:{age:.78,angle:12,gravity:6,decay:.93,branch:1,asym:.18,jitter:9,density:.55,leafSize:1.7}},
+  {id:'prunus-mar',name:'Beach Plum',latin:'Prunus maritima',family:'Rosaceae',zone:'dune',form:'shrub',
+   habit:'sprawling shrub',pheno:'spring flower · fall fruit',rootM:0.8,maxH:2.0,model:'sympodial shrub',rule:'F → F[+F][−F]F',
+   fn:['salt','pollinator','erosion'],tol:{s:.8,f:.3,d:.8},carbon:.4,phyto:.45,seed:0x22,baseLen:30,fruit:'#6a4a8a',flower:'#e8e0d0',
+   note:'White in May, purple-fruited in September. Holds the back-dune and feeds the jam jar.',
+   p:{age:.7,angle:30,gravity:3,decay:.7,branch:3,asym:.4,jitter:12,density:.7,leafSize:2.6}},
+  {id:'morella',name:'Northern Bayberry',latin:'Morella pensylvanica',family:'Myricaceae',zone:'dune',form:'shrub',
+   habit:'dense rounded shrub',pheno:'semi-evergreen',rootM:0.7,maxH:2.5,model:'sympodial shrub',rule:'F → F[+F][−F]F',
+   fn:['salt','nitrogen','phyto','evergreen'],tol:{s:.88,f:.5,d:.7},carbon:.45,phyto:.6,seed:0x23,baseLen:32,leafTint:'#4a6e36',fruit:'#9aa890',
+   note:'Fixes its own nitrogen, so it thrives where soil is barely soil. Waxy berries scent the winter dune.',
+   p:{age:.72,angle:26,gravity:2,decay:.71,branch:4,asym:.35,jitter:10,density:.82,leafSize:2.4}},
+  {id:'opuntia',name:'Eastern Prickly Pear',latin:'Opuntia humifusa',family:'Cactaceae',zone:'dune',form:'succulent',
+   habit:'mat-forming cactus',pheno:'summer bloom',rootM:0.4,maxH:0.4,model:'cladode chain · areoles φ',rule:'pad → pad · θ=137.5°',
+   fn:['erosion','phyto'],tol:{s:.6,f:.1,d:.97},carbon:.2,phyto:.3,seed:0x24,baseLen:30,
+   note:'The Northeast’s only native cactus. Yellow blooms on the hottest, driest sand on the coast.',
+   p:{age:.7,angle:20,gravity:0,decay:.8,branch:2,asym:.3,jitter:6,density:.6,leafSize:2}},
+  {id:'solidago-semp',name:'Seaside Goldenrod',latin:'Solidago sempervirens',family:'Asteraceae',zone:'dune',form:'herb',
+   habit:'fleshy-leaved forb',pheno:'late-summer bloom',rootM:0.5,maxH:1.4,model:'stem + terminal plume',rule:'F → F · plume head',
+   fn:['salt','pollinator'],tol:{s:.85,f:.4,d:.7},carbon:.2,phyto:.4,seed:0x25,baseLen:30,flower:'#d8c24a',leafTint:'#5f8d3e',
+   note:'The last great nectar source before the monarchs cross the harbor. Salt-spray proof.',
+   p:{age:.74,angle:18,gravity:0,decay:.8,branch:2,asym:.3,jitter:8,density:.6,leafSize:1.8}},
+
+  // ---- MARITIME FOREST ----
+  {id:'pinus-rigida',name:'Pitch Pine',latin:'Pinus rigida',family:'Pinaceae',zone:'forest',form:'conifer',
+   habit:'irregular fire-pine',pheno:'evergreen',rootM:2.0,maxH:18,model:"Rauh's · whorled",rule:'F → F[whorl(k)]F',
+   fn:['carbon','salt','evergreen'],tol:{s:.6,f:.2,d:.85},carbon:.7,phyto:.45,seed:0x31,baseLen:40,baseW:4,leafTint:'#4a6e3a',
+   note:'Sprouts from its own bark after fire. The backbone of the Pine Barrens and the sandy maritime ridge.',
+   p:{age:.72,angle:20,gravity:8,decay:.82,branch:6,asym:.25,jitter:8,density:.6,leafSize:1.7}},
+  {id:'juniperus',name:'Eastern Red Cedar',latin:'Juniperus virginiana',family:'Cupressaceae',zone:'forest',form:'conifer',narrow:true,
+   habit:'columnar juniper',pheno:'evergreen',rootM:1.8,maxH:14,model:"Massart's · narrow",rule:'F → F[whorl₀]F · narrow envelope',
+   fn:['salt','carbon','evergreen'],tol:{s:.8,f:.3,d:.85},carbon:.6,phyto:.4,seed:0x32,baseLen:44,baseW:3.2,leafTint:'#3f6a44',
+   note:'First tree onto an abandoned field; tolerant of salt wind. Berries feed cedar waxwings all winter.',
+   p:{age:.74,angle:16,gravity:6,decay:.84,branch:6,asym:.15,jitter:5,density:.75,leafSize:1.6}},
+  {id:'quercus-rubra',name:'Northern Red Oak',latin:'Quercus rubra',family:'Fagaceae',zone:'forest',form:'tree',
+   habit:'sympodial canopy',pheno:'deciduous',rootM:2.5,maxH:24,model:"Hallé · sympodial",rule:'F → F[+F][−F][≈F] · ε∈[−12°,12°]',
+   fn:['carbon'],tol:{s:.16,f:.2,d:.5},carbon:.95,phyto:.45,seed:0x33,baseLen:50,baseW:4.6,
+   note:'The carbon heavyweight of the upland canopy — and the species coastal retreat leaves stranded behind the salt line.',
+   p:{age:.74,angle:32,gravity:2,decay:.745,branch:3,asym:.42,jitter:11,density:.72,leafSize:3.6}},
+  {id:'quercus-velutina',name:'Black Oak',latin:'Quercus velutina',family:'Fagaceae',zone:'forest',form:'tree',
+   habit:'sympodial canopy',pheno:'deciduous',rootM:2.4,maxH:22,model:"Hallé · sympodial",rule:'F → F[+F][−F]F',
+   fn:['carbon'],tol:{s:.18,f:.18,d:.6},carbon:.9,phyto:.45,seed:0x34,baseLen:48,baseW:4.4,leafTint:'#5a7d33',
+   note:'Drought-firm cousin of the red oak; acorns anchor the upland food web.',
+   p:{age:.72,angle:30,gravity:3,decay:.74,branch:3,asym:.4,jitter:11,density:.7,leafSize:3.4}},
+  {id:'ilex-opaca',name:'American Holly',latin:'Ilex opaca',family:'Aquifoliaceae',zone:'forest',form:'tree',
+   habit:'dense evergreen pyramid',pheno:'broadleaf evergreen',rootM:1.5,maxH:12,model:"sympodial · dense",rule:'F → F[+F][−F]F · evergreen',
+   fn:['salt','evergreen'],tol:{s:.7,f:.4,d:.55},carbon:.6,phyto:.4,seed:0x35,baseLen:38,baseW:3.6,leafTint:'#3f6a3e',fruit:'#c0392b',
+   note:'Holds its glossy leaves and red berries through the salt-wind winter of the maritime forest.',
+   p:{age:.7,angle:26,gravity:4,decay:.72,branch:3,asym:.3,jitter:8,density:.85,leafSize:2.6}},
+  {id:'amelanchier',name:'Shadbush',latin:'Amelanchier canadensis',family:'Rosaceae',zone:'forest',form:'shrub',
+   habit:'multi-stem small tree',pheno:'early-spring flower',rootM:1.0,maxH:6,model:'sympodial · suckering',rule:'F → F[+F][−F]F',
+   fn:['pollinator','salt'],tol:{s:.55,f:.5,d:.5},carbon:.5,phyto:.5,seed:0x36,baseLen:34,fruit:'#5a3a6a',flower:'#e8e0d0',
+   note:'Blooms when the shad run the rivers — the first white of the coastal spring.',
+   p:{age:.7,angle:24,gravity:2,decay:.73,branch:3,asym:.4,jitter:10,density:.65,leafSize:2.4}},
+  {id:'sassafras',name:'Sassafras',latin:'Sassafras albidum',family:'Lauraceae',zone:'forest',form:'tree',
+   habit:'layered sympodial',pheno:'deciduous',rootM:1.6,maxH:15,model:"Aubréville-like tiers",rule:'F → F[+F][−F]F',
+   fn:['carbon','pollinator'],tol:{s:.4,f:.3,d:.65},carbon:.6,phyto:.5,seed:0x37,baseLen:42,leafTint:'#5f8d3e',
+   note:'Mitten leaves, root-beer bark, and a blaze of orange in fall. Pioneers the forest edge.',
+   p:{age:.72,angle:28,gravity:5,decay:.74,branch:3,asym:.35,jitter:10,density:.68,leafSize:3}},
+
+  // ---- FRESHWATER WETLAND ----
+  {id:'salix-babylon',name:'Weeping Willow',latin:'Salix babylonica',family:'Salicaceae',zone:'wetland',form:'tree',
+   habit:'pendant sympodial',pheno:'deciduous',rootM:2.0,maxH:16,model:"Champagnat's · weeping",rule:'F → F[+F]F[−F] · γ=+25°',
+   fn:['flood','phyto','erosion'],tol:{s:.25,f:.8,d:.2},carbon:.55,phyto:.66,seed:0x41,baseLen:46,baseW:4,leafTint:'#7ca33e',
+   note:'Gravity-drawn curtains over the water. A thirsty, fast stormwater sponge for the wet edge.',
+   p:{age:.74,angle:20,gravity:24,decay:.8,branch:2,asym:.3,jitter:8,density:.78,leafSize:2.4}},
+  {id:'salix-nigra',name:'Black Willow',latin:'Salix nigra',family:'Salicaceae',zone:'wetland',form:'tree',
+   habit:'leaning multi-trunk',pheno:'deciduous',rootM:1.8,maxH:18,model:'sympodial · riparian',rule:'F → F[+F][−F]F',
+   fn:['flood','erosion','phyto'],tol:{s:.3,f:.92,d:.25},carbon:.55,phyto:.62,seed:0x42,baseLen:46,leafTint:'#6f9a3a',
+   note:'Roots knit the eroding streambank; live stakes resprout into a wall of green.',
+   p:{age:.74,angle:26,gravity:6,decay:.76,branch:3,asym:.45,jitter:12,density:.72,leafSize:2.6}},
+  {id:'acer-rubrum',name:'Red Maple',latin:'Acer rubrum',family:'Sapindaceae',zone:'wetland',form:'tree',
+   habit:'opposite-branched canopy',pheno:'deciduous',rootM:1.8,maxH:21,model:"Massart-ish · opposite",rule:'F → F[+F][−F]F',
+   fn:['flood','carbon'],tol:{s:.3,f:.85,d:.45},carbon:.8,phyto:.5,seed:0x43,baseLen:46,baseW:4.2,leafTint:'#5a7d33',
+   note:'The most adaptable tree on the coast — swamp to upland — and the first to flag red each autumn.',
+   p:{age:.74,angle:28,gravity:3,decay:.745,branch:3,asym:.36,jitter:10,density:.74,leafSize:3.2}},
+  {id:'cephalanthus',name:'Buttonbush',latin:'Cephalanthus occidentalis',family:'Rubiaceae',zone:'wetland',form:'shrub',
+   habit:'open wetland shrub',pheno:'summer pincushion bloom',rootM:0.8,maxH:3,model:'sympodial shrub',rule:'F → F[+F][−F]F · ●heads',
+   fn:['flood','pollinator'],tol:{s:.3,f:.95,d:.3},carbon:.4,phyto:.5,seed:0x44,baseLen:32,flower:'#e8e0d0',leafTint:'#4f7d3a',
+   note:'Stands in standing water. Spherical white flower-heads are a pollinator magnet; seeds feed ducks.',
+   p:{age:.7,angle:28,gravity:2,decay:.71,branch:3,asym:.4,jitter:10,density:.7,leafSize:2.6}},
+  {id:'clethra',name:'Sweet Pepperbush',latin:'Clethra alnifolia',family:'Clethraceae',zone:'wetland',form:'shrub',
+   habit:'colonial wetland shrub',pheno:'fragrant late-summer spike',rootM:0.7,maxH:2.5,model:'sympodial · suckering',rule:'F → F[+F][−F]F · spike',
+   fn:['flood','pollinator'],tol:{s:.35,f:.85,d:.35},carbon:.4,phyto:.5,seed:0x45,baseLen:30,flower:'#e8e0d0',leafTint:'#4f7d3a',
+   note:'Perfumes the August wetland; tolerates salt spray and wet feet alike.',
+   p:{age:.7,angle:26,gravity:2,decay:.71,branch:4,asym:.38,jitter:9,density:.78,leafSize:2.4}},
+
+  // ---- PIONEER / DISTURBED ----
+  {id:'populus-trem',name:'Quaking Aspen',latin:'Populus tremuloides',family:'Salicaceae',zone:'pioneer',form:'clonal',
+   habit:'clonal colony',pheno:'deciduous',rootM:1.2,maxH:18,model:'clonal · shared rhizome',rule:'F → F[+F][−F] × k stems',
+   fn:['carbon','erosion'],tol:{s:.2,f:.45,d:.4},carbon:.6,phyto:.52,seed:0x51,baseLen:44,leafTint:'#7ca33e',
+   note:'One organism, many trembling stems. First to green a cleared or burned upland.',
+   p:{age:.72,angle:14,gravity:-3,decay:.78,branch:2,asym:.34,jitter:9,density:.7,leafSize:2.8}},
+  {id:'rhus-typhina',name:'Staghorn Sumac',latin:'Rhus typhina',family:'Anacardiaceae',zone:'pioneer',form:'clonal',
+   habit:'umbrella clonal thicket',pheno:'deciduous · red fall',rootM:1.0,maxH:6,model:"Leeuwenberg-ish · umbrella",rule:'F → F·★[F][F] · crown fork',
+   fn:['erosion','pollinator'],tol:{s:.45,f:.3,d:.8},carbon:.45,phyto:.55,seed:0x52,baseLen:36,fruit:'#9a3a2a',leafTint:'#6f9a3a',
+   note:'Velvet antler-stems and crimson fruit cones. Colonizes raw fill and roadside slope fast.',
+   p:{age:.7,angle:22,gravity:-2,decay:.74,branch:2,asym:.3,jitter:8,density:.72,leafSize:2.6}},
+  {id:'panicum',name:'Switchgrass',latin:'Panicum virgatum',family:'Poaceae',zone:'pioneer',form:'grass',
+   habit:'deep-rooted bunchgrass',pheno:'warm-season',rootM:2.5,maxH:2.2,model:'linear · deep root',rule:'B → B · airy panicle',
+   fn:['carbon','erosion','phyto'],tol:{s:.5,f:.6,d:.8},carbon:.6,phyto:.65,seed:0x53,baseLen:50,blades:20,leafTint:'#8aa15a',
+   note:'Roots plunge deeper than the plant is tall — a carbon pump and erosion brake for raw ground.',
+   p:{age:.78,angle:11,gravity:4,decay:.92,branch:1,asym:.2,jitter:7,density:.55,leafSize:1.8}},
+  {id:'baccharis',name:'Groundsel Tree',latin:'Baccharis halimifolia',family:'Asteraceae',zone:'pioneer',form:'shrub',
+   habit:'salt-edge shrub',pheno:'silver-seeded fall',rootM:0.8,maxH:3.5,model:'sympodial shrub',rule:'F → F[+F][−F]F',
+   fn:['salt','erosion','pollinator'],tol:{s:.85,f:.7,d:.6},carbon:.4,phyto:.55,seed:0x54,baseLen:34,leafTint:'#6a8d4a',flower:'#e8e4d0',
+   note:'The shrub that marks the marsh’s upper edge — silver seed-plumes catch the autumn light.',
+   p:{age:.72,angle:28,gravity:2,decay:.72,branch:4,asym:.4,jitter:10,density:.72,leafSize:2.4}},
+
+  // ================= INVASIVE · existing conditions, mapped to be managed =================
+  {id:'knotweed',name:'Japanese Knotweed',latin:'Reynoutria japonica',family:'Polygonaceae',zone:'wetland',form:'shrub',status:'invasive',
+   habit:'cane-forming thicket',pheno:'late-summer plume',rootM:2.0,maxH:3,model:'sympodial cane · clonal',rule:'F → F[+F][−F]F · rhizome leap',
+   fn:['flood','erosion'],tol:{s:.3,f:.7,d:.6},carbon:.4,phyto:.5,seed:0x61,baseLen:34,leafTint:'#6a8a3a',flower:'#e8e0d0',rootType:'rhizomatous',
+   note:'Bamboo-like canes from a rhizome that shrugs off concrete. Mapped so it can be cut back — never planted.',
+   phytoNote:'Colonizes metal-laden brownfield fill, but its monoculture erases the very diversity that real remediation depends on.',
+   pollNote:'Late flowers draw bees — yet it displaces the native plants specialist pollinators and birds actually need.',
+   p:{age:.74,angle:24,gravity:3,decay:.72,branch:3,asym:.4,jitter:10,density:.8,leafSize:3.0}},
+  {id:'norway-maple',name:'Norway Maple',latin:'Acer platanoides',family:'Sapindaceae',zone:'forest',form:'tree',status:'invasive',
+   habit:'dense shading canopy',pheno:'deciduous',rootM:1.5,maxH:18,model:'sympodial · dense crown',rule:'F → F[+F][−F]F',
+   fn:['carbon'],tol:{s:.4,f:.4,d:.6},carbon:.7,phyto:.4,seed:0x62,baseLen:46,baseW:4.2,leafTint:'#5a7d33',rootType:'fibrous',
+   note:'Shade so dense and roots so greedy that nothing native grows beneath it. A street tree gone rogue across the region.',
+   phytoNote:'Intercepts particulates like any large canopy — but its shallow root mat outcompetes the understory remediators for water.',
+   pollNote:'Early flowers offer some nectar; on balance it thins the forest food web by shading out native host plants.',
+   p:{age:.74,angle:30,gravity:3,decay:.745,branch:3,asym:.36,jitter:10,density:.85,leafSize:3.2}},
+  {id:'ailanthus',name:'Tree of Heaven',latin:'Ailanthus altissima',family:'Simaroubaceae',zone:'pioneer',form:'tree',status:'invasive',
+   habit:'fast clonal pioneer',pheno:'deciduous · pinnate',rootM:2.0,maxH:20,model:'sympodial · suckering',rule:'F → F[+F][−F] × suckers',
+   fn:['carbon'],tol:{s:.5,f:.4,d:.85},carbon:.55,phyto:.5,seed:0x63,baseLen:48,leafTint:'#6f9a3a',rootType:'rhizomatous',
+   note:'Grows from any crack, resprouts from any cut, poisons the soil against competitors — and hosts the spotted lanternfly.',
+   phytoNote:'Survives the most contaminated urban fill, but releases allelochemicals that actively suppress the plants around it.',
+   pollNote:'Harbors the invasive spotted lanternfly; offers little to the native pollinators it crowds out.',
+   p:{age:.74,angle:26,gravity:4,decay:.76,branch:2,asym:.4,jitter:11,density:.6,leafSize:3.2}},
+  {id:'bamboo',name:'Golden Bamboo',latin:'Phyllostachys aurea',family:'Poaceae',zone:'pioneer',form:'grass',status:'invasive',
+   habit:'running woody cane',pheno:'evergreen cane',rootM:1.0,maxH:8,model:'monopodial cane · running rhizome',rule:'B → B · rhizome runner',
+   fn:['erosion','evergreen'],tol:{s:.3,f:.5,d:.6},carbon:.5,phyto:.4,seed:0x64,baseLen:64,blades:16,leafTint:'#5a8a3a',rootType:'rhizomatous',
+   note:'A running rhizome that crosses property lines underground and throws up an impenetrable cane wall. Nearly impossible to remove.',
+   phytoNote:'Fast biomass and erosion control are real — but the running rhizome makes it an uncontainable monoculture in temperate soil.',
+   pollNote:'Wind-pollinated and rarely flowering; dense cover, but it supports few native insects or birds.',
+   p:{age:.82,angle:6,gravity:2,decay:.95,branch:1,asym:.08,jitter:4,density:.6,leafSize:2}},
+];
+
+/* status, glossary, augmentation */
+const STATUS={native:{c:'#9ed855',g:'\u25c6',l:'native'},introduced:{c:'#c8a96e',g:'\u25c7',l:'introduced'},invasive:{c:'#e07a5a',g:'!',l:'invasive'}};
+const ROOTTYPE={taproot:'taproot \u00b7 deep anchor',fibrous:'fibrous \u00b7 spreading pump',rhizomatous:'rhizomatous \u00b7 clonal mat',adventitious:'adventitious \u00b7 stem-born',prop:'prop + pneumatophore'};
+const GLOSSARY={
+  'VVIM':'Vegetative Voxel Information Model\u2122 \u2014 SymbiOS\u2019s data model: one multiscale graph carrying a plant\u2019s form, biology, and ecosystem-service data in three bands.',
+  'Vegetative Voxel Information Model\u2122':'SymbiOS\u2019s core data model: one multiscale graph carrying a plant\u2019s form, biology, and ecosystem-service data in three bands.',
+  'L-system':'Lindenmayer system \u2014 a rewriting grammar where a simple rule applied to itself grows branching form. The grammar of plants.',
+  'MTG':'Multiscale Tree Graph \u2014 one graph describing a plant at every scale at once: whole organism \u2192 systems \u2192 modules \u2192 organs.',
+  'PlantGL':'The geometry library that turns the plant graph into a 3-D mesh \u2014 exportable to Rhino, Grasshopper, GIS.',
+  'Phytoremediation':'Using living plants to absorb, trap, or break down pollutants \u2014 metals, petroleum, excess nutrients \u2014 in soil and water.',
+  'phytoremediation':'Using living plants to absorb, trap, or break down pollutants \u2014 metals, petroleum, excess nutrients \u2014 in soil and water.',
+  'halophyte':'A salt-loving plant that thrives in saline soil or tidal water where most species fail.',
+  'sympodial':'Branching where the main axis stops and side shoots take over \u2014 the spreading habit of oaks and maples.',
+  'monopodial':'Growth from a single dominant leader with side branches \u2014 the conical habit of pines and firs.',
+  'rhizome':'A horizontal underground stem that sends up new shoots \u2014 how grasses, aspens, and many invasives spread clonally.',
+  'VOC':'Volatile Organic Compounds \u2014 airborne chemical signals plants release to warn neighbours and summon beneficial insects.',
+  'mycorrhizal':'The underground fungal network linking plant roots \u2014 the \u201cwood-wide web\u201d that trades carbon, nutrients, and signals.',
+  'LAI':'Leaf Area Index \u2014 leaf area per unit ground area; higher means more shade, photosynthesis, and rainfall interception.',
+};
+const AUG={
+ 'spartina-alt':{s:'native',rt:'rhizomatous',ph:'Marsh-mud microbes in its rhizosphere degrade petroleum and bind metals (rhizodegradation).',po:'Stems and detritus feed ribbed mussels and fiddler crabs; cover for marsh rails.'},
+ 'spartina-pat':{s:'native',rt:'rhizomatous',ph:'Dense roots stabilize and aerate high-marsh peat, supporting microbial breakdown of contaminants.',po:'Nesting cover for sparrows and rails; seeds feed waterfowl.'},
+ 'phragmites':{s:'invasive',rt:'rhizomatous',ph:'Takes up nutrients and some metals fast \u2014 but its monoculture erases the marsh diversity it replaces.',po:'Dense stands shelter few specialists; it crowds out the native plants birds and pollinators need.'},
+ 'bolboschoenus':{s:'native',rt:'rhizomatous',ph:'Binds brackish sediment and filters runoff at the ditch edge.',po:'Seedheads are prime forage for migrating waterfowl.'},
+ 'limonium':{s:'native',rt:'taproot',ph:'Excretes salt and tolerates saline soil; limited active uptake.',po:'A rare high-marsh nectar source for bees and small butterflies.'},
+ 'ammophila':{s:'native',rt:'rhizomatous',ph:'Deep rhizomes stabilize and aerate dune sand, anchoring the microbial community.',po:'Provides cover for dune insects and nesting shorebirds.'},
+ 'prunus-mar':{s:'native',rt:'fibrous',ph:'Spreading roots stabilize back-dune soil; modest uptake.',po:'Spring blossoms feed native bees; fruit feeds birds, foxes, and people.'},
+ 'morella':{s:'native',rt:'fibrous',ph:'A nitrogen-fixer that builds soil on barren sand, enabling other remediators to follow.',po:'Waxy berries sustain tree swallows and warblers through winter.'},
+ 'opuntia':{s:'native',rt:'fibrous',ph:'Tolerant of poor, dry, disturbed soils; minimal uptake.',po:'Showy yellow blooms draw native bees; pads shelter dune reptiles.'},
+ 'solidago-semp':{s:'native',rt:'fibrous',ph:'Salt-tolerant roots stabilize dune and edge soil.',po:'The last great nectar source before the monarch migration crosses the harbor.'},
+ 'pinus-rigida':{s:'native',rt:'taproot',ph:'Needles intercept airborne particulates; roots stabilize and sequester metals in sandy soil.',po:'Seeds and evergreen cover sustain crossbills, chickadees, and squirrels.'},
+ 'juniperus':{s:'native',rt:'taproot',ph:'Salt- and drought-firm roots hold poor soil; foliage filters particulates year-round.',po:'Berries are a winter staple for cedar waxwings and robins.'},
+ 'quercus-rubra':{s:'native',rt:'taproot',ph:'Locks metals into long-lived wood; its real service is decades of carbon storage and a soil-holding root mat.',po:'A keystone host \u2014 supports 500+ caterpillar species, the base of the songbird food web.'},
+ 'quercus-velutina':{s:'native',rt:'taproot',ph:'Stabilizes upland soil and sequesters carbon in dense wood.',po:'Acorns anchor the upland food web for jays, deer, and turkeys.'},
+ 'ilex-opaca':{s:'native',rt:'fibrous',ph:'Evergreen canopy intercepts particulates through the salt-wind winter.',po:'Red berries feed robins and mockingbirds when little else remains.'},
+ 'amelanchier':{s:'native',rt:'fibrous',ph:'Suckering roots stabilize forest-edge soil.',po:'Among the earliest spring blooms for native bees; berries feed dozens of bird species.'},
+ 'sassafras':{s:'native',rt:'taproot',ph:'Pioneers disturbed edges and rebuilds soil structure.',po:'Host to the spicebush swallowtail; fruit feeds migrating thrushes.'},
+ 'salix-babylon':{s:'introduced',rt:'fibrous',ph:'A phytoremediation workhorse \u2014 fast growth + deep fibrous roots pump and degrade metals and petroleum from soil and groundwater, no earth-moving.',po:'Early catkins are a critical first nectar source for emerging native bees.'},
+ 'salix-nigra':{s:'native',rt:'fibrous',ph:'Live stakes resprout into a root wall that pumps and filters streambank groundwater.',po:'Catkins feed early bees; thickets shelter songbirds and stabilize fish habitat.'},
+ 'acer-rubrum':{s:'native',rt:'fibrous',ph:'Adaptable roots take up excess nutrients across wet and dry soils.',po:'Very early flowers feed bees; samaras feed squirrels and finches.'},
+ 'cephalanthus':{s:'native',rt:'fibrous',ph:'Stands in standing water, filtering nutrients straight from the wetland.',po:'Pincushion flowers are a pollinator magnet; seeds feed ducks and shorebirds.'},
+ 'clethra':{s:'native',rt:'fibrous',ph:'Colonial roots filter runoff and stabilize the wet edge.',po:'Fragrant August spikes are a late-season favorite of bees and butterflies.'},
+ 'populus-trem':{s:'native',rt:'rhizomatous',ph:'A premier phytoremediator (Salicaceae) \u2014 rapid uptake of solvents, nitrates, and metals; transpires and degrades groundwater contaminants.',po:'Catkins feed early bees; host to tiger swallowtail and viceroy; browse for beaver and grouse.'},
+ 'rhus-typhina':{s:'native',rt:'rhizomatous',ph:'Colonizes raw fill and slope fast, rebuilding soil where little else grows.',po:'Fuzzy fruit cones feed birds deep into winter; flowers draw native bees.'},
+ 'panicum':{s:'native',rt:'fibrous',ph:'Roots plunge deeper than the plant is tall \u2014 a carbon pump and erosion brake that hosts contaminant-degrading microbes.',po:'Seeds feed sparrows and finches; bunch base shelters ground-nesting insects.'},
+ 'baccharis':{s:'native',rt:'fibrous',ph:'Salt-tolerant roots stabilize the marsh-upland transition.',po:'Late silver flowers are a crucial fall nectar source as other blooms fade.'},
+};
+SPECIES.forEach(sp=>{const a=AUG[sp.id];if(a){sp.status=a.s;sp.rootType=a.rt;sp.phytoNote=a.ph;sp.pollNote=a.po;}
+  if(!sp.status)sp.status=sp.flag==='invasive'?'invasive':'native';
+  if(!sp.rootType)sp.rootType='fibrous';});
+const ZONE_COLOR={marsh:'var(--z-marsh)',dune:'var(--z-dune)',forest:'var(--z-forest)',wetland:'var(--z-wetland)',pioneer:'var(--z-pioneer)'};
+const ZONE_HEX={marsh:'#6ab4e8',dune:'#c8a96e',forest:'#9ed855',wetland:'#55c4a0',pioneer:'#9a8ae8'};
+const FN_COLOR={salt:'#6ab4e8',flood:'#55c4a0',carbon:'#9ed855',phyto:'#9a8ae8',erosion:'#c8a96e',pollinator:'#e8b04a',nitrogen:'#55c4a0',evergreen:'#3f6a3e'};
+const FN_LABEL={salt:'salt-tolerant',flood:'flood-tolerant',carbon:'high-carbon',phyto:'phytoremediator',erosion:'erosion-control',pollinator:'pollinator',nitrogen:'nitrogen-fixer',evergreen:'evergreen'};
+
+/* ============================================================
+   ATLAS RENDER
+   ============================================================ */
+let activeZone='all', activeFns=new Set(), searchTerm='';
+function filtered(){
+  return SPECIES.filter(sp=>{
+    if(activeZone==='invasive'){if(sp.status!=='invasive')return false;}
+    else if(activeZone!=='all'&&sp.zone!==activeZone)return false;
+    for(const f of activeFns)if(!sp.fn.includes(f))return false;
+    if(searchTerm){const t=searchTerm.toLowerCase();if(!(sp.name.toLowerCase().includes(t)||sp.latin.toLowerCase().includes(t)||sp.family.toLowerCase().includes(t)))return false;}
+    return true;
+  });
+}
+function buildAtlas(){
+  const grid=document.getElementById('atlas');grid.innerHTML='';
+  const list=filtered();
+  document.getElementById('navCount').textContent=list.length+' specimen'+(list.length===1?'':'s');
+  if(list.length===0){grid.innerHTML='<div class="no-results">No species match those filters.</div>';return;}
+  list.forEach((sp,i)=>{
+    const inv=sp.status==='invasive';
+    const card=document.createElement('div');card.className='card'+(inv?' invasive':'');card.style.animationDelay=(i*22)+'ms';card.dataset.id=sp.id;
+    const zc=ZONE_COLOR[sp.zone];
+    const fnDots=sp.fn.slice(0,4).map(f=>`<i style="background:${FN_COLOR[f]||'#6a8a68'}"></i>`).join('');
+    const zoneLabel=inv?`<div class="card-zone inv">⚠ invasive · ${sp.zone}</div>`:`<div class="card-zone" style="color:${zc};border-color:${zc}33">${sp.zone}</div>`;
+    card.innerHTML=`
+      <div class="card-canvas">
+        ${zoneLabel}
+        <div class="card-fn">${fnDots}</div>
+        <button class="card-add" data-add="${sp.id}" title="add to shoreline">＋</button>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${inv?'<span style="color:#e07a5a">⚠ </span>':''}${sp.name}</div>
+        <div class="card-latin italic">${sp.latin}</div>
+        <div class="card-meta">${sp.maxH} m · ${sp.model.split('·')[0].trim()}</div>
+      </div>`;
+    const cv=card.querySelector('.card-canvas');
+    const svg=svgEl(186,194);cv.insertBefore(svg,cv.firstChild);
+    renderSpecimen(svg,sp,186,194,{ground:16,showGround:false,scale:0.95});
+    card.addEventListener('click',e=>{if(e.target.closest('[data-add]'))return;openDrawer(sp.id);});
+    grid.appendChild(card);
+  });
+  // wire add buttons
+  grid.querySelectorAll('[data-add]').forEach(b=>{
+    b.classList.toggle('added',shoreline.includes(b.dataset.add));
+    b.addEventListener('click',e=>{e.stopPropagation();toggleShore(b.dataset.add);});
+  });
+}
+
+/* ============================================================
+   DETAIL DRAWER
+   ============================================================ */
+let drawerState=null;
+function openDrawer(id){
+  const sp=SPECIES.find(s=>s.id===id);drawerState={sp,age:sp.p.age,density:sp.p.density,angle:sp.p.angle,hue:undefined,root:0.6,signals:true};
+  const zc=ZONE_COLOR[sp.zone];
+  const stt=STATUS[sp.status]||STATUS.native;const inv=sp.status==='invasive';
+  const tags=sp.fn.map(f=>`<span class="tag" style="color:${FN_COLOR[f]};border-color:${FN_COLOR[f]}33">${FN_LABEL[f]}</span>`).join('');
+  const zoneBadge=inv
+    ? `<div class="dr-zone inv">⚠ ${stt.l} · ${sp.zone}</div>`
+    : `<div class="dr-zone" style="color:${stt.c};border-color:${stt.c}44">${stt.g} ${stt.l} · ${sp.zone}</div>`;
+  const d=document.getElementById('drawer');
+  d.innerHTML=`
+    <div class="dr-head">
+      <button class="dr-close" id="drClose">✕</button>
+      ${zoneBadge}
+      <div class="dr-name">${inv?'<span style="color:#e07a5a">⚠ </span>':''}${sp.name}</div>
+      <div class="dr-latin italic">${sp.latin} · ${sp.family}</div>
+      <div class="dr-note">${sp.note}</div>
+    </div>
+    <div class="dr-canvas"><div class="dr-readout">
+      <div>age <b id="dr-age">—</b></div><div>height <b id="dr-h">—</b></div>
+      <div>segments <b id="dr-seg">—</b></div><div>model <b>${sp.model}</b></div>
+    </div></div>
+    <div class="dr-sec">
+      <div class="dr-sec-h">parameter manifold</div>
+      <div class="dial"><div class="dial-h"><span class="dn"><em>n</em>age</span><span class="dv" id="v-age"></span></div><input type="range" id="s-age" min="0" max="1" step="0.01"></div>
+      <div class="dial"><div class="dial-h"><span class="dn"><em>θ</em>branch angle</span><span class="dv" id="v-angle"></span></div><input type="range" id="s-angle" min="5" max="50" step="0.5"></div>
+      <div class="dial"><div class="dial-h"><span class="dn"><em>ρ</em>leaf density</span><span class="dv" id="v-density"></span></div><input type="range" id="s-density" min="0" max="1" step="0.02"></div>
+      <div class="dial"><div class="dial-h"><span class="dn"><em>r</em>root system <span style="color:var(--mid);font-size:.42rem">(${(ROOTTYPE[sp.rootType]||'fibrous').split('·')[0].trim()})</span></span><span class="dv" id="v-root"></span></div><input type="range" id="s-root" min="0" max="1" step="0.02"></div>
+      <div class="dial"><div class="dial-h"><span class="dn"><em>h</em>leaf hue <span style="color:var(--mid);font-size:.42rem">(overrides season)</span></span><span class="dv" id="v-hue"></span></div><input type="range" id="s-hue" min="0" max="1" step="0.01"></div>
+      <button class="dr-toggle" id="drComms"><span class="gl" data-gl="VOC">VOC</span> + <span class="gl" data-gl="mycorrhizal">mycorrhizal</span> signals · on</button>
+    </div>
+    <div class="dr-sec">
+      <div class="dr-sec-h"><span class="gl" data-gl="VVIM">VVIM</span> record <span class="bn">· Vegetative Voxel Information Model™ · three bands</span></div>
+      <div class="band">
+        <div class="band-l" style="color:var(--cream)"><i style="background:var(--cream)"></i>BAND 1 · representation</div>
+        <div class="rule-box"><span class="gl" data-gl="L-system" style="color:var(--bright)">L-system</span> &nbsp;${sp.rule.replace(/F/g,'<em>F</em>').replace(/B/g,'<em>B</em>')}<div class="rl">architecture: ${glossModel(sp.model)} · geometry: <span class="gl" data-gl="PlantGL">PlantGL</span> mesh</div></div>
+      </div>
+      <div class="band">
+        <div class="band-l" style="color:var(--teal)"><i style="background:var(--teal)"></i>BAND 2 · biological</div>
+        <div class="kv">
+          <span class="k">habit</span><span class="v">${sp.habit}</span>
+          <span class="k">phenology</span><span class="v">${sp.pheno}</span>
+          <span class="k">root depth</span><span class="v"><em>${sp.rootM} m</em></span>
+          <span class="k">mature height</span><span class="v"><em>${sp.maxH} m</em></span>
+        </div>
+      </div>
+      <div class="band">
+        <div class="band-l" style="color:var(--gold)"><i style="background:var(--gold)"></i>BAND 3 · systems</div>
+        <div class="idx-lbl">Coastal Adaptation Index</div>
+        <div class="tol">
+          <div class="t"><div class="tn">SALT</div><div class="tbar"><i style="width:${(sp.tol.s*100)}%;background:var(--z-marsh)"></i></div></div>
+          <div class="t"><div class="tn">FLOOD</div><div class="tbar"><i style="width:${(sp.tol.f*100)}%;background:var(--z-wetland)"></i></div></div>
+          <div class="t"><div class="tn">DROUGHT</div><div class="tbar"><i style="width:${(sp.tol.d*100)}%;background:var(--z-dune)"></i></div></div>
+        </div>
+        <div class="idx-lbl" style="margin-top:.6rem">Ecosystem Services</div>
+        <div class="kv">
+          <span class="k">carbon potential</span><span class="v"><em>${(sp.carbon*100).toFixed(0)}</em> / 100</span>
+          <span class="k"><span class="gl" data-gl="phytoremediation">phytoremediation</span></span><span class="v"><em>${(sp.phyto*100).toFixed(0)}</em> / 100</span>
+        </div>
+        <div class="tags">${tags}</div>
+      </div>
+    </div>
+    <div class="dr-sec">
+      <div class="dr-sec-h">field notes</div>
+      <div class="fn-note"><div class="fh" style="color:var(--purple)"><span class="gl" data-gl="phytoremediation">phytoremediation</span> · how it works</div><div class="fb">${sp.phytoNote||'—'}</div></div>
+      <div class="fn-note poll"><div class="fh" style="color:var(--gold)">pollinators &amp; habitat</div><div class="fb">${sp.pollNote||'—'}</div></div>
+      <div class="fn-note rootn"><div class="fh" style="color:var(--teal)">root system</div><div class="fb">${ROOTTYPE[sp.rootType]||sp.rootType} — the underground mirror of the crown.</div></div>
+    </div>
+    <div class="dr-sec" style="border-bottom:none">
+      <button class="tray-clear" id="drAdd" style="color:var(--teal);border-color:var(--muted)">${shoreline.includes(sp.id)?'✓ in shoreline — remove':'＋ add to living shoreline'}</button>
+    </div>`;
+  // canvas
+  const cv=d.querySelector('.dr-canvas');const svg=svgEl(440,280);svg.id='dr-svg';cv.insertBefore(svg,cv.firstChild);
+  function redraw(){
+    const s=document.getElementById('dr-svg');while(s.firstChild)s.removeChild(s.firstChild);
+    const st=renderSpecimen(s,sp,440,280,{ground:18,showGround:true,detail:true,root:drawerState.root,signals:drawerState.signals,
+      age:drawerState.age,density:drawerState.density,angle:drawerState.angle,hue:drawerState.hue,scale:1.18});
+    const yr=sp.maxH>5?Math.round(15+drawerState.age*70):Math.round(2+drawerState.age*6);
+    document.getElementById('dr-age').textContent=yr+' yr';
+    document.getElementById('dr-h').textContent=(drawerState.age*sp.maxH).toFixed(1)+' m';
+    document.getElementById('dr-seg').textContent=st.seg.toLocaleString();
+  }
+  // wire sliders
+  const bind=(id,key,fmt,vid)=>{const inp=document.getElementById(id);inp.value=drawerState[key]!==undefined?drawerState[key]:0.5;document.getElementById(vid).textContent=fmt(parseFloat(inp.value));
+    inp.addEventListener('input',()=>{drawerState[key]=parseFloat(inp.value);document.getElementById(vid).textContent=fmt(drawerState[key]);redraw();});};
+  bind('s-age','age',v=>Math.round(v*100)+'%','v-age');
+  bind('s-angle','angle',v=>v.toFixed(0)+'°','v-angle');
+  bind('s-density','density',v=>(v*100).toFixed(0)+'%','v-density');
+  bind('s-root','root',v=>(v*100).toFixed(0)+'%','v-root');
+  const hueInp=document.getElementById('s-hue');hueInp.value=0.5;document.getElementById('v-hue').textContent='season';
+  hueInp.addEventListener('input',()=>{drawerState.hue=parseFloat(hueInp.value);document.getElementById('v-hue').textContent=seasonWord(drawerState.hue);redraw();});
+  const comms=document.getElementById('drComms');
+  comms.addEventListener('click',()=>{drawerState.signals=!drawerState.signals;comms.classList.toggle('off',!drawerState.signals);
+    comms.innerHTML=`<span class="gl" data-gl="VOC">VOC</span> + <span class="gl" data-gl="mycorrhizal">mycorrhizal</span> signals · ${drawerState.signals?'on':'off'}`;redraw();});
+  document.getElementById('drClose').addEventListener('click',closeDrawer);
+  document.getElementById('drAdd').addEventListener('click',()=>{toggleShore(sp.id);document.getElementById('drAdd').textContent=shoreline.includes(sp.id)?'✓ in shoreline — remove':'＋ add to living shoreline';});
+  redraw();
+  document.getElementById('scrim').classList.add('open');d.classList.add('open');
+}
+function glossModel(m){return m.replace(/sympodial/g,'<span class="gl" data-gl="sympodial">sympodial</span>').replace(/monopodial/g,'<span class="gl" data-gl="monopodial">monopodial</span>');}
+function seasonWord(h){if(h<.16)return'bud';if(h<.4)return'spring';if(h<.62)return'summer';if(h<.78)return'turning';if(h<.92)return'autumn';return'dormant';}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('scrim').classList.remove('open');drawerState=null;}
+document.getElementById('scrim').addEventListener('click',closeDrawer);
+
+/* ============================================================
+   COMPOSE SHORELINE
+   ============================================================ */
+let shoreline=[];  // species ids in plant order
+const ZONE_ORDER=['marsh','dune','wetland','forest','pioneer']; // left(wet) → right(upland)
+function toggleShore(id){
+  const i=shoreline.indexOf(id);
+  if(i>=0)shoreline.splice(i,1); else { if(shoreline.length>=10){toast('shoreline is full — <b>10 species max</b>');return;} shoreline.push(id); }
+  document.querySelectorAll('[data-add]').forEach(b=>b.classList.toggle('added',shoreline.includes(b.dataset.add)));
+  if(shoreline.length&&!document.getElementById('tray').classList.contains('open'))document.getElementById('tray').classList.add('open');
+  drawShoreline();
+}
+function drawShoreline(){
+  const host=document.getElementById('shoreline');
+  document.getElementById('shoreEmpty').style.display=shoreline.length?'none':'flex';
+  document.getElementById('trayCount').textContent=shoreline.length?`· ${shoreline.length} species`:'· empty';
+  let old=host.querySelector('svg');if(old)old.remove();
+  if(!shoreline.length){updateShoreStats();return;}
+  const W=860,H=170,groundY=H-30;
+  const svg=svgEl(W,H);svg.style.position='absolute';host.insertBefore(svg,host.firstChild);
+  // ground + tide band at the wet (marsh) end
+  el(svg,'rect',{x:0,y:groundY,width:W,height:H-groundY,fill:'#0a1209'});
+  L(svg,0,groundY,W,groundY,'#243a20',1);
+  el(svg,'rect',{x:0,y:groundY-8,width:W*0.28,height:H-groundY+8,fill:'rgba(106,180,232,0.10)'});
+  L(svg,0,groundY-8,W*0.28,groundY-8,'rgba(106,180,232,0.4)',1);
+  const tideT=el(svg,'text',{x:8,y:groundY-12,fill:'#6ab4e8','font-family':"'DM Mono',monospace",'font-size':'8','opacity':0.7});tideT.textContent='tide';
+  const upT=el(svg,'text',{x:W-8,y:groundY-12,fill:'#9ed855','font-family':"'DM Mono',monospace",'font-size':'8','opacity':0.6,'text-anchor':'end'});upT.textContent='upland';
+  // plant across, wet → upland
+  const sorted=[...shoreline].sort((a,b)=>{const A=SPECIES.find(s=>s.id===a),B=SPECIES.find(s=>s.id===b);return ZONE_ORDER.indexOf(A.zone)-ZONE_ORDER.indexOf(B.zone);});
+  const n=sorted.length;
+  sorted.forEach((id,i)=>{
+    const sp=SPECIES.find(s=>s.id===id);
+    const x=W*(0.06+(i+0.5)/n*0.88);
+    drawAt(svg,sp,x,groundY,0.6,i);
+  });
+  updateShoreStats();
+}
+/* draw one specimen at an arbitrary x,baseline */
+function drawAt(group,sp,cx,baseY,scale,idx){
+  const s=SEASONS[SEASON];
+  const leafy=(s.leafy||sp.fn.includes('evergreen'));
+  const baseLen=(sp.baseLen||34)*(0.45+sp.p.age*0.62)*scale*(VSCALE[sp.form]||1);
+  const iter=(sp.minIter||3)+sp.p.age*((sp.maxIter||7)-(sp.minIter||3));
+  const skip=Math.min(0.92,(1-sp.p.density*s.dens));
+  const common={cx:cx,cy:baseY,dir:-90,length:baseLen,decay:sp.p.decay||0.74,angle:sp.p.angle,jitter:sp.p.jitter||8,
+    branchCount:Math.round(sp.p.branch||2),asym:sp.p.asym||0.3,gravity:sp.p.gravity||0,iter:iter,
+    width:Math.max(1.2,(sp.baseW||3.6)*scale*0.8),widthDecay:0.66,minWidth:0.4,minLen:1.0,
+    color:sp.branchCol||s.branch,branchColor:sp.branchCol||s.branch,leafColor:leafy?leafColorFor(sp):null,
+    leafSize:(sp.p.leafSize||3)*scale,leafOpacity:0.9,skip:skip,dens:sp.p.density,
+    rng:seedRandom((sp.seed||0x55)+idx*5),blades:sp.blades,narrow:sp.narrow,fruit:sp.fruit,flower:sp.flower};
+  const st={seg:0,len:0,tips:0,leaves:0,top:baseY,bx0:cx,bx1:cx};
+  switch(sp.form){case'grass':growGrass(group,common,st);break;case'reed':growReed(group,common,st);break;
+    case'shrub':growShrub(group,common,st);break;case'conifer':growWhorl(group,common,st);break;
+    case'succulent':growSucc(group,common,st);break;case'herb':growHerb(group,common,st);break;
+    case'clonal':growClonal(group,common,st);break;case'mangrove':growMangrove(group,common,st);break;
+    default:grow(group,common,st);}
+  return st;
+}
+function updateShoreStats(){
+  let carbon=0,surge=0,storm=0,habitat=0;const zones=new Set();
+  shoreline.forEach(id=>{const sp=SPECIES.find(s=>s.id===id);zones.add(sp.zone);
+    carbon+=sp.carbon*sp.maxH*1.2; surge+=(sp.tol.f*0.6+sp.tol.s*0.4)*(sp.form==='grass'||sp.form==='reed'||sp.form==='shrub'?1.3:0.8)*10;
+    storm+=(sp.rootM*sp.tol.f*8+sp.carbon*5); habitat+=(sp.fn.includes('pollinator')?14:8)+sp.phyto*8;});
+  const setBar=(v,max,sid,bid,fmt)=>{const pct=Math.min(100,v/max*100);document.getElementById(bid).style.width=pct+'%';document.getElementById(sid).textContent=fmt(v);};
+  setBar(carbon,420,'ts-carbon','tb-carbon',v=>Math.round(v)+' t/ha');
+  setBar(surge,260,'ts-surge','tb-surge',v=>Math.round(v)+' %');
+  setBar(storm,140,'ts-storm','tb-storm',v=>Math.round(v*20)+' L/m²');
+  setBar(habitat,220,'ts-habitat','tb-habitat',v=>Math.round(v)+' idx');
+  const zc=zones.size;document.getElementById('ts-zones').textContent=zc+' / 5';document.getElementById('tb-zones').style.width=(zc/5*100)+'%';
+}
+document.getElementById('trayTab').addEventListener('click',()=>document.getElementById('tray').classList.toggle('open'));
+document.getElementById('trayClear').addEventListener('click',()=>{shoreline=[];document.querySelectorAll('[data-add]').forEach(b=>b.classList.remove('added'));drawShoreline();toast('shoreline cleared');});
+
+/* ============================================================
+   SEASON TOGGLE (whole atlas)
+   ============================================================ */
+function setSeason(idx,announce){
+  SEASON=idx;
+  document.querySelectorAll('#seasonToggle button').forEach(x=>{const on=parseInt(x.dataset.s)===idx;x.classList.toggle('on',on);x.style.background=on?SEASONS[idx].leaf:'';x.style.color=on?'#0a120a':'';});
+  buildAtlas();drawShoreline();
+  if(drawerState){const id=drawerState.sp.id;closeDrawer();openDrawer(id);}
+  if(announce)toast('season · <b>'+SEASONS[idx].n+'</b> — the whole atlas turns');
+}
+document.getElementById('seasonToggle').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  stopTour();setSeason(parseInt(b.dataset.s),true);
+});
+/* tour the seasons — hands-free auto-cycle of the whole atlas */
+let tourTimer=null;
+function stopTour(){if(tourTimer){clearInterval(tourTimer);tourTimer=null;document.getElementById('btnTour').classList.remove('on');document.querySelector('#btnTour .tri').textContent='▶';}}
+document.getElementById('btnTour').addEventListener('click',function(){
+  if(tourTimer){stopTour();return;}
+  this.classList.add('on');this.querySelector('.tri').textContent='❚❚';
+  toast('touring the seasons · the whole atlas turns');
+  tourTimer=setInterval(()=>{setSeason((SEASON+1)%4,false);},2600);
+  setSeason((SEASON+1)%4,false);
+});
+
+/* ============================================================
+   FILTERS + SEARCH
+   ============================================================ */
+document.getElementById('zoneChips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
+  activeZone=b.dataset.zone;document.querySelectorAll('#zoneChips .chip').forEach(c=>c.classList.toggle('on',c===b));buildAtlas();});
+document.getElementById('fnChips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
+  const f=b.dataset.fn;if(activeFns.has(f)){activeFns.delete(f);b.classList.remove('on');}else{activeFns.add(f);b.classList.add('on');}buildAtlas();});
+document.getElementById('searchInput').addEventListener('input',e=>{searchTerm=e.target.value;buildAtlas();});
+
+/* toast */
+let toastT;function toast(html){const t=document.getElementById('toast');t.innerHTML=html;t.style.display='block';clearTimeout(toastT);toastT=setTimeout(()=>t.style.display='none',3200);}
+
+/* glossary tooltip (event-delegated, body-anchored so it never clips) */
+const gtip=document.getElementById('gtip');
+function showTip(t){const key=t.dataset.gl,lit=t.dataset.tip;let html=lit||'';
+  if(key&&GLOSSARY[key])html=`<b>${key}</b>${GLOSSARY[key]}`;
+  if(!html)return;gtip.innerHTML=html;gtip.classList.add('on');
+  const r=t.getBoundingClientRect();let y=r.top-10-gtip.offsetHeight;if(y<6)y=r.bottom+10;
+  let x=Math.max(8,Math.min(r.left,window.innerWidth-gtip.offsetWidth-8));
+  gtip.style.left=x+'px';gtip.style.top=y+'px';}
+document.addEventListener('mouseover',e=>{const t=e.target.closest('[data-gl],[data-tip]');if(t)showTip(t);});
+document.addEventListener('mouseout',e=>{const t=e.target.closest('[data-gl],[data-tip]');if(t)gtip.classList.remove('on');});
+
+/* keyboard: esc closes drawer */
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(drawerState)closeDrawer();}});
+
+/* boot */
+document.querySelector('#seasonToggle button.on').style.background=SEASONS[SEASON].leaf;
+document.querySelector('#seasonToggle button.on').style.color='#0a120a';
+buildAtlas();
+setTimeout(()=>toast('grown live · filter by <b>function</b>, turn the <b>season</b>, or compose a <b>shoreline</b>'),700);
+</script>
+</body>
+</html>
