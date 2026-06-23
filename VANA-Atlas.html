@@ -232,7 +232,25 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .dr-zone.inv{color:#e07a5a;border-color:#a0403077}
 
 @media print{body{background:#fff}}
-@media (max-width:720px){.tray-body{grid-template-columns:1fr}.hero-stat{display:none}.search input{width:130px}}
+@media (max-width:720px){
+  .tray-body{grid-template-columns:1fr}.hero-stat{display:none}.search input{width:130px}
+  /* nav: drop tagline, let it wrap, keep tour + season controls usable */
+  nav{height:auto;min-height:48px;flex-wrap:wrap;gap:.4rem;padding:.42rem .7rem;align-items:center}
+  .nav-mid{display:none}
+  .nav-r{gap:.4rem;flex-wrap:wrap;justify-content:flex-end;width:auto}
+  .tour-hero{font-size:.5rem;padding:.3rem .55rem;white-space:nowrap}
+  .season-toggle{order:3;flex:1 1 100%;justify-content:space-between}
+  .season-toggle button{flex:1;text-align:center;font-size:.52rem}
+  .count{display:none}
+  /* hero a touch tighter */
+  .hero{padding:1.1rem .9rem .8rem}
+  /* two columns of cards so the plant reads without a giant tile */
+  .atlas{grid-template-columns:repeat(2,1fr);gap:.55rem;padding:.7rem}
+  .card-name{font-size:.82rem}.card-latin{font-size:.44rem}.card-meta{font-size:.42rem}
+  /* drawer: keep the specimen canvas from collapsing */
+  .drawer{width:100vw}
+  .dr-canvas{flex-shrink:0;height:240px}
+}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}}
 </style>
 </head>
