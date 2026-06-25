@@ -90,9 +90,35 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
 .tagline{font-family:'Cormorant Garamond',serif;font-style:italic;
   font-size:clamp(.95rem,2.6vw,1.2rem);color:#8a9a82;line-height:1.7;margin-bottom:1.3rem;
   user-select:none}
+.thesis{font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.25rem,3.4vw,1.75rem);color:var(--cream);line-height:1.35;
+  margin:.1rem 0 .35rem;letter-spacing:.01em;user-select:none}
+.thesis em{color:var(--bright);font-style:italic}
+.thesis-sub{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--body);
+  letter-spacing:.07em;line-height:1.6;margin-bottom:1.2rem;user-select:none}
+.hero-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);gap:2.2rem;align-items:start;margin-bottom:.5rem}
+.hero-col{min-width:0}
+.hero-col h1{margin-bottom:.35rem}
+.hero-mod{font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.1rem,2.8vw,1.5rem);line-height:1.3;margin:0 0 .65rem;user-select:none}
+.hero-mod .hm-name{color:var(--bright);letter-spacing:.04em}
+.hero-mod .hm-role{color:var(--mid)}
+.hero-media{position:relative}
+.hero-gif{display:block;width:100%;max-width:440px;height:auto;
+  border:1px solid var(--bor);border-radius:6px;background:#090e08}
+.hero-cap{display:block;margin-top:.55rem;font-family:'DM Mono',monospace;font-size:.46rem;
+  letter-spacing:.09em;color:var(--dim);text-align:center}
+.hero-cap em{font-style:italic;color:var(--mid);font-family:'Cormorant Garamond',serif;font-size:.62rem}
+@media (max-width:940px){
+  .hero-row{grid-template-columns:1fr;gap:1rem}
+  .hero-media{max-width:440px;margin-top:.4rem}
+}
 .desc{font-size:.66rem;color:var(--mid);line-height:2.05;margin-bottom:1.5rem;max-width:760px;user-select:none}
 .desc b{color:var(--ivory);font-weight:400}
 .desc em{color:var(--gold-pale);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.9rem}
+.tagline-attr{display:block;font-style:normal;font-family:'DM Mono',monospace;font-size:.5rem;
+  color:var(--dim);letter-spacing:.1em;margin-top:.5rem}
+.ety-triptych{display:block;width:100%;max-width:1080px;height:auto;margin:.2rem 0 1.2rem}
 
 /* CC CALLOUT */
 .cc-callout{background:linear-gradient(135deg,rgba(196,181,224,.06),rgba(106,180,232,.04));
@@ -254,7 +280,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
 
 <nav>
   <a href="#concept" class="brand-link nb" onclick="show('concept',null);return false;">
-    <span class="nv">VANA</span>
+    <span class="nv">VA·NA</span>
     <span class="ns">SymbiOS™ · Inflorescence Intelligence™</span>
   </a>
   <div class="tabs">
@@ -286,73 +312,53 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     <span class="tag tag-p">Inflorescence Intelligence™</span>
   </div>
 
-  <p class="epigraph fu d1">
-    "Light is the left hand of darkness, and darkness the right hand of light.
-    Two are one, life and death, lying together like lovers in <em>kemmer</em>,
-    like hands joined together, like the end and the way."
-    <span class="epigraph-attr">— Ursula K. Le Guin · <em>The Left Hand of Darkness</em> · 1969</span>
-  </p>
-
-  <p class="masthead fu d2">वन · วน · 森林 · <span style="color:var(--ivory);font-family:'Cormorant Garamond',serif;font-style:italic">Forest</span></p>
-
-  <h1 class="fu d2">VANA</h1>
-  <p class="tagline fu d3">"The Word for World is Forest."</p>
+  <div class="hero-row">
+    <div class="hero-col">
+      <p class="masthead fu d2">वन · วน · 森林 · <span style="color:var(--ivory);font-family:'Cormorant Garamond',serif;font-style:italic">Forest</span></p>
+      <h1 class="fu d2">SymbiOS</h1>
+      <p class="hero-mod fu d2"><span class="hm-name">VA·NA</span> — <span class="hm-role">the phase 01 module</span></p>
+      <p class="thesis fu d2">Botanical Systems as <em>Design Source Code</em>.</p>
+      <p class="thesis-sub fu d3">A digital ecosystem for analog living-systems design.</p>
+      <p class="tagline fu d3">"The Word for World is Forest."<span class="tagline-attr">— Ursula K. Le Guin · 1972</span></p>
+    </div>
+    <div class="hero-media fu d2">
+      <img class="hero-gif" src="vana-plant-oak.gif" alt="VA·NA — live procedural specimen, Red Oak grown by L-system" />
+      <span class="hero-cap">VA·NA engine · live procedural specimen — <em>Quercus rubra</em></span>
+    </div>
+  </div>
 
   <p class="desc fu d3">
-    <b>SymbiOS™</b> is a coastal resilience platform — a computational design and ecological intelligence
-    system synthesizing eco-sensing mesh networks, MOF-integrated phytoremediation,
-    adaptive zoning algorithms, and an insurance overlay layer.
-    What BIM + ArcGIS would be for urban ecologists — or ArcGIS meets IoT meets predictive
-    analytics, built for <em>living systems</em>.
+    <b>SymbiOS™</b> is a coastal resilience platform — a computational-design and
+    ecological-intelligence system for climate tech and urban-ecology resilience. It
+    synthesizes eco-sensing mesh networks, MOF-integrated phytoremediation, adaptive zoning
+    algorithms, and an insurance-overlay layer into a single stack. What <b>BIM + ArcGIS</b>
+    are for the built environment, SymbiOS is for <em>living systems</em> — ArcGIS meets IoT
+    meets predictive analytics, built for the coast.
     <br><br>
-    <b>VANA</b> is Module 01 — a field-deployable plant intelligence database for climate-vulnerable
-    coastal contexts. The full stack reveals itself in the tabs that follow:
-    <b>ARCHITECTURE</b> (eco-sensing mesh), <b>PHYTOREMEDIATION</b> (MOF chemistry),
-    <b>AUXEN</b> (predictive policy + insurance), and <b>PILOT</b> (field sites).
+    It is a digital ecosystem of computational-design tools for <em>analog design</em> —
+    turning living infrastructure, biodiversity credits, and insurance incentives into
+    priceable climate-adaptation scenarios. Nature-based solutions, made legible to underwriters.
+    <br><br>
+    The name carries the method. <b>VA·NA</b> is Sanskrit and Thai for <em>forest</em> — and
+    SymbiOS is, quite literally, building a <em>data forest</em>: 3D plant models, GIS, BIM,
+    and Eco-IoT held as voxels and data containers for integrated systems design.
+    <br><br>
+    <b>VA·NA</b> is Module 01 — a field-deployable plant-intelligence database for
+    climate-vulnerable coasts, the reference layer beneath everything downstream. The full
+    stack reveals itself in the tabs above: <b>ARCHITECTURE</b> (the eco-sensing mesh),
+    <b>PHYTOREMEDIATION</b> (the MOF chemistry), <b>AUXEN</b> (predictive policy + insurance),
+    and <b>PILOT</b> (the field sites).
   </p>
 
-  <div class="cc-callout fu d4">
-    <span class="cc-mark">✦</span>
-    <span class="cc-body">
-      <b>To the Climate Circle review committee:</b> This site is the technical companion to
-      our <em>2026–27 application</em>. The platform substance referenced in Q17 (problem),
-      Q18 (solution), Q22 (technical edge), and Q32 (why CC) lives in the tabs above.
-      <b>ARCHITECTURE</b> and <b>PHYTOREMEDIATION</b> show the methodology.
-      <b>AUXEN</b> shows the insurance/zoning surface. <b>PILOT</b> shows Rumney Marsh, Bangkok,
-      and the Axolotl Rhino/Grasshopper MVP.
-    </span>
-  </div>
-
   <div class="sl"><span class="sl-n">i.</span> Etymology · A name that contains its method</div>
-  <div class="etymology fu">
-    <div class="ety">
-      <div class="ety-glyph">वन</div>
-      <div class="ety-lang">SANSKRIT · VANA</div>
-      <div class="ety-meaning">forest · grove · the wild. The root from which the project takes its name.</div>
-    </div>
-    <div class="ety">
-      <div class="ety-glyph">วน</div>
-      <div class="ety-lang">THAI · WON</div>
-      <div class="ety-meaning">to return · to circle back · cyclical. The hydrology, the season, the monsoon.</div>
-    </div>
-    <div class="ety">
-      <div class="ety-glyph">森林</div>
-      <div class="ety-lang">CHINESE / JAPANESE · SĒNLÍN / SHINRIN</div>
-      <div class="ety-meaning">forest as compound — many trees. Shared ideographs across writing systems.</div>
-    </div>
-    <div class="ety">
-      <div class="ety-glyph">Forest</div>
-      <div class="ety-lang">ENGLISH · LATIN ROOT</div>
-      <div class="ety-meaning">the outer world. From <em>foris</em> — outside. The system beyond the door.</div>
-    </div>
-  </div>
+  <img class="ety-triptych fu" src="symbios-etymology-triptych.png" alt="VA·NA — forest · woodland (Sanskrit · Thai) · XÉN — to grow · to increase (Greek) · AU·XĒN — to augment · to amplify (Greek)" />
 
   <div class="sl"><span class="sl-n">ii.</span> The platform · Module ecosystem</div>
   <div class="mod-grid fu">
 
     <div class="mod-card lime">
       <div class="mod-head">
-        <span class="mod-name lime">VANA</span>
+        <span class="mod-name lime">VA·NA</span>
         <span class="mod-phase">PHASE 1 · ACTIVE · MODULE 01</span>
       </div>
       <div class="mod-full">Plant Intelligence Database · Field Tool · Dashboard</div>
@@ -365,25 +371,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
         <span class="mod-phase">PHASE 1.5 · IN DEVELOPMENT</span>
       </div>
       <div class="mod-full">Generative Pattern Library · M/V/A-System Grammar</div>
-      <div class="mod-desc-s">A custom growth grammar — 89 botanical specimens encoded as Morphology / Venation / Architecture parameters. Generative companion to VANA's typological data.</div>
-    </div>
-
-    <div class="mod-card teal">
-      <div class="mod-head">
-        <span class="mod-name teal">AUXLOGRAM</span>
-        <span class="mod-phase">PHASE 2 · DESIGN</span>
-      </div>
-      <div class="mod-full">Eco-Sensing Mesh · Bayesian Inference Layer</div>
-      <div class="mod-desc-s">Drones + ground sensors + satellite + citizen-IoT phones, fused into a probabilistic decision network. Higher resolution than current satellite products. See <b>ARCHITECTURE</b>.</div>
-    </div>
-
-    <div class="mod-card amber">
-      <div class="mod-head">
-        <span class="mod-name amber">PHYTOFLEET</span>
-        <span class="mod-phase">PHASE 2 · DESIGN</span>
-      </div>
-      <div class="mod-full">MOF-Integrated Phytoremediation Hardware</div>
-      <div class="mod-desc-s">Metal-organic frameworks bonded into bio-substrate — phyto-filtration units, tidal blocks, micro-site stormwater berms. Sensing-and-remediation as one object. See <b>PHYTOREMEDIATION</b>.</div>
+      <div class="mod-desc-s">A custom growth grammar — 89 botanical specimens encoded as Morphology / Venation / Architecture parameters. Generative companion to VA·NA's typological data.</div>
     </div>
 
     <div class="mod-card purple">
@@ -393,15 +381,6 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
       </div>
       <div class="mod-full">Predictive Analytics · Policy Simulation · Insurance Overlay</div>
       <div class="mod-desc-s">DAPP decision trees, PPPP scenario engine, exceedance probability maps, RLP insurance correlation, adaptive zoning. The decision surface for insurers, planners, and property owners. See <b>AUXEN</b>.</div>
-    </div>
-
-    <div class="mod-card coral">
-      <div class="mod-head">
-        <span class="mod-name coral">AXOLOTL</span>
-        <span class="mod-phase">MVP · FAST PATH</span>
-      </div>
-      <div class="mod-full">Rhino / Grasshopper Plugin · Food4Rhino</div>
-      <div class="mod-desc-s">The thin-slice MVP — VANA + XĒN inside the working tool of landscape architects worldwide. Distribution path through GSD studios + the Food4Rhino ecosystem. See <b>PILOT</b>.</div>
     </div>
 
   </div>
@@ -679,7 +658,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     <div class="m-c">remediation priority, plant-species selection, insurance overlay</div>
 
     <div class="m-c row-h">Vegetation viability</div>
-    <div class="m-c">satellite NDVI, drone multispectral, citizen audio (biodiversity), VANA plant database</div>
+    <div class="m-c">satellite NDVI, drone multispectral, citizen audio (biodiversity), VA·NA plant database</div>
     <div class="m-c">carbon attribution, biodiversity score, blue-carbon ESG ledger</div>
 
     <div class="m-c row-h">Composite risk</div>
@@ -1156,7 +1135,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     Three pilots, parallel-tracked. Two field sites at opposite ends of the climate-vulnerability spectrum —
     a <b>New England salt marsh</b> facing repetitive-loss insurance collapse, and a <b>Bangkok coastal
     development</b> facing subsidence + storm-surge. Plus a <b>distribution channel pilot</b>: the
-    Axolotl plugin, which embeds VANA + XĒN inside Rhino/Grasshopper — the tool every landscape architect
+    Axolotl plugin, which embeds VA·NA + XĒN inside Rhino/Grasshopper — the tool every landscape architect
     already opens at 9am.
   </p>
 
@@ -1196,13 +1175,13 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
       ecosystem is sophisticated. The luxury-resort layer in particular operates at a price-per-square-meter
       where adaptation hardware is financially trivial relative to project budgets.
       <br><br>
-      <b>What gets deployed:</b> tropical species library expansion within VANA (mangrove, nipa palm,
+      <b>What gets deployed:</b> tropical species library expansion within VA·NA (mangrove, nipa palm,
       casuarina, sea hibiscus, coastal fig); MOF-bonded tidal-block prototype against monsoon
       surge; PPPP scenario set for 2050 / 2070 SLR under three subsidence trajectories.
       <br><br>
       <b>Anchor partner:</b> <b>P Landscape (PLA)</b> — Bangkok-based luxury-resort landscape architecture firm.
       Founded by <em>Wannaporn "Pui" Phornprapha</em>, Harvard GSD MLA alumna. PLA has had an open
-      <b>Digital Solution Specialist</b> role since late 2025; the VANA module set is effectively a portfolio for it.
+      <b>Digital Solution Specialist</b> role since late 2025; the VA·NA module set is effectively a portfolio for it.
       Engagement model: written agreement for a pilot site partnership, regardless of formal employment outcome.
     </div>
   </div>
@@ -1213,10 +1192,10 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
       <span class="pilot-name">Axolotl</span>
       <span class="pilot-loc">RHINOCEROS / GRASSHOPPER · FOOD4RHINO ECOSYSTEM</span>
     </div>
-    <div class="pilot-sub">VANA's plant intelligence layer + XĒN's generative grammar — inside the tool 80% of landscape architects already use daily. <em>The fast-path MVP for distribution + traction.</em></div>
+    <div class="pilot-sub">VA·NA's plant intelligence layer + XĒN's generative grammar — inside the tool 80% of landscape architects already use daily. <em>The fast-path MVP for distribution + traction.</em></div>
     <div class="pilot-body">
       <b>Why this matters:</b> the field doesn't need another platform to learn. It needs <em>its existing
-      toolchain</em> to become climate-literate. Axolotl ships VANA's plant database as queryable
+      toolchain</em> to become climate-literate. Axolotl ships VA·NA's plant database as queryable
       Grasshopper components (filter by salt tolerance, climate zone, ecosystem service), XĒN's grammar
       as procedural growth nodes, and AUXEN's risk surface as a context-overlay layer for site model imports.
       <br><br>
@@ -1281,7 +1260,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
   <div class="xen-hero">
     <div class="xen-glyph">XĒN</div>
     <p class="xen-sub">A generative pattern library — 89 botanical specimens encoded as Morphology / Venation / Architecture
-      parameters. Companion to VANA's typological data; substrate for generative computational design.</p>
+      parameters. Companion to VA·NA's typological data; substrate for generative computational design.</p>
     <a class="btn-out" href="../demo-plandscape/xen.html" target="_blank" rel="noopener">
       OPEN XĒN COMPENDIUM <span class="arr">→</span>
     </a>
@@ -1294,7 +1273,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     <div class="card-l">WHY XĒN</div>
     <div class="card-t">The grammar underneath every site decision.</div>
     <div class="card-b">
-      VANA tells you <em>which plant</em>. XĒN tells you <em>how it grows</em> — the morphological grammar
+      VA·NA tells you <em>which plant</em>. XĒN tells you <em>how it grows</em> — the morphological grammar
       that generative design tools (Rhino, Grasshopper, Houdini) need to render plants as parametric objects,
       not as static reference images. Every specimen encodes leaf morphology, venation topology
       (after Hallé), and architectural model (after the Hallé–Oldeman tropical-tree typology). The compendium
