@@ -48,20 +48,14 @@ nav{flex-shrink:0;height:52px;display:flex;align-items:center;justify-content:sp
 .tab.on{background:#1a2e1a;color:var(--bright);border-color:var(--muted)}
 .na{font-size:.48rem;color:var(--muted);white-space:nowrap;font-family:'DM Mono',monospace}
 .na em{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.65rem;color:var(--gold-pale)}
-.nav-demos{display:flex;align-items:center;gap:.5rem}
-.demo-link{display:flex;align-items:center;gap:.45rem;text-decoration:none;
-  background:var(--sur);border:1px solid var(--bor);border-radius:4px;padding:.28rem .55rem .28rem .3rem;
-  transition:background .15s,border-color .15s}
-.demo-link:hover{background:#1a2e1a;border-color:var(--muted)}
-.demo-link.atlas:hover{border-color:rgba(106,180,232,.5)}
-.demo-link.manifold:hover{border-color:rgba(158,216,85,.5)}
-.dl-thumb{display:block;width:34px;height:24px;border-radius:2px;overflow:hidden;flex-shrink:0;
-  border:1px solid var(--bor2)}
-.dl-thumb svg{display:block;width:100%;height:100%}
-.dl-name{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.08em;color:var(--body);white-space:nowrap}
-.demo-link.atlas:hover .dl-name{color:var(--blue)}
-.demo-link.manifold:hover .dl-name{color:var(--bright)}
-@media(max-width:780px){.dl-name{display:none}}
+.nav-right{display:flex;align-items:center;gap:.55rem}
+.nav-cta{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--bor);border-radius:3px;
+  padding:.36rem .72rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;
+  color:var(--ivory);text-decoration:none;transition:all .15s;white-space:nowrap}
+.nav-cta:hover{border-color:var(--muted);background:#1a2e1a;color:var(--bright)}
+.nav-cta .tri{font-size:.5rem;color:var(--teal)}
+.nav-cta.primary{border-color:var(--teal);color:var(--bright)}
+.nav-cta.primary:hover{background:rgba(85,196,160,.1)}
 
 /* CONTENT */
 #content{flex:1;overflow-y:auto;overflow-x:hidden}
@@ -244,6 +238,8 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
   .tabs{order:3;width:100%;justify-content:flex-start;overflow-x:auto;padding-bottom:.2rem}
   .tab{padding:.25rem .55rem;font-size:.5rem;white-space:nowrap}
   .na{display:none}
+  .nav-right{order:2;margin-left:auto;gap:.4rem}
+  .nav-cta{font-size:.5rem;padding:.3rem .55rem}
   .nb{order:1}
   #content{overflow:visible}
   .panel{padding:1rem .85rem 2.5rem}
@@ -269,33 +265,10 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     <button class="tab" data-id="pilot" onclick="show('pilot',this)">PILOT</button>
     <button class="tab" data-id="xen" onclick="show('xen',this)">XĒN</button>
   </div>
-  <div class="nav-demos">
-    <a class="demo-link atlas" href="VANA-Atlas.html" target="_blank" rel="noopener">
-      <span class="dl-thumb" aria-hidden="true">
-        <svg viewBox="0 0 40 28" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="28" fill="#0a1119"/>
-          <path d="M2 20 Q10 8 20 14 T38 9" stroke="#6ab4e8" stroke-width="1" fill="none" opacity=".8"/>
-          <path d="M2 24 Q12 16 22 20 T38 16" stroke="#55c4a0" stroke-width="1" fill="none" opacity=".6"/>
-          <circle cx="12" cy="13" r="1.4" fill="#9ed855"/>
-          <circle cx="26" cy="12" r="1.4" fill="#e8aa8a"/>
-          <circle cx="33" cy="11" r="1.2" fill="#c4b5e0"/>
-        </svg>
-      </span>
-      <span class="dl-name">VANA-Atlas</span>
-    </a>
-    <a class="demo-link manifold" href="VANA-Manifold.html" target="_blank" rel="noopener">
-      <span class="dl-thumb" aria-hidden="true">
-        <svg viewBox="0 0 40 28" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="28" fill="#0a1119"/>
-          <path d="M20 24 L20 15 M20 18 L13 11 M20 18 L27 11 M13 11 L9 6 M13 11 L17 6 M27 11 L23 6 M27 11 L31 6" stroke="#9ed855" stroke-width="1" fill="none" opacity=".85"/>
-          <circle cx="9" cy="6" r="1.2" fill="#c4b5e0"/>
-          <circle cx="17" cy="6" r="1.2" fill="#55c4a0"/>
-          <circle cx="23" cy="6" r="1.2" fill="#55c4a0"/>
-          <circle cx="31" cy="6" r="1.2" fill="#c4b5e0"/>
-        </svg>
-      </span>
-      <span class="dl-name">VANA-Manifold</span>
-    </a>
+  <div class="nav-right">
+    <a class="nav-cta primary" href="/demo"><span class="tri">▶</span>Live Demo</a>
+    <a class="nav-cta" href="/VANA-Atlas.html">Living Atlas</a>
+    <span class="na">Marko Manriquez · <em>Founder</em> · Harvard GSD MLA I</span>
   </div>
 </nav>
 
@@ -345,7 +318,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
       our <em>2026–27 application</em>. The platform substance referenced in Q17 (problem),
       Q18 (solution), Q22 (technical edge), and Q32 (why CC) lives in the tabs above.
       <b>ARCHITECTURE</b> and <b>PHYTOREMEDIATION</b> show the methodology.
-      <b>AUXEN</b> shows the insurance/zoning surface. <b>PILOT</b> shows Brooklyn Inlet Park (BIP), Bangkok,
+      <b>AUXEN</b> shows the insurance/zoning surface. <b>PILOT</b> shows Rumney Marsh, Bangkok,
       and the Axolotl Rhino/Grasshopper MVP.
     </span>
   </div>
@@ -448,7 +421,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
 
   <div class="parent-footer">
     <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
-    <div class="pf-meta">© 2026 · All rights reserved</div>
+    <div class="pf-meta">© 2026 · All rights reserved · Confidential · Companion to Harvard Climate Entrepreneurs Circle 2026–27 application</div>
   </div>
 </div>
 
@@ -896,7 +869,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
       <div class="card-b">
         Cast-form MOF-bonded substrate blocks placed along the high-tide interface. Function as
         <b>coastal surge barriers + contaminant capture</b>. Self-stabilizing keyed geometry, biocompatible for
-        oyster + mangrove colonization. Pilot site: Brooklyn Inlet Park (BIP), Bangkok delta.
+        oyster + mangrove colonization. Pilot site: Rumney Marsh, Bangkok delta.
       </div>
     </div>
     <div class="card">
@@ -1000,7 +973,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
   </p>
 
   <div class="viz">
-    <div class="viz-l">FIG. AX.1 — DAPP DECISION TREE — BROOKLYN INLET PARK · BIP (BROOKLYN) · 2025–2080</div>
+    <div class="viz-l">FIG. AX.1 — DAPP DECISION TREE — RUMNEY MARSH (BOSTON) · 2025–2080</div>
     <svg viewBox="0 0 900 320" style="width:100%;height:auto;font-family:'DM Mono',monospace">
       <!-- timeline -->
       <line x1="60" y1="290" x2="860" y2="290" stroke="#3a5a38" stroke-width="0.6"/>
@@ -1059,7 +1032,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     </svg>
     <div class="viz-cap">Four pathways under 2050–2080 sea-level-rise scenarios. AUXEN simulates each against the live mesh
       forecast and surfaces both the current pathway and the next-trigger horizon. The hybrid (Pathway C) is recommended
-      for Brooklyn Inlet Park (BIP) — same site logic transposes to Bangkok with different species and tidal regimes.</div>
+      for Rumney Marsh — same site logic transposes to Bangkok with different species and tidal regimes.</div>
   </div>
 
   <div class="sl"><span class="sl-n">B.</span> PPPP · Present / Probable / Plausible / Possible / Preferable</div>
@@ -1171,7 +1144,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
 
   <div class="tags">
     <span class="tag tag-t">Field Sites · MVP Path</span>
-    <span class="tag tag-a">Brooklyn Inlet Park · BIP · Bangkok · Axolotl</span>
+    <span class="tag tag-a">Rumney Marsh · Bangkok · Axolotl</span>
     <span class="tag tag-g">Phase 1 → Phase 2</span>
   </div>
 
@@ -1187,26 +1160,26 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     already opens at 9am.
   </p>
 
-  <div class="sl"><span class="sl-n">i.</span> Field Site 01 · Brooklyn Inlet Park (BIP), Brooklyn</div>
+  <div class="sl"><span class="sl-n">i.</span> Field Site 01 · Rumney Marsh, Boston</div>
   <div class="pilot-card green">
     <div class="pilot-head">
-      <span class="pilot-name">Brooklyn Inlet Park · BIP</span>
-      <span class="pilot-loc">BUSHWICK INLET · BROOKLYN · NEW YORK · USA</span>
+      <span class="pilot-name">Rumney Marsh</span>
+      <span class="pilot-loc">REVERE / SAUGUS · MASSACHUSETTS · USA</span>
     </div>
-    <div class="pilot-sub">FEMA Special Flood Hazard Area on a ~160-year petroleum-contamination legacy. Adjacent to dense residential parcels with rising NFIP premium pressure. <em>The test case for AUXEN's North American insurance overlay.</em></div>
+    <div class="pilot-sub">650-acre Area of Critical Environmental Concern. Adjacent to dense residential parcels in FEMA AE flood zone. Repetitive-loss claims accelerating. <em>The test case for AUXEN's North American insurance overlay.</em></div>
     <div class="pilot-body">
-      <b>Why here:</b> a remediated post-industrial waterfront inside a designated flood-hazard zone, in a
-      major coastal city with active managed-retreat and resilience policy — the right
+      <b>Why here:</b> the marsh is one of two largest salt marshes north of Long Island, sits in a major
+      flyway, and is bordered by neighborhoods with rising NFIP premium pressure. It is the right
       complexity-to-access ratio for a Phase-1 pilot.
       <br><br>
-      <b>What gets deployed:</b> (1) ground-sensor array along the inlet-upland transition; (2) citizen-IoT
-      app pilot with an adjacent neighborhood; (3) a 12-month DAPP scenario simulation against
-      NYC climate-resiliency inundation projections; (4) a single PhytoFleet phyto-cistern installation
+      <b>What gets deployed:</b> (1) ground-sensor array along the marsh-upland transition; (2) citizen-IoT
+      app pilot with a target neighborhood (likely Revere); (3) a 12-month DAPP scenario simulation against
+      Boston Climate Ready inundation projections; (4) a single PhytoFleet phyto-cistern installation
       at one cooperating property as proof-of-concept.
       <br><br>
-      <b>Partnerships:</b> Resilience-track advisors are the right early channel.
-      NYC DEP, the Mayor's Office of Climate &amp; Environmental Justice, and Brooklyn Community Board planning
-      are the public-sector targets. DCP for regional zoning. NFIP / FEMA Region II for the insurance overlay test.
+      <b>Partnerships:</b> Lori Collins (Harvard Resilience Track lead) is the right early channel.
+      Mass DEP, Boston Climate Ready Office, and the Saugus / Revere planning departments are the public-sector targets.
+      MAPC for regional zoning. NFIP / FEMA Region I for the insurance overlay test.
     </div>
   </div>
 
@@ -1261,7 +1234,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
 
   <div class="matrix c4">
     <div class="m-h">QUARTER</div>
-    <div class="m-h">BROOKLYN INLET PARK · BIP</div>
+    <div class="m-h">RUMNEY MARSH</div>
     <div class="m-h">BANGKOK / PLA</div>
     <div class="m-h">AXOLOTL</div>
 
@@ -1288,7 +1261,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
 
   <div class="parent-footer">
     <div class="pf-mark">SymbiOS™ &nbsp;|&nbsp; Inflorescence Intelligence™</div>
-    <div class="pf-meta">© 2026 · PILOT · Brooklyn Inlet Park · BIP · Bangkok · Axolotl</div>
+    <div class="pf-meta">© 2026 · PILOT · Rumney Marsh · Bangkok · Axolotl</div>
   </div>
 </div>
 
@@ -1309,7 +1282,7 @@ h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
     <div class="xen-glyph">XĒN</div>
     <p class="xen-sub">A generative pattern library — 89 botanical specimens encoded as Morphology / Venation / Architecture
       parameters. Companion to VANA's typological data; substrate for generative computational design.</p>
-    <a class="btn-out" href="xen.html" target="_blank" rel="noopener">
+    <a class="btn-out" href="../demo-plandscape/xen.html" target="_blank" rel="noopener">
       OPEN XĒN COMPENDIUM <span class="arr">→</span>
     </a>
     <div style="font-size:.55rem;color:var(--muted);margin-top:.9rem;letter-spacing:.12em">

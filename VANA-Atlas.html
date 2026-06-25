@@ -53,6 +53,14 @@ button{font-family:var(--mono);cursor:pointer;color:inherit;background:none;bord
 nav{position:sticky;top:0;z-index:40;height:48px;display:flex;align-items:center;justify-content:space-between;
   padding:0 1.1rem;border-bottom:1px solid var(--bor);background:rgba(9,14,8,.93);backdrop-filter:blur(12px)}
 .brand{display:flex;align-items:baseline;gap:.5rem}
+a.brand{text-decoration:none;cursor:pointer}
+a.brand:hover .wm{text-shadow:0 0 16px rgba(85,196,160,.45)}
+a.brand:hover .sub{color:var(--teal)}
+.nav-home{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--bor);border-radius:4px;
+  padding:.3rem .55rem;font-size:.5rem;letter-spacing:.1em;color:var(--ivory);text-decoration:none;
+  font-family:var(--mono);transition:all .15s;white-space:nowrap}
+.nav-home:hover{border-color:var(--teal);color:var(--teal);background:rgba(85,196,160,.08)}
+.nav-home .hg{font-size:.72rem;line-height:1}
 .wm{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--cream);letter-spacing:.14em}
 .wm b{color:var(--teal);font-weight:400}
 .sub{font-size:.46rem;color:var(--muted);letter-spacing:.13em}
@@ -257,7 +265,7 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 <body>
 
 <nav>
-  <div class="brand"><span class="wm">VA<b>·</b>NA</span><span class="sub">SYMBIOS™ · MODULE 02 · XĒN</span></div>
+  <a class="brand" href="/" title="back to SymbiOS home"><span class="wm">SymbiOS <b>/</b> VANA</span><span class="sub">MODULE 02 · XĒN · ↩ home</span></a>
   <div class="nav-mid">the living coastal atlas</div>
   <div class="nav-r">
     <button class="tour-hero" id="btnTour"><span class="tri">▶</span>tour the seasons</button>
@@ -266,6 +274,7 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
       <button data-s="2">autumn</button><button data-s="3">winter</button>
     </div>
     <span class="count" id="navCount">30 specimens</span>
+    <a class="nav-home" href="/" title="SymbiOS home page"><span class="hg">⌂</span>home</a>
   </div>
 </nav>
 
