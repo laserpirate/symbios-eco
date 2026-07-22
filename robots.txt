@@ -1,5 +1,5 @@
 # ============================================================
-# GSD-TOOLS · GitHub Pages · robots.txt
+# SymbiOS-eco · GitHub Pages · robots.txt
 # © 2026 Marko Manriquez · All rights reserved
 # Blanket disallow + named AI-training crawlers.
 # Politeness signal, not enforcement — pair with in-page
