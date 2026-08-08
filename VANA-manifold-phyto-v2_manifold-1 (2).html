@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  VA·NA · SymbiOS™ · Module 01 · GROWTH MANIFOLD STUDIO
+  ============================================================
+  P1-A generative canvas — the DEEP build.
+  One organism, every dial live. A Functional-Structural Plant
+  Model surfaced in the browser: the same parametric kernel that
+  produces a seedling produces a 50-year forecast.
+
+  Wraps (conceptually) the OpenAlea stack the way xFigura wraps
+  frontier models: L-Py (grammar) · MTG (multiscale graph) ·
+  PlantGL (geometry) · Caribu/radiosity (light competition) ·
+  VVIM Band-3 (ecosystem services).
+
+  Demo artifact. Modeled values are illustrative. Schema is real.
+  ------------------------------------------------------------
+  ARTIFACT ID   : P1-A.02   (P1-A = VANA Growth Manifold Studio)
+  BUILD         : 2026/22/06/1850   (year/day/month/time-military)
+  © 2026 SymbiOS™ | Inflorescence Intelligence™
+  All Rights Reserved · screen-record ready
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VANA · Growth Manifold Studio · SymbiOS™</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090e08;--sur:#0d160c;--sur2:#0f180e;--sur3:#0a1209;--bor:#1e2e1d;--bor2:#1a2a19;
+  --cream:#e8e0d0;--ivory:#c8c0b0;--gold-pale:#d8d4be;--gold:#c8a96e;
+  --teal:#55c4a0;--bright:#9ed855;--purple:#9a8ae8;--blue:#6ab4e8;--coral:#c45a3a;
+  --amber:#c4904a;--rust:#b0894a;
+  --dim:#3a5a38;--mid:#4a6a48;--body:#6a8a68;--muted:#2a4a28;--faint:#8a9a82;
+  --mono:'DM Mono',monospace;--serif:'Cormorant Garamond',serif;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--cream);font-family:var(--mono);
+  display:flex;flex-direction:column;overflow:hidden;
+  background-image:radial-gradient(140% 90% at 50% -10%,#0d1a0c 0%,#090e08 55%);}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+::-webkit-scrollbar-track{background:transparent}
+button{font-family:var(--mono);cursor:pointer;color:inherit;background:none;border:none}
+.italic{font-family:var(--serif);font-style:italic}
+
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes nodeflash{0%{background:#13251f;border-color:var(--teal);box-shadow:0 0 0 0 rgba(85,196,160,.4)}
+  100%{background:var(--sur2);border-color:var(--bor);box-shadow:0 0 0 6px rgba(85,196,160,0)}}
+@keyframes breathe{0%,100%{transform:scale(1) skewX(0deg)}50%{transform:scale(1.012) skewX(.35deg)}}
+@keyframes toastin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- NAV ---------- */
+nav{flex-shrink:0;height:46px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;border-bottom:1px solid var(--bor);background:rgba(9,14,8,.92);
+  backdrop-filter:blur(10px);position:relative;z-index:30}
+.brand{display:flex;align-items:baseline;gap:.5rem}
+a.brand{text-decoration:none;cursor:pointer}
+a.brand:hover .wm{text-shadow:0 0 16px rgba(85,196,160,.45)}
+a.brand:hover .sub{color:var(--teal)}
+.nav-home{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--bor);border-radius:4px;
+  padding:.32rem .6rem;font-size:.5rem;letter-spacing:.1em;color:var(--ivory);text-decoration:none;
+  font-family:var(--mono);transition:all .15s;white-space:nowrap}
+.nav-home:hover{border-color:var(--teal);color:var(--teal);background:rgba(85,196,160,.08)}
+.nav-home .hg{font-size:.72rem;line-height:1}
+.wm{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--cream);letter-spacing:.14em}
+.wm b{color:var(--teal);font-weight:400}
+.sub{font-size:.46rem;color:var(--muted);letter-spacing:.13em}
+.nav-mid{font-family:var(--serif);font-style:italic;color:var(--faint);font-size:.92rem;letter-spacing:.02em}
+.nav-r{display:flex;align-items:center;gap:.6rem;font-size:.46rem;color:var(--muted);letter-spacing:.1em}
+.live{display:inline-flex;align-items:center;gap:.35rem;color:var(--teal)}
+.live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+
+/* ---------- LAYOUT ---------- */
+main{flex:1;display:grid;grid-template-columns:268px 1fr 320px;min-height:0}
+.rail{overflow-y:auto;background:var(--sur);min-height:0}
+.rail.left{border-right:1px solid var(--bor)}
+.rail.right{border-left:1px solid var(--bor)}
+.stage{position:relative;display:flex;flex-direction:column;min-height:0;background:
+  radial-gradient(120% 80% at 50% 8%,#0c160b 0%,#090e08 60%)}
+
+.sec{padding:.85rem .9rem;border-bottom:1px solid var(--bor2)}
+.sec-h{font-size:.5rem;color:var(--dim);letter-spacing:.17em;margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.55rem}
+.sec-h::after{content:'';flex:1;height:1px;background:var(--bor2)}
+.sec-h .n{color:var(--mid)}
+
+/* ---------- FSPM PIPELINE NODES ---------- */
+.node{display:flex;align-items:center;gap:.6rem;padding:.5rem .55rem;border-radius:4px;
+  border:1px solid var(--bor);background:var(--sur2);margin-bottom:.4rem;position:relative}
+.node.flash{animation:nodeflash 1.1s ease forwards}
+.node .idx{font-size:.52rem;color:var(--teal);width:13px;flex-shrink:0;text-align:center}
+.node .body{flex:1;min-width:0}
+.node .nm{font-size:.6rem;color:var(--ivory);letter-spacing:.04em}
+.node .eng{font-size:.46rem;color:var(--mid);letter-spacing:.05em;margin-top:1px}
+.node .eng b{color:var(--teal);font-weight:400}
+.node .dot{width:5px;height:5px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.node.flash .dot{background:var(--teal)}
+.wire{height:7px;width:1px;background:var(--bor);margin-left:13px}
+
+/* ---------- PRESETS ---------- */
+.preset{width:100%;text-align:left;padding:.55rem .6rem;border-radius:4px;border:1px solid var(--bor2);
+  background:transparent;margin-bottom:.35rem;transition:all .14s;border-left:2px solid transparent}
+.preset:hover{background:var(--sur2);border-color:var(--bor)}
+.preset.on{background:#101c0f;border-left-color:var(--teal);border-color:var(--bor)}
+.preset .pn{font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--cream);line-height:1.1}
+.preset .pl{font-size:.5rem;color:var(--body);margin-top:2px}
+.preset .pb{display:inline-block;font-size:.44rem;color:var(--mid);letter-spacing:.1em;margin-top:.35rem;
+  padding:1px 5px;border:1px solid var(--bor2);border-radius:2px}
+
+/* ---------- L-SYSTEM RULE CARD ---------- */
+.rule{background:var(--sur3);border:1px solid var(--bor2);border-radius:4px;padding:.6rem .65rem;font-size:.56rem}
+.rule .ax{color:var(--mid);letter-spacing:.04em;margin-bottom:.35rem}
+.rule .ax b{color:var(--teal);font-weight:500}
+.rule .pr{color:var(--ivory);font-size:.66rem;letter-spacing:.02em;line-height:1.5;word-break:break-word}
+.rule .pr em{color:var(--bright);font-style:normal}
+.rule .meta{color:var(--mid);font-size:.48rem;margin-top:.45rem;letter-spacing:.04em}
+
+/* ---------- MTG MINI GRAPH ---------- */
+.mtg-wrap{background:var(--sur3);border:1px solid var(--bor2);border-radius:4px;padding:.4rem}
+.mtg-legend{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.45rem;font-size:.44rem;color:var(--mid)}
+.mtg-legend span{display:inline-flex;align-items:center;gap:.3rem}
+.mtg-legend i{width:6px;height:6px;border-radius:50%;display:inline-block}
+
+/* ---------- STAGE / VIEWPORT ---------- */
+.stage-top{flex:1;position:relative;min-height:0;overflow:hidden}
+#viewport{position:absolute;inset:0;width:100%;height:100%}
+.vp-badge{position:absolute;top:.7rem;left:.8rem;z-index:5;display:flex;flex-direction:column;gap:.3rem}
+.spec-name{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--cream);line-height:1}
+.spec-latin{font-size:.55rem;color:var(--body);letter-spacing:.04em}
+.spec-site{font-size:.5rem;color:var(--mid);letter-spacing:.05em;margin-top:.15rem}
+.vp-readout{position:absolute;top:.7rem;right:.8rem;z-index:5;text-align:right;font-size:.5rem;color:var(--mid);letter-spacing:.05em;line-height:1.7}
+.vp-readout b{color:var(--teal);font-weight:400}
+.adapt{position:absolute;left:.8rem;bottom:.7rem;z-index:5;font-size:.52rem;letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .55rem;border-radius:3px;
+  border:1px solid var(--bor);background:rgba(9,14,8,.7)}
+.adapt .ad-dot{width:6px;height:6px;border-radius:50%}
+
+/* live production-rule readout — the procedural proof, draggable, under the plant */
+.vp-rule{position:absolute;left:50%;bottom:.7rem;transform:translateX(-50%);z-index:6;
+  background:rgba(7,11,7,.84);border:1px solid var(--bor);border-left:2px solid var(--teal);
+  border-radius:5px;padding:.45rem 1.3rem .45rem .7rem;font-family:var(--mono);text-align:left;
+  backdrop-filter:blur(3px);box-shadow:0 6px 22px rgba(0,0,0,.45);
+  cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;white-space:nowrap}
+.vp-rule.dragging{cursor:grabbing;border-left-color:var(--bright);box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.vp-rule .vr-grip{position:absolute;top:.3rem;right:.45rem;font-size:.6rem;color:var(--dim);letter-spacing:-2px;line-height:1}
+.vp-rule .vr-prod{font-size:.82rem;color:var(--ivory);letter-spacing:.02em;line-height:1.3;margin-bottom:.15rem}
+.vp-rule .vr-prod em{color:var(--bright);font-style:normal}
+.vp-rule .vr-meta{font-size:.5rem;color:var(--mid);letter-spacing:.03em;line-height:1.3;display:flex;align-items:center;gap:.3rem}
+.vp-rule .vr-meta .vr-k{color:var(--dim)}
+.vp-rule .vr-meta b{color:var(--teal);font-weight:500}
+.vp-rule .vr-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;animation:pulse 2s infinite}
+.vp-rule .vr-cur{color:var(--teal);animation:blink 1.1s step-end infinite;margin-left:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ---------- TRANSPORT ---------- */
+.transport{flex-shrink:0;border-top:1px solid var(--bor);background:var(--sur3);padding:.55rem .8rem;
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.tgrp{display:flex;align-items:center;gap:.5rem}
+.tlabel{font-size:.48rem;color:var(--dim);letter-spacing:.13em}
+.tbtn{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--bor);border-radius:3px;
+  padding:.32rem .6rem;font-size:.52rem;color:var(--ivory);letter-spacing:.06em;transition:all .14s;background:var(--sur2)}
+.tbtn:hover{border-color:var(--mid);background:#13201240}
+.tbtn.on{border-color:var(--teal);color:var(--teal);background:#0f1c1640}
+.tbtn .tri{font-size:.6rem;line-height:1}
+.scrub{flex:1;min-width:120px;display:flex;align-items:center;gap:.55rem}
+.scrub input{flex:1}
+.scrub .val{font-size:.5rem;color:var(--teal);min-width:54px;text-align:right;letter-spacing:.03em}
+.season-pips{display:flex;gap:.25rem}
+.pip{width:18px;height:18px;border-radius:50%;border:1px solid var(--bor);font-size:0;transition:all .14s;cursor:pointer}
+.pip:hover{transform:scale(1.12)}
+.pip.on{border-color:var(--cream);box-shadow:0 0 0 2px rgba(232,224,208,.12)}
+
+/* ---------- RIGHT RAIL : MANIFOLD ---------- */
+.dial{margin-bottom:.7rem}
+.dial-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.28rem}
+.dial-h .dn{font-size:.55rem;color:var(--ivory);letter-spacing:.04em}
+.dial-h .dn em{font-family:var(--serif);font-style:italic;color:var(--teal);font-size:.78rem;margin-right:.3rem}
+.dial-h .dv{font-size:.5rem;color:var(--body);letter-spacing:.03em}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--bor);
+  border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:13px;height:13px;
+  border-radius:50%;background:var(--teal);border:2px solid var(--bg);cursor:pointer;
+  box-shadow:0 0 0 1px var(--muted);transition:transform .1s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--teal);
+  border:2px solid var(--bg);cursor:pointer}
+input[type=range].env::-webkit-slider-thumb{background:var(--blue)}
+input[type=range].env.hot::-webkit-slider-thumb{background:var(--coral)}
+
+/* ---------- SERVICES (Band-3) ---------- */
+.svc{margin-bottom:.55rem}
+.svc-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.22rem}
+.svc-h .sn{font-size:.52rem;color:var(--body);letter-spacing:.03em}
+.svc-h .sv{font-size:.55rem;color:var(--cream);letter-spacing:.02em}
+.svc-h .sv u{color:var(--mid);text-decoration:none;font-size:.46rem;margin-left:.2rem}
+.bar{height:4px;border-radius:3px;background:var(--bor2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:3px;transition:width .5s cubic-bezier(.2,.7,.3,1),background .4s}
+.resil{display:flex;align-items:center;justify-content:space-between;padding:.5rem .6rem;border-radius:4px;
+  border:1px solid var(--bor);background:var(--sur3);margin-top:.5rem}
+.resil .rl{font-size:.5rem;color:var(--dim);letter-spacing:.12em}
+.resil .rv{font-family:var(--serif);font-style:italic;font-size:1.5rem}
+
+/* ---------- EXPORT CHROME ---------- */
+.exp-row{display:flex;flex-wrap:wrap;gap:.3rem}
+.exp{font-size:.48rem;letter-spacing:.08em;color:var(--mid);border:1px solid var(--bor2);border-radius:2px;
+  padding:.3rem .5rem;transition:all .14s}
+.exp:hover{border-color:var(--mid);color:var(--ivory)}
+.exp.go{color:var(--teal);border-color:var(--muted)}
+
+/* ---------- TOAST ---------- */
+#toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:60;
+  background:var(--sur);border:1px solid var(--bor);border-radius:4px;padding:.5rem .85rem;
+  font-size:.55rem;color:var(--ivory);letter-spacing:.05em;display:none;animation:toastin .25s ease}
+#toast b{color:var(--teal);font-weight:400}
+
+.hint{font-size:.46rem;color:var(--mid);letter-spacing:.05em;line-height:1.6;margin-top:.5rem}
+.fn-note{margin-top:.6rem;padding:.5rem .55rem;border-radius:4px;background:var(--sur3);border:1px solid var(--bor2);border-left:2px solid var(--purple)}
+.fn-note+.fn-note{border-left-color:var(--gold)}
+.fn-note .fh{font-size:.46rem;letter-spacing:.1em;color:var(--mid);margin-bottom:.25rem;display:flex;align-items:center;gap:.3rem}
+.fn-note .fb{font-size:.52rem;color:var(--faint);line-height:1.65;font-family:var(--serif);font-style:italic}
+
+/* ---------- GLOSSARY TOOLTIP ---------- */
+.gl{border-bottom:1px dotted var(--mid);cursor:help}
+.gl:hover{border-bottom-color:var(--teal);color:var(--teal)}
+#gtip{position:fixed;z-index:200;max-width:230px;background:var(--sur);border:1px solid var(--bor);
+  border-left:2px solid var(--teal);border-radius:4px;padding:.5rem .6rem;font-size:.52rem;line-height:1.6;
+  color:var(--ivory);letter-spacing:.02em;pointer-events:none;opacity:0;transform:translateY(4px);
+  transition:opacity .12s,transform .12s;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+#gtip.on{opacity:1;transform:translateY(0)}
+#gtip b{color:var(--teal);font-weight:500;display:block;margin-bottom:.2rem;font-size:.55rem}
+
+/* bolded INDEX section headers */
+.sec-h.idx{font-size:.64rem;color:var(--cream);font-weight:500;letter-spacing:.1em}
+.sec-h.idx::after{background:var(--bor)}
+.idx-sub{font-size:.48rem;color:var(--mid);letter-spacing:.05em;margin:-.45rem 0 .7rem;line-height:1.5}
+
+/* header tour (palette) button */
+.tour-hero{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--teal);border-radius:4px;
+  padding:.32rem .7rem;font-size:.54rem;letter-spacing:.07em;color:var(--teal);background:#0f1c1633;transition:all .15s}
+.tour-hero:hover{background:#13251f;box-shadow:0 0 14px rgba(85,196,160,.25)}
+.tour-hero.on{background:var(--teal);color:#08120c;font-weight:500}
+.tour-hero .tri{font-size:.6rem}
+
+/* signals + print transport buttons share .tbtn */
+
+/* footer bar (version / legal / date) */
+.footbar{position:fixed;left:0;right:0;bottom:0;transform:translateY(0);height:24px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 1rem;border-top:1px solid var(--bor);background:var(--sur3);font-size:.44rem;
+  color:var(--muted);letter-spacing:.08em;z-index:1}
+.footbar b{color:var(--mid);font-weight:400}
+.footbar .vid{color:var(--teal);letter-spacing:.12em}
+
+/* native/introduced/invasive preset badge already inline-coloured */
+
+@media print{
+  body{background:#fff!important}
+  nav,.rail,.transport,.footbar,#gtip,#toast{display:none!important}
+}
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1080px){
+  main{grid-template-columns:1fr;grid-template-rows:auto auto auto;overflow-y:auto}
+  body{overflow:auto}
+  .rail{max-height:none}
+  .stage{min-height:62vh}
+}
+@media (max-width:760px){
+  /* nav: drop the tagline, let it breathe, keep brand + palette tour */
+  nav{height:auto;min-height:46px;flex-wrap:wrap;gap:.35rem;padding:.42rem .7rem;position:sticky;top:0}
+  .nav-mid{display:none}
+  .nav-r{gap:.4rem;flex-wrap:wrap;justify-content:flex-end;font-size:.42rem}
+  .tour-hero{font-size:.5rem;padding:.3rem .55rem;white-space:nowrap;line-height:1.1}
+  .tour-hero .tri{font-size:.55rem}
+  .wm{font-size:1.05rem}.sub{display:none}
+
+  /* stack: plant stage first, then the two rails */
+  main{display:flex;flex-direction:column}
+  .stage{order:-1;min-height:66vh;border-bottom:1px solid var(--bor)}
+  .stage-top{min-height:56vh}
+  .rail.left,.rail.right{border:none;border-top:1px solid var(--bor)}
+
+  /* corner readouts: smaller + chipped so they label without hiding the plant */
+  .spec-name{font-size:1.15rem}
+  .spec-latin{font-size:.5rem}.spec-site{font-size:.45rem}
+  .vp-badge{top:.45rem;left:.5rem;gap:.12rem;max-width:62%;
+    background:rgba(9,14,8,.5);padding:.2rem .4rem;border-radius:4px;backdrop-filter:blur(2px)}
+  .vp-readout{top:.45rem;right:.5rem;font-size:.46rem;line-height:1.55;
+    background:rgba(9,14,8,.5);padding:.2rem .4rem;border-radius:4px;backdrop-filter:blur(2px)}
+
+  /* adaptation flag: centered at the very bottom edge — never over the plant */
+  .adapt{left:50%;right:auto;transform:translateX(-50%);bottom:.45rem;font-size:.46rem;
+    max-width:94%;justify-content:center;text-align:center;background:rgba(9,14,8,.86)}
+
+  .transport{gap:.5rem;padding:.5rem .6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s!important}
+  #canopy-grp{animation:none!important}
+}
+
+/* ---- remediation profile (xēn · represented) ---- */
+#remediation{margin-top:.3rem}
+.rem-arch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem;margin:.15rem 0 .4rem}
+.rem-arch .gl{font-family:var(--serif);font-style:italic;font-size:.98rem;color:var(--gold);cursor:help;border-bottom:1px dotted var(--gold)}
+.rem-role{font-size:.5rem;color:var(--faint);letter-spacing:.04em;text-transform:uppercase}
+.rem-ev{--ev:#9ed855;display:flex;align-items:center;gap:.35rem;padding:.32rem .45rem;margin:.2rem 0 .5rem;
+  border:1px solid color-mix(in srgb,var(--ev) 42%,transparent);border-left:3px solid var(--ev);
+  border-radius:4px;background:color-mix(in srgb,var(--ev) 9%,transparent);cursor:help}
+.rem-ev-dot{width:7px;height:7px;border-radius:50%;background:var(--ev);box-shadow:0 0 6px var(--ev);flex:none}
+.rem-ev-lab{font-size:.56rem;color:var(--cream);letter-spacing:.02em}
+.rem-ev-tag{margin-left:auto;font-size:.44rem;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.rem-sub{font-size:.46rem;color:var(--body);text-transform:uppercase;letter-spacing:.08em;margin:.4rem 0 .22rem}
+.rem-sub .n{color:var(--faint);text-transform:none;letter-spacing:0}
+.rem-chips,.rem-mechs{display:flex;flex-wrap:wrap;gap:.28rem}
+.rem-chip{display:inline-flex;align-items:center;gap:.26rem;font-size:.5rem;padding:.16rem .4rem;
+  border:1px solid;border-radius:10px;background:rgba(255,255,255,.02);cursor:help}
+.rem-chip i{width:6px;height:6px;border-radius:50%;flex:none}
+.rem-mech{font-size:.5rem;padding:.16rem .4rem;border:1px solid var(--bor);border-radius:4px;
+  color:var(--teal);background:rgba(85,196,160,.06);cursor:help}
+.rem-target{font-size:.54rem;line-height:1.55;color:var(--body);margin-top:.5rem;
+  padding-top:.4rem;border-top:1px solid var(--bor)}
+.aux-pill{display:inline-block;font-size:.42rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:.06rem .3rem;border:1px solid var(--purple);color:var(--purple);border-radius:8px;margin-left:.3rem}
+
+/* ---- private-demo passphrase gate ---- */
+#pw-gate{position:fixed;inset:0;z-index:9999;padding:1.5rem;
+  background:radial-gradient(120% 90% at 50% 12%,#0c160b 0%,var(--bg) 62%);
+  display:flex;align-items:center;justify-content:center}
+#pw-gate.hidden{opacity:0;pointer-events:none;transition:opacity .55s ease}
+.pw-card{width:min(430px,92vw);text-align:center;border:1px solid var(--bor);border-radius:14px;
+  background:var(--sur);padding:2.2rem 2rem 1.7rem;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.pw-brand{font-family:var(--serif);font-style:italic;font-size:1.7rem;color:var(--cream);letter-spacing:.1em}
+.pw-brand b{color:var(--teal);font-weight:400}
+.pw-sub{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:.55rem 0 1.4rem}
+.pw-lead{font-size:.64rem;color:var(--body);line-height:1.6;margin-bottom:1.25rem}
+.pw-row{display:flex;gap:.5rem}
+#pw-input{flex:1;min-width:0;font-family:var(--mono);font-size:.82rem;color:var(--cream);background:var(--sur3);
+  border:1px solid var(--bor);border-radius:8px;padding:.62rem .7rem;letter-spacing:.14em;outline:none}
+#pw-input:focus{border-color:var(--teal)}
+#pw-go{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bg);
+  background:var(--teal);border-radius:8px;padding:.62rem 1.05rem;font-weight:500;white-space:nowrap}
+#pw-go:hover{background:var(--bright)}
+.pw-err{color:var(--coral);font-size:.56rem;height:1rem;margin-top:.75rem;letter-spacing:.04em;opacity:0;transition:opacity .2s}
+.pw-err.on{opacity:1}
+.pw-foot{margin-top:1.5rem;font-size:.46rem;color:var(--faint);letter-spacing:.06em;line-height:1.6}
+@keyframes pw-shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.pw-card.shake{animation:pw-shake .4s}
+</style>
+</head>
+<body>
+
+<!-- private-demo passphrase gate (client-side; deters casual viewing of a shared link, not real auth) -->
+<div id="pw-gate">
+  <div class="pw-card" id="pw-card">
+    <div class="pw-brand">SymbiOS <b>/</b> VA·NA</div>
+    <div class="pw-sub">Growth Manifold · Phytoremediation</div>
+    <div class="pw-lead">Private demo. Enter the passphrase to continue.</div>
+    <div class="pw-row">
+      <input id="pw-input" type="password" placeholder="passphrase" autocomplete="off" spellcheck="false" autofocus>
+      <button id="pw-go">enter</button>
+    </div>
+    <div class="pw-err" id="pw-err">incorrect passphrase</div>
+    <div class="pw-foot">© 2026 Marko Manriquez · Inflorescence Intelligence™ · All Rights Reserved</div>
+  </div>
+</div>
+
+<nav>
+  <a class="brand" href="/" title="back to SymbiOS home">
+    <span class="wm">SymbiOS <b>/</b> VA·NA</span>
+    <span class="sub">MODULE 01 · PHYTOREMEDIATION</span>
+  </a>
+  <div class="nav-mid">the growth manifold — every dial live</div>
+  <div class="nav-r">
+    <button class="tour-hero" id="btn-tour-hero"><span class="tri">▶</span>tour the coastal plant palette</button>
+    <a class="nav-home" href="/" title="SymbiOS home page"><span class="hg">⌂</span>home</a>
+    <span class="live">ENGINE</span>
+  </div>
+</nav>
+
+<main>
+  <!-- ================= LEFT RAIL ================= -->
+  <div class="rail left">
+    <div class="sec">
+      <div class="sec-h"><span class="gl" data-gl="FSPM">FSPM</span> pipeline <span class="n">· wrapped engines</span></div>
+      <div id="pipeline">
+        <div class="node" data-node="0"><span class="idx">01</span><div class="body"><div class="nm"><span class="gl" data-gl="Axiom">Axiom</span></div><div class="eng">seed · <b>specimen</b></div></div><span class="dot"></span></div>
+        <div class="wire"></div>
+        <div class="node" data-node="1"><span class="idx">02</span><div class="body"><div class="nm"><span class="gl" data-gl="L-system">L-system</span></div><div class="eng">grammar · <b><span class="gl" data-gl="L-Py">L-Py</span></b></div></div><span class="dot"></span></div>
+        <div class="wire"></div>
+        <div class="node" data-node="2"><span class="idx">03</span><div class="body"><div class="nm"><span class="gl" data-gl="MTG">MTG</span></div><div class="eng">multiscale graph · <b><span class="gl" data-gl="OpenAlea">OpenAlea</span></b></div></div><span class="dot"></span></div>
+        <div class="wire"></div>
+        <div class="node" data-node="3"><span class="idx">04</span><div class="body"><div class="nm">Geometry</div><div class="eng">3D skin · <b><span class="gl" data-gl="PlantGL">PlantGL</span></b></div></div><span class="dot"></span></div>
+        <div class="wire"></div>
+        <div class="node" data-node="4"><span class="idx">05</span><div class="body"><div class="nm">Light</div><div class="eng">shade · <b><span class="gl" data-gl="Caribu">Caribu</span> / <span class="gl" data-gl="radiosity">radiosity</span></b></div></div><span class="dot"></span></div>
+        <div class="wire"></div>
+        <div class="node" data-node="5"><span class="idx">06</span><div class="body"><div class="nm">Systems</div><div class="eng">services · <b><span class="gl" data-gl="VVIM">VVIM</span> <span class="gl" data-gl="Band-3">Band-3</span></b></div></div><span class="dot"></span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">specimens <span class="n">· coastal palette</span></div>
+      <div id="presets"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">production rule <span class="n">· live</span></div>
+      <div class="rule">
+        <div class="ax">axiom <b id="r-axiom">F</b> · iterate n = <b id="r-n">5</b></div>
+        <div class="pr" id="r-rule">F → F[+F][−F]F</div>
+        <div class="meta" id="r-meta">θ = 32° · branch = 3 · decay = 0.74</div>
+      </div>
+    </div>
+
+    <div class="sec" style="border-bottom:none">
+      <div class="sec-h"><span class="gl" data-gl="MTG">MTG</span> <span class="n">· <span class="gl" data-gl="VVIM">vegetative voxel information model</span></span></div>
+      <div class="mtg-wrap">
+        <svg id="mtg" viewBox="0 0 240 150" style="width:100%;display:block"></svg>
+        <div class="mtg-legend">
+          <span><i style="background:var(--cream)"></i>L0 specimen</span>
+          <span><i style="background:var(--teal)"></i>L1 systems</span>
+          <span><i style="background:var(--gold)"></i>L2 modules</span>
+          <span><i style="background:var(--bright)"></i>L3 organs</span>
+        </div>
+      </div>
+      <div class="hint">One graph, four scales. Data attaches where it belongs — the formal spine beneath VVIM.</div>
+    </div>
+  </div>
+
+  <!-- ================= STAGE ================= -->
+  <div class="stage">
+    <div class="stage-top">
+      <svg id="viewport" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="vp-badge">
+        <div class="spec-name" id="vp-name">Red Oak</div>
+        <div class="spec-latin italic" id="vp-latin">Quercus rubra</div>
+        <div class="spec-site" id="vp-site">Rumney Marsh edge · Saugus, MA</div>
+      </div>
+      <div class="vp-readout">
+        <div>age <b id="vp-age">26 yr</b></div>
+        <div>height <b id="vp-h">14.2 m</b></div>
+        <div>segments <b id="vp-seg">0</b></div>
+        <div>tips <b id="vp-tips">0</b></div>
+      </div>
+      <div class="vp-rule" id="vp-rule" title="drag to reposition">
+        <span class="vr-grip">⠿</span>
+        <div class="vr-prod" id="vr-rule">F → F</div>
+        <div class="vr-meta"><span class="vr-dot"></span><span class="vr-k">axiom</span> <b id="vr-axiom">F</b> <span class="vr-k">· iterate</span> n = <b id="vr-n">0.0</b> · <span id="vr-params">θ 0° · branch 0 · decay 0.00</span><span class="vr-cur">▋</span></div>
+      </div>
+    </div>
+
+    <div class="transport">
+      <div class="tgrp">
+        <span class="tlabel">GROWTH</span>
+        <button class="tbtn" id="btn-grow"><span class="tri">▶</span>grow</button>
+      </div>
+      <div class="scrub">
+        <input type="range" id="t-age" min="0" max="1" step="0.001" value="0.72"/>
+        <span class="val" id="t-age-v">26 yr</span>
+      </div>
+      <div class="tgrp">
+        <span class="tlabel">SEASON</span>
+        <button class="tbtn" id="btn-season"><span class="tri">▶</span>cycle</button>
+        <div class="season-pips" id="season-pips"></div>
+      </div>
+      <div class="tgrp">
+        <button class="tbtn on" id="btn-signals" title="VOC + mycorrhizal signalling layer">comms</button>
+        <button class="tbtn" id="btn-print" title="print / save PDF — current specimen">print</button>
+        <button class="tbtn" id="btn-tour"><span class="tri">▶</span>tour</button>
+        <button class="tbtn" id="btn-reset">reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= RIGHT RAIL ================= -->
+  <div class="rail right">
+    <div class="sec">
+      <div class="sec-h">parameter manifold <span class="n">· morphology</span></div>
+      <div id="dials"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h idx">Coastal Adaptation Index</div>
+      <div id="env-dials"></div>
+      <div class="hint">Push these past a species' tolerance and watch it decline. This is the verification gap — made visible.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h idx">Ecosystem Services Index</div>
+      <div class="idx-sub"><span class="gl" data-gl="VVIM">Vegetative Voxel Information Model™</span> (VVIM) · Band-3</div>
+      <div id="services"></div>
+      <div class="resil">
+        <span class="rl">RESILIENCE</span>
+        <span class="rv italic" id="resil-v" style="color:var(--bright)">—</span>
+      </div>
+      <div class="hint">Modeled from the generated geometry · demo values, real schema — the auxēn side of the trust wall.</div>
+      <div id="fieldnotes"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">Phytoremediation Profile <span class="n">· <span class="gl" data-gl="Phytoremediation">xēn</span> · represented</span></div>
+      <div id="remediation"></div>
+      <div class="hint">Source-cited facts, carried with an evidence grade. The modeled mg/yr figure lives on the auxēn side of the trust wall.</div>
+    </div>
+
+    <div class="sec" style="border-bottom:none">
+      <div class="sec-h">export <span class="n">· same object, every format</span></div>
+      <div class="exp-row">
+        <button class="exp go" data-exp="SVG">SVG ↓</button>
+        <button class="exp" data-exp="glTF">glTF</button>
+        <button class="exp" data-exp="DXF">DXF</button>
+        <button class="exp" data-exp="Rhino">Rhino</button>
+        <button class="exp" data-exp="Grasshopper">Grasshopper</button>
+        <button class="exp" data-exp="ArcGIS Pro">ArcGIS Pro</button>
+      </div>
+      <div class="hint">The animation you see and a 50-year forecast are the same parameter object at different fill-levels.</div>
+    </div>
+  </div>
+</main>
+
+<div class="footbar">
+  <span><b>VANA</b> · P1-A · Growth Manifold Studio &nbsp;|&nbsp; <span class="vid">P1-A.02</span> · build 2026/07/12 · phyto · v2</span>
+  <span>© 2026 Marko Manriquez · SymbiOS™ | Inflorescence Intelligence™ · All Rights Reserved</span>
+</div>
+
+<div id="gtip"></div>
+<div id="toast"></div>
+
+<script>
+/* ---- private-demo passphrase gate (client-side obfuscation; the real IP protection is the private repo) ---- */
+(function(){
+  const KEY='remy';
+  const gate=document.getElementById('pw-gate');if(!gate)return;
+  const inp=document.getElementById('pw-input'),err=document.getElementById('pw-err'),card=document.getElementById('pw-card');
+  function unlock(){gate.classList.add('hidden');setTimeout(()=>{if(gate&&gate.parentNode)gate.parentNode.removeChild(gate);},650);}
+  function tryit(){
+    if((inp.value||'').trim().toLowerCase()===KEY){unlock();}
+    else{err.classList.add('on');card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');inp.select();}
+  }
+  const go=document.getElementById('pw-go');
+  if(go)go.addEventListener('click',tryit);
+  if(inp){inp.addEventListener('keydown',e=>{if(e.key==='Enter')tryit();});
+    inp.addEventListener('input',()=>err.classList.remove('on'));
+    setTimeout(()=>inp.focus(),60);}
+})();
+/* ============================================================
+   CORE · SVG helpers + seeded PRNG (ported from VANA compendium)
+   ============================================================ */
+const NS='http://www.w3.org/2000/svg';
+function seedRandom(seed){let s=seed>>>0;return function(){s=(s+0x6D2B79F5)|0;let t=Math.imul(s^s>>>15,1|s);t=(t+Math.imul(t^t>>>7,61|t))^t;return((t^t>>>14)>>>0)/4294967296;};}
+function el(svg,tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);svg.appendChild(e);return e;}
+function L(svg,x1,y1,x2,y2,c,w,o){const e=document.createElementNS(NS,'line');e.setAttribute('x1',x1.toFixed(2));e.setAttribute('y1',y1.toFixed(2));e.setAttribute('x2',x2.toFixed(2));e.setAttribute('y2',y2.toFixed(2));e.setAttribute('stroke',c);e.setAttribute('stroke-width',w);e.setAttribute('stroke-linecap','round');if(o!==undefined)e.setAttribute('opacity',o);svg.appendChild(e);return e;}
+function C(svg,cx,cy,r,fill,o){const e=document.createElementNS(NS,'circle');e.setAttribute('cx',cx.toFixed(2));e.setAttribute('cy',cy.toFixed(2));e.setAttribute('r',r.toFixed(2));e.setAttribute('fill',fill);if(o!==undefined)e.setAttribute('opacity',o);svg.appendChild(e);return e;}
+function PA(svg,d,c,w,o){const e=document.createElementNS(NS,'path');e.setAttribute('d',d);e.setAttribute('fill','none');if(c)e.setAttribute('stroke',c);if(w)e.setAttribute('stroke-width',w);e.setAttribute('stroke-linecap','round');if(o!==undefined)e.setAttribute('opacity',o);svg.appendChild(e);return e;}
+function DL(svg,x1,y1,x2,y2,c,w,o,dash){const e=document.createElementNS(NS,'line');e.setAttribute('x1',x1.toFixed(2));e.setAttribute('y1',y1.toFixed(2));e.setAttribute('x2',x2.toFixed(2));e.setAttribute('y2',y2.toFixed(2));e.setAttribute('stroke',c);e.setAttribute('stroke-width',w);e.setAttribute('stroke-dasharray',dash||'2 3');e.setAttribute('stroke-linecap','round');if(o!==undefined)e.setAttribute('opacity',o);svg.appendChild(e);return e;}
+
+/* hex colour lerp + a seasonal leaf ramp */
+function hex2rgb(h){h=h.replace('#','');return[parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)];}
+function rgb2hex(r){return '#'+r.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('');}
+function lerpColor(a,b,t){const A=hex2rgb(a),B=hex2rgb(b);return rgb2hex([A[0]+(B[0]-A[0])*t,A[1]+(B[1]-A[1])*t,A[2]+(B[2]-A[2])*t]);}
+const LEAF_STOPS=[[0,'#c6e27e'],[0.30,'#7cb342'],[0.50,'#4f7d33'],[0.68,'#c9a961'],[0.84,'#c4904a'],[1,'#c45a3a']];
+function leafRamp(t){t=Math.max(0,Math.min(1,t));for(let i=0;i<LEAF_STOPS.length-1;i++){const[a,ca]=LEAF_STOPS[i],[b,cb]=LEAF_STOPS[i+1];if(t<=b)return lerpColor(ca,cb,(t-a)/(b-a));}return LEAF_STOPS[LEAF_STOPS.length-1][1];}
+
+/* ============================================================
+   SPECIES · coastal palette (the deep set)
+   form drives the renderer; tol drives the climate response
+   ============================================================ */
+const SPECIES={
+  robinia:{name:'Black Locust',latin:'Robinia pseudoacacia',form:'sympodial',badge:'pioneer',status:'introduced',
+    site:'BIP · Bushwick Inlet, Brooklyn',axiom:'F',rule:'F → F[+F][−F]F · N-fix',rootType:'taproot',
+    maxH:20,maxAge:60,baseLen:48,branchCol:'#5c4a2e',
+    p:{age:.70,angle:30,gravity:2,decay:.75,branch:3,asym:.44,jitter:11,density:.66,leafSize:2.4,hue:.44,root:.66},
+    tol:{salt:.22,flood:.30,drought:.62},phyto:.58,
+    archetype:'nfixer',role:'MGP / PAH pioneer · N-fixer',evidence:'F',
+    contaminants:[{c:'PAH',g:'G'},{c:'petroleum',g:'G'},{c:'metals',g:'G'}],
+    mechanisms:['rhizodeg','stabilize'],
+    targets:'Flavonoid root exudates prime the rhizosphere to degrade PAH / coal-tar on manufactured-gas-plant fill; fixes nitrogen to green harsh, nutrient-poor soil first.',
+    note:'A hard-site pioneer. Fixes nitrogen and throws deep roots into brownfield fill nothing else will colonise — manage its spread.',
+    phytoNote:'Black locust’s value is the rhizosphere it builds: N-fixing nodules + flavonoid exudates feed microbes that break down PAH and petroleum in the root zone. The degradation is the soil’s, plant-fed.',
+    pollinators:'Fragrant spring racemes are a major nectar source for honeybees and native bees; a classic honey tree.'},
+  quercus:{name:'Red Oak',latin:'Quercus rubra',form:'sympodial',badge:'upland',status:'native',
+    site:'Nashua River terrace · NH',axiom:'F',rule:'F → F[+F][−F][↑F]',rootType:'taproot',
+    maxH:22,maxAge:90,baseLen:50,branchCol:'#5a4a30',
+    p:{age:.72,angle:32,gravity:2,decay:.745,branch:3,asym:.42,jitter:11,density:.72,leafSize:4.0,hue:.46,root:.6},
+    tol:{salt:.16,flood:.20,drought:.50},phyto:.45,
+    archetype:'excluder',role:'upland carbon + metal lock',evidence:'F',
+    contaminants:[{c:'metals',g:'F'},{c:'air-PM',g:'G'}],
+    mechanisms:['stabilize'],
+    targets:'Stabilises metals in long-lived woody tissue and holds the bank with a deep root mat — an excluder, not an extractor. Its headline service is decades of carbon.',
+    note:'Upland canopy. High carbon, low salt tolerance — the species coastal retreat leaves behind.',
+    phytoNote:'Oaks stabilise soil and lock metals into long-lived woody tissue. Modest active uptake — their service is decades of carbon storage and a root mat that holds the bank.',
+    pollinators:'Wind-pollinated, but a keystone host: a single oak supports 500+ caterpillar species — the base of the songbird food web.'},
+  avicennia:{name:'Black Mangrove',latin:'Avicennia germinans',form:'mangrove',badge:'intertidal',status:'native',
+    site:'Bangkok delta · the global transposition',axiom:'F',rule:'F → F[+F][−F]F · +prop-roots',rootType:'prop',
+    maxH:12,maxAge:60,baseLen:38,branchCol:'#4a4636',
+    p:{age:.70,angle:26,gravity:6,decay:.72,branch:3,asym:.30,jitter:9,density:.82,leafSize:3.6,hue:.50,root:.8},
+    tol:{salt:.98,flood:.95,drought:.40},phyto:.62,
+    archetype:'halophyte',role:'tidal treatment wall',evidence:'F',
+    contaminants:[{c:'metals',g:'F'},{c:'nutrients',g:'F'},{c:'salt',g:'F'}],
+    mechanisms:['stabilize','rhizofiltration'],
+    targets:'Binds heavy metals and excess nutrients in anoxic sediment; salt glands excrete, roots sequester — a living water-treatment wall at the tide line.',
+    note:'Salt-excreting halophyte. Pneumatophores + prop roots hold the intertidal line as the sea climbs.',
+    phytoNote:'Mangroves bind heavy metals and excess nutrients in anoxic sediment; salt glands excrete, roots sequester — a living water-treatment wall at the tide line.',
+    pollinators:'Insect-pollinated flowers feed bees; the prop-root tangle is nursery habitat for fish, crabs, and shorebirds.'},
+  spartina:{name:'Smooth Cordgrass',latin:'Spartina alterniflora',form:'grass',badge:'salt marsh',status:'native',
+    site:'BIP · Bushwick Inlet, Brooklyn',axiom:'B',rule:'B → B (blade · linear · no branch)',rootType:'rhizomatous',
+    maxH:2,maxAge:8,baseLen:60,branchCol:'#6f8d3e',
+    p:{age:.78,angle:7,gravity:1,decay:.94,branch:1,asym:.10,jitter:5,density:.5,leafSize:2,hue:.40,root:.7},
+    tol:{salt:.96,flood:.98,drought:.30},phyto:.70,
+    archetype:'emergent',role:'harbor-edge rhizodegrader',evidence:'F',
+    contaminants:[{c:'petroleum',g:'F'},{c:'PAH',g:'F'},{c:'metals',g:'G'}],
+    mechanisms:['rhizodeg','stabilize'],
+    targets:'Rhizosphere microbes degrade petroleum and PAH in marsh sediment — rhizodegradation at the dirtiest edge of the harbor.',
+    note:'The marsh-builder. Traps sediment, accretes soil, blunts storm surge — engineered by tide, not by us.',
+    phytoNote:'Cordgrass rhizospheres host microbes that degrade petroleum hydrocarbons and bind metals in marsh sediment — rhizodegradation at the dirtiest edge of the harbor.',
+    pollinators:'Wind-pollinated; stems and detritus feed ribbed mussels, fiddler crabs, and shelter marsh rails.'},
+  salix:{name:'Weeping Willow',latin:'Salix babylonica',form:'weeping',badge:'riparian',status:'introduced',
+    site:'Nashua River bank · stormwater edge',axiom:'F',rule:'F → F[+F]F[−F] · γ-pull pendant',rootType:'phreatophyte',
+    maxH:16,maxAge:55,baseLen:46,branchCol:'#5a5230',
+    p:{age:.74,angle:20,gravity:24,decay:.80,branch:2,asym:.28,jitter:8,density:.78,leafSize:2.6,hue:.42,root:.85},
+    tol:{salt:.25,flood:.80,drought:.20},phyto:.66,
+    archetype:'pump',role:'phreatophyte pump-and-treat',evidence:'F',
+    contaminants:[{c:'TCE',g:'F'},{c:'petroleum',g:'F'},{c:'nutrients',g:'F'},{c:'metals',g:'G'}],
+    mechanisms:['phytodeg','rhizodeg','hydraulic'],
+    targets:'Fast growth + deep phreatophyte roots draw up and degrade solvents, petroleum, and nitrate from soil and groundwater — a living pump-and-treat, no earth-moving.',
+    note:'Pendant secondary axes, gravity-dominant. Thirsty roots — a stormwater sponge for the wet edge.',
+    phytoNote:'A phytoremediation workhorse: fast growth + deep roots act as natural pumps, drawing up and degrading heavy metals and petroleum from soil and groundwater — no earth-moving required.',
+    pollinators:'Early-spring catkins are a critical first pollen + nectar source for emerging native bees; host to dozens of moth and butterfly larvae.'},
+  pinus:{name:'Eastern White Pine',latin:'Pinus strobus',form:'monopodial',badge:'evergreen',status:'native',
+    site:'upland buffer · New England coast',axiom:'F',rule:'F → F[whorl(k)]F · k = 6 ± 1',rootType:'taproot',
+    maxH:24,maxAge:120,baseLen:42,branchCol:'#52472e',
+    p:{age:.70,angle:18,gravity:8,decay:.82,branch:6,asym:.15,jitter:6,density:.6,leafSize:1.8,hue:.52,root:.55},
+    tol:{salt:.35,flood:.20,drought:.55},phyto:.40,
+    archetype:'canopy',role:'evergreen particulate canopy',evidence:'F',
+    contaminants:[{c:'air-PM',g:'F'},{c:'metals',g:'G'}],
+    mechanisms:['stabilize'],
+    targets:'Needles intercept airborne particulates and volatile organics year-round — capture, not removal; roots stabilise sandy upland metals. Pair with a stormwater filter.',
+    note:'Monopodial conifer, whorled tiers. Evergreen — holds structure and shade through the dormant season.',
+    phytoNote:'Conifer needles intercept airborne particulates and volatile organics; roots stabilise and sequester metals in sandy upland soils year-round.',
+    pollinators:'Wind-pollinated; seeds and evergreen cover sustain crossbills, chickadees, and red squirrels through winter.'},
+  populus:{name:'Quaking Aspen',latin:'Populus tremuloides',form:'clonal',badge:'pioneer',status:'native',
+    site:'disturbed upland · pioneer colonizer',axiom:'F',rule:'F → F[+F][−F] × k stems / rhizome',rootType:'rhizomatous',
+    maxH:18,maxAge:50,baseLen:44,branchCol:'#7a7250',
+    p:{age:.72,angle:14,gravity:-3,decay:.78,branch:2,asym:.34,jitter:9,density:.7,leafSize:2.8,hue:.44,root:.75},
+    tol:{salt:.20,flood:.45,drought:.40},phyto:.52,
+    archetype:'pump',role:'pioneer phreatophyte (clonal)',evidence:'F',
+    contaminants:[{c:'TCE',g:'F'},{c:'nutrients',g:'F'},{c:'metals',g:'G'}],
+    mechanisms:['phytodeg','hydraulic','rhizodeg'],
+    targets:'Salicaceae kin to willow — rapid uptake of solvents and nitrate; transpires and degrades groundwater contaminants at volume across a clonal stand.',
+    note:'One organism, many stems from a shared rhizome. A pioneer — first to green a disturbed coast.',
+    phytoNote:'Like willows (Salicaceae kin), poplars are premier phytoremediators — rapid uptake of solvents, nitrates, and metals; they transpire and degrade groundwater contaminants at volume.',
+    pollinators:'Wind + insect; catkins feed early bees, host to tiger swallowtail and viceroy larvae; beaver and grouse browse the clonal stand.'},
+  poplar:{name:'Hybrid Poplar',latin:'Populus × canadensis',form:'sympodial',badge:'phreatophyte',status:'introduced',
+    site:'Newtown Creek · Brooklyn / Queens',axiom:'F',rule:'F → F[+F][−F]F · fast leader',rootType:'phreatophyte',
+    maxH:25,maxAge:35,baseLen:52,branchCol:'#5f5432',
+    p:{age:.68,angle:22,gravity:1,decay:.79,branch:2,asym:.30,jitter:9,density:.74,leafSize:3.2,hue:.45,root:.9},
+    tol:{salt:.22,flood:.70,drought:.28},phyto:.82,
+    archetype:'pump',role:'phreatophyte pump-and-treat',evidence:'F',
+    contaminants:[{c:'TCE',g:'F'},{c:'petroleum',g:'F'},{c:'nutrients',g:'F'},{c:'metals',g:'G'}],
+    mechanisms:['phytodeg','rhizodeg','hydraulic','volatilize'],
+    targets:'The workhorse. Deep phreatophyte roots capture and degrade TCE, BTEX, and nitrate plumes — pump-and-treat without the pumps. The most field-deployed phytoremediator.',
+    note:'Fast, thirsty, deep-rooted — the standard hydraulic-control tree for capping a groundwater plume.',
+    phytoNote:'Hybrid poplar is the field standard for plume control: deep roots pull the water table, capturing and degrading chlorinated solvents, petroleum, and nitrate before they migrate.',
+    pollinators:'Wind-pollinated; fast biomass hosts early Salicaceae-associated moths and provides quick cover on bare fill.'},
+  vetiver:{name:'Vetiver Grass',latin:'Chrysopogon zizanioides',form:'grass',badge:'deep-root grass',status:'introduced',
+    site:'Bangkok · P Landscape',axiom:'B',rule:'B → B (clump · 2–4 m roots)',rootType:'phreatophyte',
+    maxH:2,maxAge:20,baseLen:56,branchCol:'#7a8d46',
+    p:{age:.80,angle:9,gravity:1,decay:.93,branch:1,asym:.12,jitter:6,density:.58,leafSize:2.2,hue:.42,root:.95},
+    tol:{salt:.55,flood:.75,drought:.85},phyto:.72,
+    archetype:'pump',role:'slope stabiliser + wastewater rhizofilter',evidence:'F',
+    contaminants:[{c:'nutrients',g:'F'},{c:'metals',g:'G'},{c:'petroleum',g:'G'}],
+    mechanisms:['stabilize','rhizofiltration','rhizodeg'],
+    targets:'2–4 m roots stabilise slopes and strip nutrients and metals from wastewater and leachate — the tropical bioengineering standard, field-proven across SE Asia.',
+    note:'A sterile clumping grass with extraordinary vertical roots — erosion control and water treatment in one.',
+    phytoNote:'Vetiver tolerates and holds heavy metals and high nutrient loads; its dense 2–4 m root column filters wastewater and armours slopes — a phreatophyte the size of a grass.',
+    pollinators:'Grown sterile for containment; primary value is soil / water engineering rather than forage or nectar.'},
+  eichhornia:{name:'Water Hyacinth',latin:'Pontederia crassipes',form:'floating',badge:'floating rhizofilter',status:'invasive',
+    site:'Bangkok canals · contained comparator',axiom:'R',rule:'R → rosette + trailing curtain',rootType:'floating',
+    maxH:1,maxAge:2,baseLen:30,branchCol:'#6f9d4e',
+    p:{age:.72,angle:12,gravity:0,decay:.9,branch:1,asym:.2,jitter:6,density:.7,leafSize:3.4,hue:.44,root:.85},
+    tol:{salt:.10,flood:1.0,drought:.05},phyto:.78,
+    archetype:'emergent',role:'floating rhizofilter (manage!)',evidence:'F',
+    contaminants:[{c:'nutrients',g:'F'},{c:'metals',g:'F'},{c:'As',g:'G'}],
+    mechanisms:['rhizofiltration','extract'],
+    targets:'A trailing root curtain strains nutrients and metals from open water at speed — powerful, but an aggressive invasive: contained lagoons and treatment cells only.',
+    note:'The fastest floating rhizofilter there is — and one of the world’s worst aquatic weeds. Use behind a barrier, harvest, never release.',
+    phytoNote:'Water hyacinth’s feathered roots are a huge filtration surface: it pulls N, P, and metals out of the water column fast. Its power is exactly why it must stay contained.',
+    pollinators:'Showy lavender flowers attract bees, but self / clonal spread dominates; mats smother native aquatic habitat if uncontrolled.'},
+  pteris:{name:'Chinese Brake Fern',latin:'Pteris vittata',form:'forb',badge:'As hyperaccumulator',status:'introduced',
+    site:'Nashua River legacy · As proxy',axiom:'V',rule:'V → pinnate frond × k',rootType:'fibrous',
+    maxH:1,maxAge:6,baseLen:28,branchCol:'#4f7d33',
+    p:{age:.7,angle:24,gravity:6,decay:.86,branch:1,asym:.3,jitter:10,density:.6,leafSize:2.6,hue:.46,root:.6},
+    tol:{salt:.12,flood:.35,drought:.45},phyto:.68,
+    archetype:'hyperaccumulator',role:'arsenic hyperaccumulator',evidence:'F',
+    contaminants:[{c:'As',g:'F'}],
+    mechanisms:['extract'],
+    targets:'The arsenic specialist — hyperaccumulates As into its fronds for harvest and off-site recovery. The rare case where phytoextraction genuinely removes the contaminant.',
+    note:'A fern that concentrates arsenic thousands-fold into harvestable fronds — field-proven, and one of phytoextraction’s few real successes.',
+    phytoNote:'Pteris vittata moves arsenic from soil into its fronds at extreme concentration. Cut and remove the fronds and the arsenic leaves with them — true extraction, not just stabilisation.',
+    pollinators:'Spore-bearing, non-flowering; ecological role here is remediation, not pollinator support.'},
+  alyssum:{name:'Alyssum',latin:'Odontarrhena muralis',form:'forb',badge:'Ni phytominer',status:'introduced',
+    site:'ultramafic proxy · Ni',axiom:'V',rule:'V → stem + flower head × k',rootType:'fibrous',
+    maxH:1,maxAge:4,baseLen:26,branchCol:'#7d8a3a',
+    p:{age:.7,angle:20,gravity:4,decay:.85,branch:2,asym:.3,jitter:9,density:.55,leafSize:1.8,hue:.5,root:.55},
+    tol:{salt:.15,flood:.20,drought:.7},phyto:.6,
+    archetype:'hyperaccumulator',role:'nickel phytominer',evidence:'G',
+    contaminants:[{c:'Ni',g:'G'}],
+    mechanisms:['extract'],
+    targets:'Concentrates nickel into shoots for harvest — “phytomining.” Proven on ultramafic soils and in pilots; still emerging as a remediation tool, not a field-standard yet.',
+    note:'A hyperaccumulator that could turn a nickel-rich soil into a slow, harvestable crop — promising, not yet routine.',
+    phytoNote:'Alyssum pulls nickel into its shoots at concentrations high enough to “mine.” The science is real but mostly greenhouse / pilot — the trust wall keeps this labelled greenhouse, not field.',
+    pollinators:'Small flowers offer some bee forage; the interest here is metal recovery from serpentine soils.'},
+};
+const ORDER=['robinia','quercus','avicennia','spartina','salix','pinus','populus','poplar','vetiver','eichhornia','pteris','alyssum'];
+/* visual-fill factor: each specimen sized to read well in the studio frame
+   (true ecological height still reported in the readout) */
+const VSCALE={robinia:1.1,quercus:1.0,avicennia:1.4,spartina:1.5,salix:1.12,pinus:1.28,populus:1.18,poplar:1.15,vetiver:1.5,eichhornia:1.5,pteris:1.6,alyssum:1.7};
+
+/* ============================================================
+   PHYTO DATA LAYER · represented facts (xēn) — token-identical to the Atlas.
+   EVIDENCE grades ARE the trust wall: F field-verified · G greenhouse-only ·
+   ! frontier/cautionary.  Never write a modeled number back into these rows.
+   ============================================================ */
+const EVIDENCE={
+  F:{lab:'field-verified',short:'field',col:'#9ed855',
+     gl:'Field-verified — documented working on a real remediation site. The claim the trust wall lets through.'},
+  G:{lab:'greenhouse only',short:'greenhouse',col:'#c8a96e',
+     gl:'Greenhouse / accumulator result only — promising in the lab, NOT yet proven in the field. Do not render as a site fact.'},
+  '!':{lab:'frontier · don\u2019t over-promise',short:'frontier',col:'#e07a5a',
+     gl:'Frontier / cautionary — weak, slow, or unsolved by phyto (the sunflower-and-lead trap). Flagged, never claimed.'},
+};
+const CONTAM={
+  'petroleum':{lab:'petroleum · BTEX',kind:'organic',col:'#c4904a'},
+  'PAH':{lab:'PAH · coal tar',kind:'organic',col:'#b0894a'},
+  'TCE':{lab:'chlorinated solvents',kind:'organic',col:'#c45a3a'},
+  'pesticides':{lab:'pesticides',kind:'organic',col:'#a5743a'},
+  'nutrients':{lab:'nutrients · N/P',kind:'inorganic',col:'#55c4a0'},
+  'As':{lab:'arsenic (As)',kind:'inorganic',col:'#6ab4e8'},
+  'Ni':{lab:'nickel (Ni)',kind:'inorganic',col:'#7fb0d8'},
+  'Se':{lab:'selenium (Se)',kind:'inorganic',col:'#95a8e0'},
+  'metals':{lab:'mixed metals',kind:'inorganic',col:'#7a9ad8'},
+  'salt':{lab:'salt · brine',kind:'inorganic',col:'#9a8ae8'},
+  'air-PM':{lab:'air particulates',kind:'inorganic',col:'#8a9ad0'},
+};
+const MECH={
+  'phytodeg':{lab:'phytodegradation',gloss:'plant destroys it — organic broken to non-toxic metabolites inside the plant'},
+  'rhizodeg':{lab:'rhizodegradation',gloss:'soil microbes destroy it — broken down in the root zone by plant-fed microbes'},
+  'volatilize':{lab:'phytovolatilization',gloss:'plant exhales it — transpired to the atmosphere as a dilute gas'},
+  'metabolism':{lab:'phytometabolism',gloss:'plant eats it, becomes biomass — esp. N, P, K'},
+  'extract':{lab:'phytoextraction',gloss:'plant hoards it — stored in shoots; MUST harvest to remove (inorganics)'},
+  'hydraulic':{lab:'phytohydraulics',gloss:'plant pulls water, contaminant rides along — plume captured / redirected'},
+  'stabilize':{lab:'phytostabilization',gloss:'plant pins it down — held in place, made less bioavailable; not removed'},
+  'rhizofiltration':{lab:'rhizofiltration',gloss:'roots strain the water — filtered out in wetlands / floating mats'},
+};
+const ARCHETYPE={
+  pump:{lab:'phreatophyte pump',gloss:'deep-rooted, high-transpiration — a living pump-and-treat that captures groundwater plumes and degrades organics'},
+  degrader:{lab:'high-biomass degrader',gloss:'runs the rhizosphere reactor — root exudates feed microbes that break down petroleum / PAH / solvents'},
+  hyperaccumulator:{lab:'hyperaccumulator',gloss:'concentrates an inorganic element to extreme levels for harvest — the rare few that make extraction viable'},
+  excluder:{lab:'excluder / stabilizer',gloss:'tolerates without taking up — the honest answer for lead: hold it in place, do not mine it'},
+  halophyte:{lab:'halophyte',gloss:'salt-tolerant — holds the brackish / tidal line where most species fail'},
+  emergent:{lab:'wetland emergent / rhizofilter',gloss:'strains nutrients and metals from water in constructed, floating, or tidal wetlands'},
+  canopy:{lab:'air-capture canopy',gloss:'high leaf-area interception of airborne particulates — capture, not removal; pair with a stormwater filter'},
+  nfixer:{lab:'N-fixing pioneer',gloss:'establishes on harsh soil AND primes degradation — black locust\u2019s flavonoid two-for-one'},
+};
+
+/* dial definitions (the manifold axes) */
+const DIALS=[
+  {k:'age',gl:'n',nm:'age',min:0,max:1,step:.001,fmt:v=>fmtAge(v)},
+  {k:'angle',gl:'θ',nm:'branch angle',min:5,max:55,step:.5,fmt:v=>v.toFixed(0)+'°'},
+  {k:'gravity',gl:'γ',nm:'gravity',min:-10,max:30,step:.5,fmt:v=>(v>0?'+':'')+v.toFixed(0)+'°'},
+  {k:'decay',gl:'λ',nm:'length decay',min:.6,max:.96,step:.005,fmt:v=>v.toFixed(2)},
+  {k:'branch',gl:'b',nm:'branch count',min:1,max:6,step:1,fmt:v=>v.toFixed(0)},
+  {k:'asym',gl:'σ',nm:'asymmetry',min:0,max:1,step:.02,fmt:v=>v.toFixed(2)},
+  {k:'jitter',gl:'ε',nm:'jitter',min:0,max:22,step:.5,fmt:v=>'±'+v.toFixed(0)+'°'},
+  {k:'density',gl:'ρ',nm:'leaf density',min:0,max:1,step:.02,fmt:v=>(v*100).toFixed(0)+'%'},
+  {k:'leafSize',gl:'s',nm:'leaf size',min:0.5,max:6,step:.1,fmt:v=>v.toFixed(1)},
+  {k:'hue',gl:'h',nm:'leaf hue',min:0,max:1,step:.01,fmt:v=>seasonName(v)},
+  {k:'root',gl:'r',nm:'root system',min:0,max:1,step:.02,fmt:v=>(v*100).toFixed(0)+'%'},
+  {k:'gravitropism',gl:'g↓',nm:'gravitropism',min:0,max:1,step:.02,fmt:v=>(v*100).toFixed(0)+'%'},
+];
+const ENV=[
+  {k:'slr',nm:'sea-level rise',min:0,max:1,step:.01,fmt:v=>(v*2).toFixed(1)+' m'},
+  {k:'runoff',nm:'stormwater runoff',min:0,max:1,step:.01,fmt:v=>(v*200).toFixed(0)+' mm/hr'},
+  {k:'salinity',nm:'salinity',min:0,max:1,step:.01,fmt:v=>(v*35).toFixed(0)+' ppt'},
+  {k:'drought',nm:'drought stress',min:0,max:1,step:.01,fmt:v=>(v*100).toFixed(0)+'%'},
+];
+/* status → colour + glyph (native / introduced / invasive) */
+const STATUS={native:{c:'var(--bright)',g:'◆',l:'native'},introduced:{c:'var(--gold)',g:'◇',l:'introduced · non-native'},invasive:{c:'var(--coral)',g:'!',l:'invasive · manage'}};
+/* root archetype → short descriptor */
+const ROOTTYPE={taproot:'taproot · deep anchor',fibrous:'fibrous · spreading pump',rhizomatous:'rhizomatous · clonal mat',adventitious:'adventitious · stem-born',prop:'prop + pneumatophore',phreatophyte:'phreatophyte · deep diver',floating:'floating · rhizofiltration curtain'};
+/* glossary for hover captions — big-picture tech/science terms */
+const GLOSSARY={
+  'VVIM':'Vegetative Voxel Information Model™ — SymbiOS\u2019s data model: one multiscale graph carrying a plant\u2019s form, biology, and ecosystem-service data in three bands.',
+  'L-system':'Lindenmayer system — a rewriting grammar where a simple rule, applied to itself, grows branching form. The grammar of plants.',
+  'L-Py':'The Python L-system engine (OpenAlea) VANA wraps to run the growth grammar.',
+  'MTG':'Multiscale Tree Graph — one graph describing a plant at every scale at once: whole organism → systems → modules → organs.',
+  'OpenAlea':'Open-source scientific platform for plant modelling. VANA wraps its engines rather than rebuilding them.',
+  'PlantGL':'The geometry library that turns the graph into a 3-D mesh — exportable to Rhino, Grasshopper, GIS.',
+  'Caribu':'A radiosity engine that models how light competes and scatters through a canopy — the basis of the shade estimate.',
+  'radiosity':'Light-transport modelling: how sunlight is absorbed, reflected, and shared between surfaces in a canopy.',
+  'Axiom':'The starting symbol of an L-system — the seed string the growth rule is applied to.',
+  'FSPM':'Functional-Structural Plant Model — a model linking a plant\u2019s 3-D structure to how it functions (light, growth, services).',
+  'Phytoremediation':'Using living plants to absorb, trap, or break down pollutants — metals, petroleum, excess nutrients — in soil and water.',
+  'Halophyte':'A salt-loving plant that thrives in saline soil or tidal water where most species fail.',
+  'LAI':'Leaf Area Index — leaf area per unit ground area. Higher LAI → more shade, photosynthesis, and interception.',
+  'VOC':'Volatile Organic Compounds — airborne chemical signals plants release to warn neighbours and call in beneficial insects.',
+  'Mycorrhizal':'The underground fungal network linking plant roots — the \u201cwood-wide web\u201d that trades carbon, nutrients, and signals.',
+  'sympodial':'Branching where the main axis stops and side shoots take over — the spreading habit of oaks and maples.',
+  'monopodial':'Growth from a single dominant leader with side branches — the conical habit of pines and firs.',
+  'Pneumatophore':'An aerial \u201cbreathing\u201d root that rises from waterlogged mud to take in oxygen — classic mangrove adaptation.',
+  'Band-3':'The third VVIM data band: ecosystem services — carbon, shade, stormwater, phytoremediation, habitat — bound to the plant\u2019s geometry.',
+  'Rhizosphere':'The thin, biologically hyperactive zone of soil around living roots — where root-fed microbes do most of the contaminant breakdown.',
+  'Phreatophyte':'A deep-rooted plant that taps the water table — a living pump that can capture and treat a groundwater plume.',
+  'Hyperaccumulator':'A rare plant that concentrates a metal to extreme levels in its shoots — the few species that make phytoextraction (harvest-and-remove) viable.',
+  'Exudate':'Sugars and compounds a root secretes into the soil — the fuel that feeds the rhizosphere microbes doing the remediation.',
+  'Rhizodegradation':'Contaminant breakdown by microbes in the root zone — the plant feeds them; they destroy the pollutant.',
+  'trust wall':'The xēn / auxēn boundary: represented, source-cited facts (with an evidence grade) on one side; modeled predictions on the other. Numbers never cross back as facts.',
+};
+const SEASONS=[{n:'spring',h:.22,d:.82,col:'#b5cf80'},{n:'summer',h:.50,d:1.0,col:'#4f7d33'},
+  {n:'autumn',h:.80,d:.9,col:'#c4904a'},{n:'winter',h:.99,d:0.02,col:'#3a4a34'}];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let state={species:'quercus',p:{gravitropism:.6,...SPECIES.quercus.p},env:{slr:.12,runoff:.18,salinity:.10,drought:.15},signals:true};
+let stats={seg:0,len:0,tips:0,leaves:0,crownArea:1,rootSpread:1,top:560,depth:0};
+let anim={grow:null,season:null,tour:null,morph:null};
+
+function fmtAge(v){const sp=SPECIES[state.species];return Math.round(v*sp.maxAge)+' yr';}
+function seasonName(h){if(h<.16)return'bud';if(h<.40)return'spring';if(h<.62)return'summer';if(h<.78)return'turn';if(h<.92)return'autumn';return'dormant';}
+
+/* ============================================================
+   GROWTH KERNEL · fractional L-system (smooth growth)
+   integer levels fully drawn; the fractional level emerges as
+   a shortened, fading tip → continuous growth animation
+   ============================================================ */
+function grow(svg,o,st){
+  const frac=o.iter-Math.floor(o.iter);
+  const gTrop=o.gravitropism||0;                  // 0 = no pull (canopy); >0 = roots curve toward straight-down
+  const floorY=(o.rootFloor==null)?null:o.rootFloor;
+  function pullDown(t){                            // bias a heading toward +90° (down), damped so it curves not snaps
+    let d=90-t;d=((d+540)%360)-180;               // shortest signed delta to down
+    return t+gTrop*d*0.5;
+  }
+  function leafAt(x,y,sz,op){
+    st.tips++;
+    if(o.leafColor && o.rng()>o.skip){C(svg,x,y,Math.max(0.5,sz*(0.55+o.rng()*0.7)),o.leafColor,op);st.leaves++;}
+  }
+  function step(x,y,theta,len,depth,w){
+    // terminal by minimum length → full canopy leaf
+    if(len<o.minLen){leafAt(x,y,o.leafSize,o.leafOpacity);return;}
+    if(gTrop)theta=pullDown(theta);               // gravitropism: heading curves toward down each segment
+    const j=(o.rng()-0.5)*2*o.jitter;
+    const emerging=depth<1;                       // the youngest, still-growing generation
+    const segLen=emerging?len*Math.max(0.06,frac):len;
+    const nx=x+Math.cos((theta+j)*Math.PI/180)*segLen;
+    let ny=y+Math.sin((theta+j)*Math.PI/180)*segLen;
+    if(floorY!=null&&ny<floorY)ny=floorY;         // hard floor — a root vertex never rises above ground
+    L(svg,x,y,nx,ny,o.color,Math.max(w,o.minWidth).toFixed(2),emerging?0.25+0.6*frac:1);
+    st.seg++;st.len+=segLen;st.top=Math.min(st.top,ny);st.depth=Math.max(st.depth,o.iter-depth);
+    if(nx<st.bx0)st.bx0=nx;if(nx>st.bx1)st.bx1=nx;
+    if(emerging){                                  // emerging tip: a small leaf that swells as it matures
+      leafAt(nx,ny,o.leafSize*(0.4+0.6*frac),o.leafOpacity*(0.45+0.55*frac));
+      return;
+    }
+    const bc=o.branchCount;
+    if(depth<2){                                   // outermost FULL generation → the canopy
+      leafAt(nx,ny,o.leafSize*(0.72+0.28*frac),o.leafOpacity);
+      if(frac>0.02){                               // sprout the next generation as faint, growing twigs
+        for(let i=0;i<bc;i++){
+          const ba=bc===1?0:(i-(bc-1)/2)*o.angle;
+          const asym=o.asym*o.angle*(o.rng()-0.5);
+          step(nx,ny,(theta+j)+ba+asym+o.gravity,len*o.decay,depth-1,w*o.widthDecay);
+        }
+      }
+      return;
+    }
+    for(let i=0;i<bc;i++){                          // interior generations branch normally
+      const ba=bc===1?0:(i-(bc-1)/2)*o.angle;
+      const asym=o.asym*o.angle*(o.rng()-0.5);
+      const newDir=(theta+j)+ba+asym+o.gravity;
+      const newLen=len*(o.decay+(o.rng()-0.5)*(o.decayJitter||0));
+      step(nx,ny,newDir,newLen,depth-1,w*o.widthDecay);
+    }
+  }
+  st.bx0=o.cx;st.bx1=o.cx;
+  step(o.cx,o.cy,o.dir,o.length,o.iter,o.width);
+}
+
+/* monopodial whorl (pine): central leader + tiers */
+function growWhorl(svg,o,st){
+  const tiers=Math.max(1,Math.round(o.iter*1.4));
+  let x=o.cx,y=o.cy,w=o.width;
+  const seg=o.length*0.42;
+  for(let t=0;t<tiers;t++){
+    const ny=y-seg*(1-t*0.02);
+    L(svg,x,ny+seg,x,ny,o.color,Math.max(w,o.minWidth));st.seg++;st.len+=seg;st.top=Math.min(st.top,ny);
+    const k=Math.max(3,Math.round(o.branchCount));
+    const tierLen=o.length*0.5*(1-t/(tiers+1));
+    for(let b=0;b<k;b++){
+      const ang=(b/k)*360;
+      const down=o.gravity+18;
+      const ex=x+Math.cos(ang*Math.PI/180)*tierLen*0.5;
+      // branch as small drawBranch-ish line with needle clusters
+      const bx=x+Math.cos((ang)*Math.PI/180)*tierLen*0.5;
+      const by=ny+Math.sin(down*Math.PI/180)*tierLen*0.5+tierLen*0.18;
+      L(svg,x,ny,bx,by,o.color,Math.max(w*0.6,o.minWidth));st.seg++;st.len+=tierLen*0.5;
+      if(o.leafColor&&o.density>0.05){const nN=Math.round(4*o.density);for(let n=0;n<nN;n++){const f=n/Math.max(nN,1);C(svg,x+(bx-x)*f,ny+(by-ny)*f,o.leafSize*(0.7+o.rng()*0.5),o.leafColor,o.leafOpacity);st.leaves++;st.tips++;}}
+      if(bx<st.bx0)st.bx0=bx;if(bx>st.bx1)st.bx1=bx;
+    }
+    y=ny;w*=0.9;
+  }
+  st.depth=tiers;
+}
+
+/* grass clump (cordgrass / switchgrass): many blades */
+function growGrass(svg,o,st){
+  const blades=Math.round(10+o.iter*9);
+  st.bx0=o.cx;st.bx1=o.cx;
+  for(let i=0;i<blades;i++){
+    const off=(o.rng()-0.5)*o.length*0.5;
+    const bx=o.cx+off;
+    const h=o.length*(0.55+o.rng()*0.6);
+    const lean=(o.rng()-0.5)*o.angle*2+ (off>0?o.gravity:-o.gravity);
+    const tx=bx+Math.sin(lean*Math.PI/180)*h*0.5;
+    const ty=o.cy-h;
+    const mx=bx+Math.sin(lean*Math.PI/180)*h*0.25;
+    const my=o.cy-h*0.55;
+    const path=document.createElementNS(NS,'path');
+    path.setAttribute('d',`M${bx.toFixed(1)} ${o.cy} Q${mx.toFixed(1)} ${my.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)}`);
+    path.setAttribute('fill','none');path.setAttribute('stroke',o.leafColor||o.color);
+    path.setAttribute('stroke-width',(1+o.rng()*0.6).toFixed(2));path.setAttribute('stroke-linecap','round');
+    path.setAttribute('opacity',(o.leafOpacity*(0.7+o.rng()*0.3)).toFixed(2));
+    svg.appendChild(path);
+    st.seg++;st.len+=h;st.top=Math.min(st.top,ty);st.tips++;
+    if(tx<st.bx0)st.bx0=tx;if(tx>st.bx1)st.bx1=tx;
+    // occasional seed head (autumn)
+    if(o.hue>0.6&&o.rng()<0.3){C(svg,tx,ty,1.6,o.leafColor,0.8);}
+  }
+  st.leaves=st.tips;st.depth=2;
+}
+
+/* mangrove: arching prop roots + branched crown */
+function growMangrove(svg,o,st){
+  const rootY=o.cy, raise=o.length*0.28;
+  const hub={x:o.cx,y:rootY-raise};
+  // prop roots arc out from hub to ground
+  const nR=5;
+  for(let i=0;i<nR;i++){
+    const side=(i-(nR-1)/2);
+    const footX=o.cx+side*o.length*0.16;
+    const cpx=(hub.x+footX)/2+side*4;
+    const cpy=hub.y+raise*0.55;
+    const path=document.createElementNS(NS,'path');
+    path.setAttribute('d',`M${hub.x} ${hub.y.toFixed(1)} Q${cpx.toFixed(1)} ${cpy.toFixed(1)} ${footX.toFixed(1)} ${rootY}`);
+    path.setAttribute('fill','none');path.setAttribute('stroke',o.color);
+    path.setAttribute('stroke-width',(2.4-Math.abs(side)*0.3).toFixed(2));path.setAttribute('stroke-linecap','round');
+    svg.appendChild(path);st.seg++;st.len+=raise;
+    if(footX<st.bx0)st.bx0=footX;if(footX>st.bx1)st.bx1=footX;
+  }
+  // pneumatophores (little vertical pegs) along ground
+  for(let i=0;i<8;i++){const px=o.cx+(o.rng()-0.5)*o.length*0.5;L(svg,px,rootY,px,rootY-3-o.rng()*4,o.color,1.1,0.8);}
+  // crown grows from hub
+  grow(svg,{...o,cx:hub.x,cy:hub.y,dir:-90,length:o.length*0.62},st);
+  st.rootSpread=o.length*0.7;
+}
+
+/* clonal (aspen): k vertical stems from a shared rhizome */
+function growClonal(svg,o,st){
+  const stems=Math.max(2,Math.round(2+o.iter*0.4));
+  st.bx0=o.cx;st.bx1=o.cx;
+  // rhizome line
+  L(svg,o.cx-o.length*0.5,o.cy,o.cx+o.length*0.5,o.cy,o.branchCol||o.color,1.2,0.5);
+  for(let s=0;s<stems;s++){
+    const sx=o.cx+(s-(stems-1)/2)*(o.length*0.9/stems);
+    const sc=0.6+o.rng()*0.7;
+    grow(svg,{...o,cx:sx,cy:o.cy,length:o.length*0.7*sc,iter:Math.max(2,o.iter-1),
+      gravity:o.gravity,density:o.density},st);
+  }
+  st.depth=o.iter;
+}
+
+/* ============================================================
+   ROOTS · mirror of the canopy, shaped by root archetype
+   ============================================================ */
+function drawRoots(svg,sp,cx,groundY,baseLen,scale,rootAmt,canopyHalfW){
+  if(sp.form==='mangrove')return baseLen*0.7;            // mangrove draws its own prop roots
+  const rng=seedRandom(0x9a2+ORDER.indexOf(state.species));
+  const age=state.p.age;
+  const matBoost=1+(1-age)*0.35;                         // younger -> proportionally deeper (excavation data)
+  const halfW=Math.max(30,canopyHalfW||baseLen);         // laterals reach the dripline (memory rule)
+  const col=`rgba(122,112,80,${(0.30+rootAmt*0.28).toFixed(2)})`;
+  const type=sp.rootType||'fibrous';
+  const blank={bx0:cx,bx1:cx,top:groundY,seg:0,len:0,tips:0,leaves:0,depth:0};
+  const active=sp.phyto||0.4;
+  const gTrop=(state.p.gravitropism==null?0.6:state.p.gravitropism);
+
+  /* ---- FLOATING (water hyacinth): no soil roots -- a trailing rhizofiltration curtain ---- */
+  if(type==='floating'){
+    const top=groundY, curtain=baseLen*(0.9+rootAmt*1.1)*scale;
+    const spread=halfW*0.85;
+    el(svg,'rect',{x:cx-spread-8,y:top,width:(spread+8)*2,height:curtain+14,fill:'rgba(85,140,180,0.05)'});
+    const strands=Math.round(14+rootAmt*14);
+    for(let i=0;i<strands;i++){
+      const sx=cx+(i/(strands-1)-0.5)*spread*2;
+      const dl=curtain*(0.55+rng()*0.5);
+      const sway=(rng()-0.5)*10;
+      PA(svg,`M${sx.toFixed(1)} ${top} Q${(sx+sway).toFixed(1)} ${(top+dl*0.55).toFixed(1)} ${(sx+sway*1.6).toFixed(1)} ${(top+dl).toFixed(1)}`,'rgba(70,110,90,0.55)',0.9,0.8);
+      const hairs=Math.round(dl/9);
+      for(let h=1;h<hairs;h++){const hy=top+dl*(h/hairs),hx=sx+sway*(h/hairs);
+        L(svg,hx,hy,hx-2.4,hy+3,'rgba(90,150,120,0.5)',0.5,0.7);
+        L(svg,hx,hy,hx+2.4,hy+3,'rgba(90,150,120,0.5)',0.5,0.7);}
+    }
+    drawRhizosphere(svg,cx,top+2,spread*0.95,curtain*0.6,active,rng,true);
+    return spread;
+  }
+
+  /* ---- PHREATOPHYTE PUMP (poplar/willow/vetiver): deep divers to groundwater ---- */
+  if(type==='phreatophyte'){
+    const depth=baseLen*(0.9+rootAmt*1.1)*matBoost;
+    const lat=halfW*0.72;
+    const nLat=Math.round(4+rootAmt*4);
+    for(let i=0;i<nLat;i++){const a=90+(i-(nLat-1)/2)*20+(rng()-0.5)*10;
+      grow(svg,{cx,cy:groundY,dir:a,length:depth*0.32*(0.7+rng()*0.5),decay:0.72,angle:16,jitter:9,branchCount:2,asym:0.4,gravity:4,gravitropism:gTrop,rootFloor:groundY,
+        iter:Math.min(3,1.5+rootAmt*2),width:Math.max(1,1.8*scale),widthDecay:0.6,minWidth:0.3,minLen:1.6,
+        color:col,leafColor:null,leafSize:0,leafOpacity:0,skip:1,rng},blank);}
+    const nDive=3;
+    for(let i=0;i<nDive;i++){const off=(i-(nDive-1)/2)*lat*0.4;
+      grow(svg,{cx:cx+off,cy:groundY,dir:90+(rng()-0.5)*8,length:depth*(0.8+rng()*0.3),decay:0.9,angle:8,jitter:4,branchCount:1,asym:0.15,gravity:0,gravitropism:gTrop,rootFloor:groundY,
+        iter:Math.min(5,3+rootAmt*2.5),width:Math.max(1.6,3*scale),widthDecay:0.72,minWidth:0.5,minLen:1.4,
+        color:col,leafColor:null,leafSize:0,leafOpacity:0,skip:1,rng},blank);}
+    drawRhizosphere(svg,cx,groundY,lat,depth*0.75,active,rng,false);
+    return lat;
+  }
+
+  /* ---- TAPROOT / PLATE-SPREADER (oak/robinia/pine): wide radial mat + taproot + sinkers ---- */
+  if(type==='taproot'){
+    const depth=baseLen*(0.5+rootAmt*0.7)*matBoost;
+    const lat=halfW*(1.02+rootAmt*0.15);                 // reach just past the dripline
+    grow(svg,{cx,cy:groundY,dir:90,length:depth*0.95,decay:0.82,angle:14,jitter:6,branchCount:2,asym:0.3,gravity:0,gravitropism:gTrop*0.7,rootFloor:groundY,
+      iter:Math.min(4.5,2+rootAmt*3),width:Math.max(1.8,3.6*scale),widthDecay:0.62,minWidth:0.4,minLen:1.4,
+      color:col,leafColor:null,leafSize:0,leafOpacity:0,skip:1,rng},blank);
+    const nLat=Math.round(5+rootAmt*5);
+    for(let i=0;i<nLat;i++){const side=(i%2?1:-1),frac=(Math.floor(i/2)+1)/Math.ceil(nLat/2);
+      const startA=90-side*(60+frac*18);
+      grow(svg,{cx,cy:groundY+2,dir:startA,length:lat*frac*(0.6+rng()*0.4),decay:0.8,angle:20,jitter:8,branchCount:2,asym:0.5,gravity:side*10,gravitropism:gTrop*0.35,rootFloor:groundY,
+        iter:Math.min(3.5,2+rootAmt*2),width:Math.max(1,2.2*scale),widthDecay:0.58,minWidth:0.3,minLen:1.8,
+        color:col,leafColor:null,leafSize:0,leafOpacity:0,skip:1,rng},blank);}
+    drawRhizosphere(svg,cx,groundY,lat*0.9,depth*0.7,active,rng,false);
+    return lat;
+  }
+
+  /* ---- RHIZOMATOUS (cordgrass/aspen): surface rhizome mat + shallow fibrous cascade (emergent cap) ---- */
+  if(type==='rhizomatous'){
+    const emergent=(sp.form==='grass');
+    const depth=emergent?baseLen*0.5*scale                // absolute-ish cap for emergents (Typha rule)
+                         :baseLen*(0.4+rootAmt*0.5)*matBoost;
+    const mat=halfW*(1.05+rootAmt*0.35);
+    L(svg,cx-mat,groundY+3,cx+mat,groundY+3,col,Math.max(1.4,2.4*scale),0.7);
+    const tufts=Math.round(5+rootAmt*6);
+    for(let i=0;i<tufts;i++){const tx=cx-mat+(i/Math.max(tufts-1,1))*mat*2;
+      for(let k=0;k<3;k++){const a=90+(k-1)*22+(rng()-0.5)*14,dl=depth*(0.5+rng()*0.5);
+        L(svg,tx,groundY+3,tx+Math.cos(a*Math.PI/180)*dl,groundY+3+Math.sin(a*Math.PI/180)*dl,col,Math.max(1,1.6*scale),0.6);}}
+    drawRhizosphere(svg,cx,groundY+3,mat,depth,active,rng,false);
+    return mat;
+  }
+
+  /* ---- FIBROUS (default): many spreading feeders to the dripline (the "pump") ---- */
+  const depth=baseLen*(0.5+rootAmt*0.7)*matBoost;
+  const lat=halfW*(0.95+rootAmt*0.2);
+  const n=Math.round(6+rootAmt*8);
+  for(let i=0;i<n;i++){let a=90+(i-(n-1)/2)*(15+rootAmt*8)+(rng()-0.5)*10;a=Math.max(18,Math.min(162,a)); // stay below the horizon
+    grow(svg,{cx,cy:groundY,dir:a,length:depth*(0.5+rng()*0.45),decay:0.74,angle:18,jitter:10,branchCount:2,asym:0.4,gravity:6,gravitropism:gTrop,rootFloor:groundY,
+      iter:Math.min(3.5,2+rootAmt*2),width:Math.max(1,2*scale),widthDecay:0.6,minWidth:0.3,minLen:1.6,
+      color:col,leafColor:null,leafSize:0,leafOpacity:0,skip:1,rng},blank);}
+  drawRhizosphere(svg,cx,groundY,lat,depth*0.7,active,rng,false);
+  return lat;
+}
+
+/* rhizosphere = the reaction chamber. A soft exudate halo + microbial fuzz around the
+   active root zone, denser for high-phyto species. This is where the remediation happens. */
+function drawRhizosphere(svg,cx,topY,halfW,depth,active,rng,inWater){
+  if(!state.signals)return;
+  const hue=inWater?'rgba(90,180,150,':'rgba(122,150,90,';
+  el(svg,'ellipse',{cx:cx,cy:topY+depth*0.42,rx:(halfW*0.95).toFixed(1),ry:(depth*0.55).toFixed(1),
+    fill:hue+(0.05+active*0.06).toFixed(3)+')'});
+  const n=Math.round(18+active*46);
+  for(let i=0;i<n;i++){
+    const rx=(rng()-0.5)*halfW*1.7, ry=Math.abs(rng())*depth*0.9;
+    C(svg,cx+rx,topY+6+ry,rng()<0.2?1.1:0.6,inWater?'#7fe0c0':'#9ed855',(0.18+active*0.3)*(1-ry/(depth+1)*0.5));
+  }
+}
+
+/* floating rosette (water hyacinth): bulbous petioles + leaf blades on the water */
+function growFloating(svg,o,st){
+  st.bx0=o.cx;st.bx1=o.cx;
+  const w=o.length*0.9, base=o.cy;
+  el(svg,'ellipse',{cx:o.cx,cy:base,rx:(w*0.7).toFixed(1),ry:(w*0.16).toFixed(1),fill:'rgba(90,150,190,0.10)'});
+  const n=Math.round(5+o.density*4);
+  for(let i=0;i<n;i++){
+    const ang=-90+(i-(n-1)/2)*26+(o.rng()-0.5)*8;
+    const h=o.length*(0.7+o.rng()*0.5);
+    const bx=o.cx+Math.cos(ang*Math.PI/180)*h*0.5;
+    const by=base+Math.sin(ang*Math.PI/180)*h*0.5;
+    el(svg,'ellipse',{cx:((o.cx+bx)/2).toFixed(1),cy:((base+by)/2).toFixed(1),rx:(3.4*o.leafSize*0.4).toFixed(1),ry:(6*o.leafSize*0.4).toFixed(1),
+      transform:`rotate(${ang+90} ${((o.cx+bx)/2).toFixed(1)} ${((base+by)/2).toFixed(1)})`,fill:o.leafColor||'#6f9d4e',opacity:0.85});
+    C(svg,bx,by,o.leafSize*1.4,o.leafColor||'#6f9d4e',0.92);
+    st.seg++;st.len+=h;st.tips++;st.leaves++;
+    st.top=Math.min(st.top,by-6);
+    if(bx<st.bx0)st.bx0=bx;if(bx>st.bx1)st.bx1=bx;
+  }
+  if(o.rng()<0.7){L(svg,o.cx,base-o.length*0.2,o.cx,base-o.length*0.7,'#9a8ae8',1.4,0.8);
+    for(let k=0;k<3;k++)C(svg,o.cx+(o.rng()-0.5)*4,base-o.length*(0.55+k*0.05),1.6,'#b0a0f0',0.85);}
+  st.depth=2;
+}
+
+/* forb / fern (alyssum, pteris): a low clump -- pinnate fronds or slender flowering stems */
+function growForb(svg,o,st){
+  st.bx0=o.cx;st.bx1=o.cx;
+  const fern=(state.species==='pteris');
+  const n=Math.round(fern?(4+o.iter*0.9):(6+o.iter*1.2));
+  for(let i=0;i<n;i++){
+    const side=(o.rng()-0.5);
+    const lean=side*o.angle*2.2+ (side>0?o.gravity:-o.gravity);
+    const h=o.length*(0.6+o.rng()*0.6);
+    const bx=o.cx+side*o.length*0.25;
+    const tx=bx+Math.sin(lean*Math.PI/180)*h*0.6;
+    const ty=o.cy-h;
+    const mx=bx+Math.sin(lean*Math.PI/180)*h*0.3, my=o.cy-h*0.55;
+    const path=document.createElementNS(NS,'path');
+    path.setAttribute('d',`M${bx.toFixed(1)} ${o.cy} Q${mx.toFixed(1)} ${my.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)}`);
+    path.setAttribute('fill','none');path.setAttribute('stroke',o.leafColor||o.color);
+    path.setAttribute('stroke-width',(fern?1.4:1.0).toFixed(2));path.setAttribute('stroke-linecap','round');
+    path.setAttribute('opacity',(o.leafOpacity*(0.75+o.rng()*0.25)).toFixed(2));
+    svg.appendChild(path);
+    st.seg++;st.len+=h;st.top=Math.min(st.top,ty);st.tips++;
+    if(fern){
+      const pin=Math.round(h/8);
+      for(let k=1;k<pin;k++){const f=k/pin;const px=bx+(tx-bx)*f,py=o.cy+(ty-o.cy)*f;
+        const pl=o.leafSize*1.6*(1-f*0.4);
+        L(svg,px,py,px-pl,py+2,o.leafColor||'#4f7d33',0.7,0.85);
+        L(svg,px,py,px+pl,py+2,o.leafColor||'#4f7d33',0.7,0.85);st.leaves++;}
+    }else{
+      const head=Math.round(4+o.density*4);
+      for(let k=0;k<head;k++)C(svg,tx+(o.rng()-0.5)*5,ty+(o.rng()-0.5)*4,1.4,'#d8c85a',0.9);st.leaves+=head;
+    }
+    if(tx<st.bx0)st.bx0=tx;if(tx>st.bx1)st.bx1=tx;
+  }
+  st.depth=2;
+}
+
+function drawSignals(svg,cx,groundY,crownTop,crownW){
+  if(!state.signals)return;
+  const rng=seedRandom(0x5160+ORDER.indexOf(state.species));
+  const cw=Math.max(60,crownW);
+  // --- airborne VOC: rising dotted emanations + signal arcs over the canopy
+  for(let i=0;i<9;i++){const bx=cx+(rng()-0.5)*cw*0.85,by=crownTop+8+rng()*36;
+    for(let k=0;k<4;k++)C(svg,bx+Math.sin((k+i)*0.9)*3,by-k*8-rng()*3,Math.max(0.3,0.9-k*0.14),'#7fe0c0',(0.5-k*0.09));}
+  for(let i=0;i<3;i++){const x1=cx+(rng()-0.5)*cw*0.5,x2=cx+(rng()-0.5)*cw*0.5,y=crownTop-4-rng()*14;
+    PA(svg,`M${x1.toFixed(1)} ${(y+6).toFixed(1)} Q${((x1+x2)/2).toFixed(1)} ${(y-8).toFixed(1)} ${x2.toFixed(1)} ${(y+6).toFixed(1)}`,'#7fe0c0',0.7,0.32);}
+  // --- mycorrhizal network: dashed underground web from the root crown
+  const baseY=groundY+8,nodes=[];
+  for(let i=0;i<5;i++){const nx=cx+(i-2)*cw*0.26+(rng()-0.5)*10,ny=baseY+10+rng()*24;nodes.push([nx,ny]);
+    DL(svg,cx,baseY,nx,ny,'#9a8ae8',0.8,0.42,'1.5 3');C(svg,nx,ny,1.3,'#9a8ae8',0.5);}
+  for(let i=0;i<nodes.length-1;i++)DL(svg,nodes[i][0],nodes[i][1],nodes[i+1][0],nodes[i+1][1],'#55c4a0',0.6,0.26,'1 3');
+}
+
+/* ============================================================
+   ENVIRONMENT LAYER · ground, waterline (SLR), root system
+   ============================================================ */
+function drawEnvironment(svg,W,H,health,slr){
+  const groundY=H-46;
+  // sky/season wash
+  const sky=el(svg,'rect',{x:0,y:0,width:W,height:H,fill:'url(#skyGrad)'});
+  // ground
+  el(svg,'rect',{x:0,y:groundY,width:W,height:H-groundY,fill:'#0a1108'});
+  L(svg,0,groundY,W,groundY,'#243a20',1);
+  // soil texture dots
+  const rng=seedRandom(99);
+  for(let i=0;i<70;i++){C(svg,rng()*W,groundY+rng()*(H-groundY),0.6,'#1c2c18',0.6);}
+  // waterline from SLR
+  const waterY=groundY-slr*150;
+  if(slr>0.01){
+    el(svg,'rect',{x:0,y:waterY,width:W,height:H-waterY,fill:'rgba(106,180,232,0.07)'});
+    L(svg,0,waterY,W,waterY,'rgba(106,180,232,0.5)',1);
+    // tick label
+    const t=el(svg,'text',{x:8,y:waterY-4,fill:'#6ab4e8','font-family':"'DM Mono',monospace",'font-size':'9','opacity':0.8});
+    t.textContent=`tide +${(slr*2).toFixed(1)} m`;
+  }
+  return groundY;
+}
+
+/* ============================================================
+   RENDER · the whole frame
+   ============================================================ */
+function computeHealth(){
+  const sp=SPECIES[state.species],e=state.env;
+  const sStress=Math.max(0,e.salinity-sp.tol.salt);
+  const fStress=Math.max(0,(e.slr+(e.runoff||0)*0.35)-sp.tol.flood);
+  const dStress=Math.max(0,e.drought-sp.tol.drought);
+  const total=sStress*1.1+fStress*1.2+dStress*0.9;
+  const health=Math.max(0.06,Math.min(1,1-total));
+  const flags=[];
+  if(sStress>0.02)flags.push('salinity');
+  if(fStress>0.02)flags.push((e.runoff||0)*0.35>e.slr?'runoff':'inundation');
+  if(dStress>0.02)flags.push('drought');
+  return{health,flags,sStress,fStress,dStress};
+}
+
+function render(){
+  const svg=document.getElementById('viewport');
+  const W=800,H=560;
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+  // defs: season sky gradient
+  const defs=el(svg,'defs',{});
+  const hp=state.p.hue;
+  const skyTop = hp<.16?'#0c1810':hp<.40?'#0c1a10':hp<.62?'#0c1810':hp<.92?'#140f0a':'#0a0f12';
+  const grad=el(defs,'linearGradient',{id:'skyGrad',x1:0,y1:0,x2:0,y2:1});
+  el(grad,'stop',{offset:0,'stop-color':skyTop});
+  el(grad,'stop',{offset:1,'stop-color':'#090e08'});
+
+  const{health,flags}=computeHealth();
+  const groundY=drawEnvironment(svg,W,H,health,state.env.slr);
+
+  const sp=SPECIES[state.species];
+  const p=state.p;
+  // age → iterations (continuous) + scale
+  const minI=sp.form==='grass'?1.2:1.0, maxI=sp.form==='monopodial'?7:sp.form==='grass'?6:8;
+  const iter=minI+p.age*(maxI-minI);
+  const scale=0.32+p.age*0.68;
+  // leaf colour from hue ramp, drought desaturates, poor health browns
+  let leafCol=leafRamp(p.hue);
+  if(health<0.95)leafCol=lerpColor(leafCol,'#9a7a3a',(1-health)*0.85);
+  const leafy = p.density>0.02 && p.hue<0.93; // winter/dormant → bare
+  const skipBase=(1-p.density);
+  const skip=Math.min(0.95, skipBase + (1-health)*0.4);
+
+  // canopy group (gentle breeze)
+  const grp=el(svg,'g',{id:'canopy-grp'});
+  grp.style.transformOrigin=`${W/2}px ${groundY}px`;
+  grp.style.animation='breathe 9s ease-in-out infinite';
+
+  // reset stats
+  stats={seg:0,len:0,tips:0,leaves:0,crownArea:1,rootSpread:0,top:H,depth:0,bx0:W/2,bx1:W/2};
+
+  const baseLen=sp.baseLen*scale*1.7*(VSCALE[state.species]||1);
+  const common={
+    cx:W/2,cy:groundY,dir:-90,length:baseLen,
+    decay:p.decay,decayJitter:0.06,angle:p.angle,jitter:p.jitter,
+    branchCount:Math.round(p.branch),asym:p.asym,gravity:p.gravity,
+    iter:iter,width:Math.max(2,4.6*scale),widthDecay:0.66,minWidth:0.5,minLen:0.8,
+    color:lerpColor(sp.branchCol,'#6a6a5a',(1-health)*0.5),
+    branchCol:sp.branchCol,
+    leafColor:leafy?leafCol:null,leafSize:p.leafSize*(0.7+scale*0.5),
+    leafOpacity:0.92,density:p.density,skip:skip,hue:p.hue,
+    rng:seedRandom(0x71c5 + ORDER.indexOf(state.species)*7),
+  };
+
+  // dispatch by form
+  switch(sp.form){
+    case'monopodial':growWhorl(grp,common,stats);break;
+    case'grass':growGrass(grp,common,stats);break;
+    case'mangrove':growMangrove(grp,common,stats);break;
+    case'clonal':growClonal(grp,common,stats);break;
+    case'floating':growFloating(grp,common,stats);break;
+    case'forb':growForb(grp,common,stats);break;
+    default:grow(grp,common,stats);
+  }
+
+  // crown bbox → area proxy
+  const crownW=Math.max(20,stats.bx1-stats.bx0);
+  const crownH=Math.max(20,groundY-stats.top);
+  stats.crownArea=crownW*crownH;
+
+  // root system (archetype-shaped) — drawn AFTER the canopy so the true crown
+  // half-width is known, then moved BEHIND the canopy for z-order.
+  {
+    const rootGrp=el(svg,'g',{id:'roots-grp'});
+    stats.rootSpread=drawRoots(rootGrp,sp,W/2,groundY,baseLen,scale,p.root,crownW/2);
+    svg.insertBefore(rootGrp,grp);
+  }
+
+  // signalling layer (VOC + mycorrhizal) — drawn last, on top
+  drawSignals(svg,W/2,groundY,stats.top,crownW);
+
+  updateReadouts(health,flags,iter,crownW,crownH);
+  flashPipeline();
+  drawMTG(iter,Math.round(p.branch),health);
+  updateServices(health,crownW,crownH);
+  updateRemediation(sp);
+  // frame the plant (canopy + roots) so it fills the canvas on every viewport
+  _fit={stats,groundY,baseLen};
+  fitViewport();
+}
+let _fit=null;
+function fitViewport(){
+  const svg=document.getElementById('viewport');if(!svg)return;
+  const W=800,H=560;
+  if(!_fit){svg.setAttribute('viewBox',`0 0 ${W} ${H}`);return;}
+  const{stats,groundY}=_fit;
+  // vertical: canopy top -> ground + a little root depth (this is what kills the dead sky above the crown)
+  const top=Math.max(0,stats.top);
+  const contentH=Math.max(70,groundY-top);
+  const rootDepth=Math.min(Math.max(60,contentH*0.30),140);
+  // horizontal: symmetric window around the trunk, wide enough for the crown
+  const half=Math.max(70,Math.max(W/2-stats.bx0,stats.bx1-W/2)*1.06);
+  const left=W/2-half,right=W/2+half;
+  // padding: a touch of sky above, a little soil below
+  const padTop=Math.max(16,contentH*0.10),padBot=Math.max(8,contentH*0.05);
+  const padX=Math.max(14,(right-left)*0.05);
+  let vx=left-padX,vw=(right-left)+padX*2;
+  let vy=top-padTop,vh=(groundY+rootDepth)-top+padTop+padBot;
+  // match the on-screen aspect so the plant fills the stage centred (no dead band above the crown)
+  const cw=svg.clientWidth||W,ch=svg.clientHeight||H,targetAR=cw/ch,curAR=vw/vh;
+  if(curAR<targetAR){const need=vh*targetAR;vx-=(need-vw)/2;vw=need;}
+  else if(curAR>targetAR){const need=vw/targetAR;vy-=(need-vh)/2;vh=need;}
+  // clamp inside the drawn scene so we never expose empty canvas
+  if(vw>=W){vx=0;vw=W;}else{if(vx<0)vx=0;if(vx+vw>W)vx=W-vw;}
+  if(vh>=H){vy=0;vh=H;}else{if(vy<0)vy=0;if(vy+vh>H)vy=H-vh;}
+  svg.setAttribute('viewBox',`${vx.toFixed(1)} ${vy.toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}`);
+}
+let _rzT;window.addEventListener('resize',()=>{clearTimeout(_rzT);_rzT=setTimeout(fitViewport,150);});
+
+/* ============================================================
+   READOUTS · viewport corners, rule card, adaptation flag
+   ============================================================ */
+function updateReadouts(health,flags,iter,crownW,crownH){
+  const sp=SPECIES[state.species],p=state.p;
+  document.getElementById('vp-name').textContent=sp.name;
+  document.getElementById('vp-latin').textContent=sp.latin;
+  document.getElementById('vp-site').textContent=sp.site;
+  const yr=Math.round(p.age*sp.maxAge);
+  document.getElementById('vp-age').textContent=yr+' yr';
+  const hM=(p.age*sp.maxH*(0.5+health*0.5)).toFixed(1);
+  document.getElementById('vp-h').textContent=hM+' m';
+  document.getElementById('vp-seg').textContent=stats.seg.toLocaleString();
+  document.getElementById('vp-tips').textContent=stats.tips.toLocaleString();
+  // rule card
+  document.getElementById('r-axiom').textContent=sp.axiom;
+  document.getElementById('r-n').textContent=iter.toFixed(1);
+  document.getElementById('r-rule').innerHTML=sp.rule.replace(/F/g,'<em>F</em>');
+  document.getElementById('r-meta').textContent=`θ = ${p.angle.toFixed(0)}° · branch = ${Math.round(p.branch)} · decay = ${p.decay.toFixed(2)} · γ = ${(p.gravity>0?'+':'')+p.gravity.toFixed(0)}°`;
+  // live production rule under the plant — the procedural proof, animates as it grows
+  document.getElementById('vr-axiom').textContent=sp.axiom;
+  document.getElementById('vr-n').textContent=iter.toFixed(1);
+  document.getElementById('vr-rule').innerHTML=sp.rule.replace(/F/g,'<em>F</em>').replace(/B/g,'<em>B</em>');
+  document.getElementById('vr-params').textContent=`θ ${p.angle.toFixed(0)}° · branch ${Math.round(p.branch)} · decay ${p.decay.toFixed(2)} · γ ${(p.gravity>0?'+':'')+p.gravity.toFixed(0)}°`;
+  // per-species field notes (phytoremediation + pollinators) — update only on species change
+  if(notesSpecies!==state.species){
+    notesSpecies=state.species;
+    const fn=document.getElementById('fieldnotes');
+    if(fn)fn.innerHTML=`
+      <div class="fn-note"><div class="fh" style="color:var(--purple)"><span class="gl" data-gl="Phytoremediation">phytoremediation</span> · how it works</div><div class="fb">${sp.phytoNote}</div></div>
+      <div class="fn-note"><div class="fh" style="color:var(--gold)">pollinators &amp; habitat</div><div class="fb">${sp.pollinators}</div></div>
+      <div class="fn-note" style="border-left-color:var(--teal)"><div class="fh" style="color:var(--teal)">root system</div><div class="fb">${ROOTTYPE[sp.rootType]||sp.rootType} — the underground mirror of the crown.</div></div>`;
+  }
+}
+let notesSpecies=null;
+
+/* pipeline cascade flash */
+let flashTimers=[];
+function flashPipeline(){
+  flashTimers.forEach(clearTimeout);flashTimers=[];
+  const nodes=document.querySelectorAll('#pipeline .node');
+  nodes.forEach((n,i)=>{n.classList.remove('flash');
+    flashTimers.push(setTimeout(()=>{n.classList.add('flash');setTimeout(()=>n.classList.remove('flash'),1100);},i*70));});
+}
+
+/* ============================================================
+   MTG · multiscale tree graph mini-viz (grows with the plant)
+   ============================================================ */
+function drawMTG(iter,branch,health){
+  const svg=document.getElementById('mtg');while(svg.firstChild)svg.removeChild(svg.firstChild);
+  const W=240,H=150;
+  const lvlY=[20,55,95,132];
+  const colors=['var(--cream)','var(--teal)','var(--gold)','var(--bright)'];
+  const cols=['#e8e0d0','#55c4a0','#c8a96e','#9ed855'];
+  // node counts per scale
+  const n0=1, n1=2, n2=Math.min(9,Math.max(2,Math.round(branch*1.6))), n3=Math.min(13,Math.max(3,Math.round(iter*1.5)));
+  const counts=[n0,n1,n2,n3];
+  const pos=[[],[],[],[]];
+  counts.forEach((c,li)=>{for(let i=0;i<c;i++){const x=W*(i+1)/(c+1);pos[li].push([x,lvlY[li]]);}});
+  // edges level→level
+  for(let li=0;li<3;li++){
+    pos[li+1].forEach((pt,j)=>{
+      const parent=pos[li][Math.floor(j/pos[li+1].length*pos[li].length)];
+      L(svg,parent[0],parent[1],pt[0],pt[1],'#26361f',0.8,0.8);
+    });
+  }
+  counts.forEach((c,li)=>{pos[li].forEach(pt=>{
+    const r=li===0?5:li===3?2.4:3.4;
+    C(svg,pt[0],pt[1],r,cols[li],li===3?(0.5+health*0.5):0.95);
+  });});
+  // scale labels
+  ['L0','L1','L2','L3'].forEach((lab,i)=>{
+    const t=el(svg,'text',{x:4,y:lvlY[i]+3,fill:'#3a5a38','font-family':"'DM Mono',monospace",'font-size':'6.5'});
+    t.textContent=lab;
+  });
+}
+
+/* ============================================================
+   SERVICES · VVIM Band-3 (modeled from generated geometry)
+   ============================================================ */
+const SVC_DEFS=[
+  {k:'carbon',nm:'carbon sequestration',unit:'kg CO₂e/yr',col:'#9ed855'},
+  {k:'lai',nm:'leaf area index',unit:'LAI',col:'#55c4a0',gl:'LAI'},
+  {k:'shade',nm:'shade footprint',unit:'m²',col:'#6ab4e8'},
+  {k:'storm',nm:'stormwater capture',unit:'L/yr',col:'#55c4a0'},
+  {k:'phyto',nm:'phytoremediation',unit:'mg/yr',col:'#9a8ae8',gl:'Phytoremediation'},
+  {k:'habitat',nm:'habitat value',unit:'idx',col:'#c8a96e'},
+];
+const SVC_MAX={carbon:140,lai:5,shade:120,storm:1400,phyto:900,habitat:100};
+function updateServices(health,crownW,crownH){
+  const sp=SPECIES[state.species],p=state.p;
+  const wood=stats.len;            // total stroke length ~ biomass proxy
+  const leaves=stats.leaves;
+  const crownArea=stats.crownArea;
+  const lai=Math.min(5, leaves/Math.max(crownArea/900,0.4)*0.5);
+  const shadeFrac=1-Math.exp(-0.6*lai);     // Beer–Lambert (Caribu flavour)
+  const carbon=wood*0.085*health;
+  const shade=crownArea*0.018*shadeFrac;
+  const storm=(crownArea*0.9+stats.rootSpread*40)*0.5*health*(1+(state.env.runoff||0)*0.8);
+  const phyto=leaves*sp.phyto*1.4*health;
+  const habitat=Math.min(100,(stats.depth*8 + p.density*40 + (sp.form==='mangrove'||sp.form==='grass'?25:10))*health);
+  const vals={carbon,lai,shade,storm,phyto,habitat};
+  SVC_DEFS.forEach(d=>{
+    const v=vals[d.k];const max=SVC_MAX[d.k];
+    const fill=Math.max(2,Math.min(100,v/max*100));
+    const fe=document.getElementById('svc-'+d.k);
+    const ve=document.getElementById('svcv-'+d.k);
+    if(fe){fe.style.width=fill+'%';fe.style.background= health<0.5?'#b0894a':d.col;}
+    if(ve){ve.innerHTML=(d.k==='lai'?v.toFixed(2):Math.round(v).toLocaleString())+' <u>'+d.unit+'</u>';}
+  });
+  // resilience score from tolerance margins × health
+  const {sStress,fStress,dStress}=computeHealth();
+  const margin=1-(sStress+fStress+dStress);
+  const score=Math.max(0,Math.min(100,(margin*0.55+health*0.45)*100));
+  const rv=document.getElementById('resil-v');
+  rv.textContent=Math.round(score);
+  rv.style.color= score>66?'var(--bright)':score>40?'var(--gold)':'var(--coral)';
+}
+
+
+/* ============================================================
+   REMEDIATION PROFILE · represented facts (xēn) + the trust wall
+   ============================================================ */
+let remSpecies=null;
+function updateRemediation(sp){
+  if(remSpecies===state.species)return;
+  remSpecies=state.species;
+  const box=document.getElementById('remediation');if(!box)return;
+  const ev=EVIDENCE[sp.evidence]||EVIDENCE.F;
+  const arch=ARCHETYPE[sp.archetype]||{lab:sp.archetype,gloss:''};
+  const chips=(sp.contaminants||[]).map(x=>{
+    const c=CONTAM[x.c]||{lab:x.c,kind:'organic',col:'#c8a96e'};
+    const g=EVIDENCE[x.g]||EVIDENCE.F;
+    return `<span class="rem-chip" data-tip="${c.lab} · ${c.kind} · <b>${g.lab}</b>" style="border-color:${c.col}66;color:${c.col}">
+      ${c.lab}<i style="background:${g.col}" title="${g.lab}"></i></span>`;
+  }).join('');
+  const mechs=(sp.mechanisms||[]).map(m=>{
+    const d=MECH[m]||{lab:m,gloss:''};
+    return `<span class="rem-mech" data-tip="<b>${d.lab}</b>${d.gloss}">${d.lab}</span>`;
+  }).join('');
+  box.innerHTML=`
+    <div class="rem-arch"><span class="gl" data-tip="<b>${arch.lab}</b>${arch.gloss}">${arch.lab}</span>
+      <span class="rem-role">${sp.role||''}</span></div>
+    <div class="rem-ev" style="--ev:${ev.col}" data-tip="<b>evidence grade</b>${ev.gl}">
+      <span class="rem-ev-dot"></span><span class="rem-ev-lab">${ev.lab}</span>
+      <span class="rem-ev-tag">the trust wall</span></div>
+    <div class="rem-sub">addresses · <span class="n">represented, source-cited</span></div>
+    <div class="rem-chips">${chips}</div>
+    <div class="rem-sub">mechanism · <span class="n">the verbs of the field</span></div>
+    <div class="rem-mechs">${mechs}</div>
+    <div class="rem-target">${sp.targets||''}</div>`;
+}
+
+/* ============================================================
+   BUILD UI · dials, env, services, presets, season pips
+   ============================================================ */
+function buildUI(){
+  // dials
+  const dc=document.getElementById('dials');
+  DIALS.forEach(d=>{
+    const row=document.createElement('div');row.className='dial';
+    row.innerHTML=`<div class="dial-h"><span class="dn"><em>${d.gl}</em>${d.nm}</span><span class="dv" id="dv-${d.k}"></span></div>
+      <input type="range" id="d-${d.k}" min="${d.min}" max="${d.max}" step="${d.step}">`;
+    dc.appendChild(row);
+    const inp=row.querySelector('input');
+    inp.value=state.p[d.k];
+    document.getElementById('dv-'+d.k).textContent=d.fmt(state.p[d.k]);
+    inp.addEventListener('input',()=>{
+      state.p[d.k]=parseFloat(inp.value);
+      document.getElementById('dv-'+d.k).textContent=d.fmt(state.p[d.k]);
+      if(d.k==='age'){const ta=document.getElementById('t-age');ta.value=inp.value;document.getElementById('t-age-v').textContent=fmtAge(state.p.age);}
+      if(d.k==='hue')syncSeasonPips();
+      render();
+    });
+  });
+  // env
+  const ec=document.getElementById('env-dials');
+  ENV.forEach(d=>{
+    const row=document.createElement('div');row.className='dial';
+    row.innerHTML=`<div class="dial-h"><span class="dn">${d.nm}</span><span class="dv" id="ev-${d.k}"></span></div>
+      <input type="range" class="env" id="e-${d.k}" min="${d.min}" max="${d.max}" step="${d.step}">`;
+    ec.appendChild(row);
+    const inp=row.querySelector('input');
+    inp.value=state.env[d.k];
+    document.getElementById('ev-'+d.k).textContent=d.fmt(state.env[d.k]);
+    inp.addEventListener('input',()=>{
+      state.env[d.k]=parseFloat(inp.value);
+      document.getElementById('ev-'+d.k).textContent=d.fmt(state.env[d.k]);
+      const {health}=computeHealth();
+      inp.classList.toggle('hot',health<0.6);
+      render();
+    });
+  });
+  // services scaffold
+  const sc=document.getElementById('services');
+  SVC_DEFS.forEach(d=>{
+    const row=document.createElement('div');row.className='svc';
+    row.innerHTML=`<div class="svc-h"><span class="sn ${d.gl?'gl':''}" ${d.gl?`data-gl="${d.gl}"`:''}>${d.nm}</span><span class="sv" id="svcv-${d.k}"></span></div>
+      <div class="bar"><i id="svc-${d.k}" style="width:2%;background:${d.col}"></i></div>`;
+    sc.appendChild(row);
+  });
+  // presets
+  const pc=document.getElementById('presets');
+  ORDER.forEach(id=>{
+    const sp=SPECIES[id];
+    const b=document.createElement('button');b.className='preset'+(id===state.species?' on':'');
+    b.dataset.id=id;
+    const stt=STATUS[sp.status]||STATUS.native;
+    b.innerHTML=`<div class="pn">${sp.name}</div><div class="pl">${sp.latin}</div>
+      <div class="pb" style="color:${stt.c};border-color:${stt.c}44">${stt.g} ${stt.l} · ${sp.badge}</div>`;
+    b.addEventListener('click',()=>loadPreset(id));
+    pc.appendChild(b);
+  });
+  // season pips
+  const spp=document.getElementById('season-pips');
+  SEASONS.forEach((s,i)=>{
+    const b=document.createElement('button');b.className='pip';b.style.background=s.col;b.title=s.n;b.dataset.i=i;
+    b.addEventListener('click',()=>setSeason(i));
+    spp.appendChild(b);
+  });
+  syncSeasonPips();
+}
+
+function syncDials(){
+  DIALS.forEach(d=>{const inp=document.getElementById('d-'+d.k);if(inp){inp.value=state.p[d.k];document.getElementById('dv-'+d.k).textContent=d.fmt(state.p[d.k]);}});
+  const ta=document.getElementById('t-age');ta.value=state.p.age;document.getElementById('t-age-v').textContent=fmtAge(state.p.age);
+  syncSeasonPips();
+}
+function syncSeasonPips(){
+  const h=state.p.hue;let best=0,bd=9;SEASONS.forEach((s,i)=>{const dd=Math.abs(s.h-h);if(dd<bd){bd=dd;best=i;}});
+  document.querySelectorAll('#season-pips .pip').forEach((p,i)=>p.classList.toggle('on',i===best&&bd<0.08));
+}
+function setSeason(i){const s=SEASONS[i];state.p.hue=s.h;state.p.density=s.d;syncDials();render();}
+
+/* ============================================================
+   PRESET LOAD · tween all params → the morph moment
+   ============================================================ */
+function loadPreset(id){
+  stopAll();
+  document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+  const target={...SPECIES[id].p};
+  const from={...state.p};
+  state.species=id;
+  const t0=performance.now(),dur=900;
+  function frame(now){
+    const k=Math.min(1,(now-t0)/dur);const e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    for(const key in target)state.p[key]=from[key]+(target[key]-from[key])*e;
+    syncDials();render();
+    if(k<1)anim.morph=requestAnimationFrame(frame);else anim.morph=null;
+  }
+  anim.morph=requestAnimationFrame(frame);
+  toast('loaded <b>'+SPECIES[id].name+'</b> · '+SPECIES[id].note);
+}
+
+/* ============================================================
+   TRANSPORT · grow / season / tour
+   ============================================================ */
+function stopAll(){
+  ['grow','season','tour','morph'].forEach(k=>{if(anim[k]){cancelAnimationFrame(anim[k]);anim[k]=null;}});
+  if(anim.tourTimer){clearTimeout(anim.tourTimer);anim.tourTimer=null;}
+  document.getElementById('btn-grow').classList.remove('on');
+  document.getElementById('btn-season').classList.remove('on');
+  document.getElementById('btn-tour').classList.remove('on');
+  const hero=document.getElementById('btn-tour-hero');if(hero)hero.classList.remove('on');
+  document.querySelectorAll('.tbtn .tri').forEach(t=>t.textContent='▶');
+}
+function toggleGrow(){
+  const btn=document.getElementById('btn-grow');
+  if(anim.grow){stopAll();return;}
+  stopAll();btn.classList.add('on');btn.querySelector('.tri').textContent='❚❚';
+  const dur=6500;let t0=performance.now();
+  // start from current age; loop seed→mature→reset
+  let startAge=state.p.age;
+  function frame(now){
+    let k=((now-t0)/dur);
+    if(k>=1){t0=now;k=0;startAge=0;}
+    state.p.age=Math.min(1,startAge+(1-startAge)*k);
+    syncDials();render();
+    anim.grow=requestAnimationFrame(frame);
+  }
+  // restart cleanly from a seed for a satisfying recording
+  state.p.age=0.02;startAge=0.02;t0=performance.now();
+  anim.grow=requestAnimationFrame(frame);
+}
+function toggleSeason(){
+  const btn=document.getElementById('btn-season');
+  if(anim.season){stopAll();return;}
+  stopAll();btn.classList.add('on');btn.querySelector('.tri').textContent='❚❚';
+  const dur=9000;const t0=performance.now();
+  // hue path: bud(.10)→spring(.24)→summer(.5)→turn(.72)→autumn(.86)→dormant(.99)→back
+  const path=[{h:.10,d:.6},{h:.24,d:.85},{h:.5,d:1},{h:.72,d:.95},{h:.86,d:.85},{h:.99,d:.03},{h:.10,d:.6}];
+  function frame(now){
+    const k=((now-t0)%dur)/dur*(path.length-1);
+    const i=Math.floor(k),f=k-i;const a=path[i],b=path[i+1];
+    state.p.hue=a.h+(b.h-a.h)*f;state.p.density=a.d+(b.d-a.d)*f;
+    syncDials();render();
+    anim.season=requestAnimationFrame(frame);
+  }
+  anim.season=requestAnimationFrame(frame);
+}
+function toggleTour(){
+  const btn=document.getElementById('btn-tour');
+  if(anim.tourTimer||anim.tour){stopAll();return;}
+  stopAll();btn.classList.add('on');btn.querySelector('.tri').textContent='❚❚';
+  const hero=document.getElementById('btn-tour-hero');if(hero)hero.classList.add('on');
+  let idx=ORDER.indexOf(state.species);
+  function next(){
+    idx=(idx+1)%ORDER.length;
+    const id=ORDER[idx];
+    document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+    const target={...SPECIES[id].p},from={...state.p};state.species=id;
+    const t0=performance.now(),dur=1100;
+    function frame(now){const k=Math.min(1,(now-t0)/dur);const e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      for(const key in target)state.p[key]=from[key]+(target[key]-from[key])*e;syncDials();render();
+      if(k<1)anim.tour=requestAnimationFrame(frame);else{anim.tour=null;anim.tourTimer=setTimeout(next,2600);}}
+    anim.tour=requestAnimationFrame(frame);
+  }
+  anim.tourTimer=setTimeout(next,400);
+}
+
+/* ============================================================
+   EXPORT · SVG is real; others are staged demo chrome
+   ============================================================ */
+function exportAs(fmt){
+  if(fmt==='SVG'){
+    const svg=document.getElementById('viewport').cloneNode(true);
+    svg.querySelectorAll('[style*="animation"]').forEach(n=>n.style.animation='none');
+    const s=new XMLSerializer().serializeToString(svg);
+    const blob=new Blob(['<?xml version="1.0"?>\n'+s],{type:'image/svg+xml'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`vana_${state.species}_${Math.round(state.p.age*SPECIES[state.species].maxAge)}yr.svg`;
+    a.click();URL.revokeObjectURL(a.href);
+    toast('exported <b>SVG</b> · '+stats.seg+' segments, data in geometry');
+  }else{
+    toast('staged <b>'+fmt+'</b> · VVIM container queued — MTG topology + 3 data bands travel with the mesh');
+  }
+}
+
+/* toast */
+let toastT;
+function toast(html){const t=document.getElementById('toast');t.innerHTML=html;t.style.display='block';
+  clearTimeout(toastT);toastT=setTimeout(()=>t.style.display='none',3400);}
+
+/* ============================================================
+   WIRE + BOOT
+   ============================================================ */
+document.getElementById('btn-grow').addEventListener('click',toggleGrow);
+document.getElementById('btn-season').addEventListener('click',toggleSeason);
+document.getElementById('btn-tour').addEventListener('click',toggleTour);
+document.getElementById('btn-reset').addEventListener('click',()=>{stopAll();state.env={slr:.12,runoff:.18,salinity:.10,drought:.15};loadPreset('quercus');
+  ENV.forEach(d=>{const i=document.getElementById('e-'+d.k);i.value=state.env[d.k];i.classList.remove('hot');document.getElementById('ev-'+d.k).textContent=d.fmt(state.env[d.k]);});});
+document.getElementById('t-age').addEventListener('input',e=>{stopAll();state.p.age=parseFloat(e.target.value);
+  document.getElementById('t-age-v').textContent=fmtAge(state.p.age);syncDials();render();});
+document.querySelectorAll('.exp').forEach(b=>b.addEventListener('click',()=>exportAs(b.dataset.exp)));
+
+/* ---- glossary tooltip (event-delegated, body-anchored so it never clips) ---- */
+const gtip=document.getElementById('gtip');
+function showTip(t){
+  const key=t.dataset.gl,lit=t.dataset.tip;let html=lit||'';
+  if(key&&GLOSSARY[key])html=`<b>${key}</b>${GLOSSARY[key]}`;
+  if(!html)return;
+  gtip.innerHTML=html;gtip.classList.add('on');
+  const r=t.getBoundingClientRect();
+  let y=r.top-10-gtip.offsetHeight;if(y<6)y=r.bottom+10;
+  let x=Math.max(8,Math.min(r.left,window.innerWidth-gtip.offsetWidth-8));
+  gtip.style.left=x+'px';gtip.style.top=y+'px';
+}
+document.addEventListener('mouseover',e=>{const t=e.target.closest('[data-gl],[data-tip]');if(t)showTip(t);});
+document.addEventListener('mouseout',e=>{const t=e.target.closest('[data-gl],[data-tip]');if(t)gtip.classList.remove('on');});
+
+/* ---- signals toggle ---- */
+document.getElementById('btn-signals').addEventListener('click',function(){
+  state.signals=!state.signals;this.classList.toggle('on',state.signals);render();
+  toast(state.signals?'signalling layer <b>on</b> · airborne VOC + mycorrhizal network':'signalling layer off');
+});
+/* ---- header palette tour ---- */
+document.getElementById('btn-tour-hero').addEventListener('click',toggleTour);
+
+/* ---- print / save-PDF · printer-friendly white-background snapshot ---- */
+function printSpecimen(){
+  const sp=SPECIES[state.species],p=state.p;
+  const clone=document.getElementById('viewport').cloneNode(true);
+  clone.querySelectorAll('rect').forEach(r=>r.remove());      // strip dark bg / soil / water fills
+  clone.querySelectorAll('defs').forEach(r=>r.remove());
+  clone.querySelectorAll('text').forEach(t=>t.setAttribute('fill','#777'));
+  clone.querySelectorAll('[style]').forEach(n=>n.style.animation='none');
+  const svgStr=new XMLSerializer().serializeToString(clone);
+  const rows=SVC_DEFS.map(d=>`<tr><td>${d.nm}</td><td>${document.getElementById('svcv-'+d.k).textContent}</td></tr>`).join('');
+  const w=window.open('','_blank','width=900,height=1100');
+  if(!w){toast('popup blocked — allow popups to print');return;}
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>VANA · ${sp.name}</title>
+   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+   <style>*{box-sizing:border-box}body{font-family:'DM Mono',monospace;color:#1b1b1b;margin:34px;background:#fff}
+   h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:36px;margin:0;line-height:1}
+   .lat{font-style:italic;color:#666;font-family:'Cormorant Garamond',serif;font-size:17px;margin:2px 0 0}
+   .meta{font-size:10px;color:#999;letter-spacing:.05em;margin-top:6px}
+   .frame{border:1px solid #e2e2e2;border-radius:8px;margin:16px 0;padding:8px;display:flex;justify-content:center;background:#fff}
+   .frame svg{width:540px;height:auto}
+   table{border-collapse:collapse;font-size:11px;width:100%;max-width:440px}
+   td{border-bottom:1px solid #eee;padding:5px 8px}td:last-child{text-align:right;color:#333}
+   .note{font-size:11px;color:#555;line-height:1.6;max-width:540px;margin-top:12px}
+   .foot{margin-top:26px;padding-top:10px;border-top:1px solid #eee;font-size:8.5px;color:#aaa;letter-spacing:.05em;line-height:1.6}
+   </style></head><body>
+   <h1>${sp.name}</h1><div class="lat">${sp.latin} · ${STATUS[sp.status].l}</div>
+   <div class="meta">age ${Math.round(p.age*sp.maxAge)} yr &nbsp;·&nbsp; height ${(p.age*sp.maxH).toFixed(1)} m &nbsp;·&nbsp; ${sp.site}</div>
+   <div class="frame">${svgStr}</div>
+   <table>${rows}<tr><td>resilience score</td><td>${document.getElementById('resil-v').textContent} / 100</td></tr></table>
+   <div class="note"><b>Phytoremediation.</b> ${sp.phytoNote}</div>
+   <div class="note"><b>Remediation profile.</b> ${(ARCHETYPE[sp.archetype]||{lab:sp.archetype}).lab} · addresses ${(sp.contaminants||[]).map(x=>(CONTAM[x.c]||{lab:x.c}).lab).join(', ')} · evidence: ${(EVIDENCE[sp.evidence]||{lab:sp.evidence}).lab}.</div>
+   <div class="note"><b>Root system.</b> ${ROOTTYPE[sp.rootType]||sp.rootType}. <b>L-system:</b> ${sp.rule}</div>
+   <div class="foot">VANA · P1-A.02 · Growth Manifold Studio · build 2026/07/12 · phyto · v2<br>© 2026 Marko Manriquez · SymbiOS™ | Inflorescence Intelligence™ · All Rights Reserved · modeled values for demonstration</div>
+   <scr`+`ipt>setTimeout(function(){window.print();},500);</scr`+`ipt></body></html>`);
+  w.document.close();
+  toast('print view opened · <b>save as PDF</b> from the dialog');
+}
+document.getElementById('btn-print').addEventListener('click',printSpecimen);
+
+/* ---- make the production-rule panel draggable (park it anywhere over the stage) ---- */
+(function(){
+  const el=document.getElementById('vp-rule');if(!el)return;
+  let drag=false,sx=0,sy=0,ox=0,oy=0;
+  el.addEventListener('pointerdown',e=>{
+    drag=true;el.setPointerCapture(e.pointerId);el.classList.add('dragging');
+    const r=el.getBoundingClientRect(),pr=el.parentElement.getBoundingClientRect();
+    ox=r.left-pr.left;oy=r.top-pr.top;sx=e.clientX;sy=e.clientY;
+    el.style.left=ox+'px';el.style.top=oy+'px';el.style.right='auto';el.style.bottom='auto';el.style.transform='none';
+    e.preventDefault();
+  });
+  el.addEventListener('pointermove',e=>{
+    if(!drag)return;
+    const pr=el.parentElement.getBoundingClientRect();
+    let nx=ox+(e.clientX-sx),ny=oy+(e.clientY-sy);
+    nx=Math.max(2,Math.min(nx,pr.width-el.offsetWidth-2));
+    ny=Math.max(2,Math.min(ny,pr.height-el.offsetHeight-2));
+    el.style.left=nx+'px';el.style.top=ny+'px';
+  });
+  const end=()=>{drag=false;el.classList.remove('dragging');};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);
+})();
+
+buildUI();
+render();
+toast('VANA manifold ready · drag a dial, or press <b>tour</b> to run hands-free');
+</script>
+</body>
+</html>
